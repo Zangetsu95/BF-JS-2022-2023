@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="quentin"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2022-11-23 11:37:19 "/>
+        <attribute name="created" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yMzsiMDk6MjU6MTAgIjszMDE3"/>
+        <attribute name="edited" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yMzsiMTE6Mzc6MTkgIjszOzMxMzI="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <comment text="D&#233;claration"/>
+            <declare name="nom, prenom" type="String" array="False" size=""/>
+            <declare name="age" type="Integer" array="False" size=""/>
+            <comment text="Affectation"/>
+            <assign variable="nom" expression="&quot;Geerts&quot;"/>
+            <assign variable="prenom" expression="&quot;Quentin&quot;"/>
+            <assign variable="age" expression="26"/>
+        </body>
+    </function>
+</flowgorithm>

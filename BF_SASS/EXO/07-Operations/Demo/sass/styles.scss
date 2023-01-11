@@ -1,0 +1,46 @@
+/* 07 - Operations */
+
+// Number operations
+body {
+  margin: 10px + 20px; // 2 valeurs avec la même unité
+  // margin: 10px + 20em; // Ne fonctionne pas
+  padding: 20px * 2;
+  // padding: 20px * 2px; // Ne fonctionne pas
+  font-size: 39px - 10px;
+}
+
+.container {
+  font: 20px / 1.5; // Retourne la même chose
+
+  $baseline: 2em;
+
+  margin-bottom: $baseline / 2; // fonctionne
+  margin-bottom: (2em / 2); // Pour forcer le calcul, utiliser les ()
+
+  padding: 10px + 20px / 2; // Précédence
+
+  &:after {
+    content: 10px > 20px;
+  }
+
+  margin-right: 1px + 3px * 3;
+  margin-left: (1px + 3px) * 3; // Prioriser => ()
+}
+
+// String operations
+
+.button {
+  font-family: sans + "-serif";
+  font-family: "sans" + -serif; // prends le format de l'élément à gauche du +
+
+  &::before {
+    content: "Click" + "Me";
+  }
+
+  &::after {
+    $content: "default";
+
+    content: "This is a #{$content} button with a width of #{5 * 23}px.";
+  }
+
+}

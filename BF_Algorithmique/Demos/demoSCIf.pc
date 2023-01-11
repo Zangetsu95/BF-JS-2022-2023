@@ -1,0 +1,49 @@
+Algorithme demoSCIF
+DEBUT
+
+    // SI ...
+
+    Variable isConnected : Booleen
+    isConnected <- true
+
+    SI !isConnected ALORS
+        Ecrire("Vous devez vous connecter")
+    FINSI
+    
+    
+    // SI ... SINON
+
+    Variable age : Entier
+
+    SI age >= 18 ALORS
+        Ecrire("Vous êtes majeur.")
+    SINON
+        Ecrire("Vous êtes mineur.")
+    FINSI
+
+    // Mineur ; adulte ; Senior
+    SI age >= 18 ALORS
+        // adulte / Senior
+        SI age >= 65 ALORS
+            Ecrire("Vous êtes senior")
+        SINON
+            Ecrire("Vous êtes adulte")        
+        FINSI
+
+    SINON
+        Ecrire("Vous êtes mineur.")    
+    FINSI
+    
+    // SI ... SINONSI ... SINON
+
+    // Mineur ; adulte ; Senior
+    SI age >= 65 ALORS
+        Ecrire("Vous êtes senior")
+    SINONSI age >= 18 ALORS
+        Ecrire("Vous êtes adulte")  
+    SINON
+        Ecrire("Vous êtes mineur.")    
+    FINSI
+
+
+FIN

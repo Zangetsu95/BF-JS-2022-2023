@@ -1,0 +1,47 @@
+/* 08 @import directive - Exercice */
+
+/*
+ * Vrai ou Faux
+ */
+
+/*** Question 1 ***/
+/*** Les deux imports suivant donneront le même résultat. Vrai ou Faux ? ***/
+@import "typography.scss";
+@import "typography";
+
+/*** Réponse : Vrai ***/
+
+
+
+/*** Question 2 ***/
+/*** Est-ce que le l'import suivant est correct ? Oui ou non ? ***/
+@import "typography" screen;
+
+/*** Réponse : Oui ***/
+
+
+
+/*** Question 3 ***/
+/*** Est-ce que le les imports suivants sont corrects ? Oui ou non ? ***/
+@import "reset.sass", "settings/variables";
+
+/*** Réponse : Oui ***/
+
+
+
+/*** Question 4 ***/
+/*** L'instruction contiendra le contenu de "reset.scss". Vrai ou Faux ? ***/
+@import url("reset.scss");
+
+/*** Réponse : Faux ***/
+
+
+
+/*** Question 5 ***/
+/*** L'instruction suivante contiendra les deux fichiers css générés séparés. Vrai ou Faux ? ***/
+@import "reset.scss";
+@import "typography";
+
+/*** Réponse : Faux ***/
+
+

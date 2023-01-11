@@ -1,0 +1,43 @@
+// exo11
+// Lanceur de balles de tennis
+// Réalisez l’algorithme d’un lanceur de balles de tennis. 
+// Ce lanceur possède deux états (variables) :
+// – pret :     
+//     permet de savoir si le tennisman est prêt. 
+//     Il ne faut pas lancer de balles dans le cas contraire
+// – panierVide : 
+//     permet de savoir s’il y a encore des balles disponibles
+// Le lanceur de balle possède l’opération « lancerBalle » qui, 
+// vous l’aurez compris, permet de lancer une balle.
+
+Algorithme exo11
+DEBUT
+    
+    Variable pret, panierVide : Booleen
+
+    Ecrire("Êtes-vous prêt ? (true / false)")
+    Lire(pret)
+
+    Ecrire("Est-ce que le panier est vide ? (true / false)")
+    Lire(panierVide)
+
+    // pret == true && panierVide == false (panierVide != true)
+    SI pret && !panierVide ALORS
+        // Lancer la balle
+        Ecrire("Lancer la balle")
+    SINON
+        // Ne pas lancer la balle
+        Ecrire("Ne pas lancer la balle")
+
+        SI !pret ALORS
+            Ecrire("Car vous n'êtes pas prêt.")
+        FINSI
+
+        SI panierVide ALORS
+            Ecrire("Car le panier est vide.")
+        FINSI
+
+    FINSI
+    
+
+FIN

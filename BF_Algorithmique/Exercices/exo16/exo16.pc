@@ -1,0 +1,28 @@
+// exo16
+// À l’aide d’une boucle, affichez la table de multiplication par 2.
+
+Algorithme exo16
+DEBUT
+    
+    Variable multiplicateur, table, resultat : Entier
+
+    table <- 2
+
+    // Initialisation
+    multiplicateur <- 1
+
+    // Condition
+    TANTQUE multiplicateur <= 10 FAIRE
+        
+        resultat <- table * multiplicateur
+
+        // Afficher le résultat
+        Ecrire(table & " x " & multiplicateur & " = " & resultat)
+        
+        // Incrémentation
+        multiplicateur <- multiplicateur + 1
+
+    FINTQ
+    
+
+FIN

@@ -1,0 +1,30 @@
+// exo25 - Écrire un algorithme qui 
+// demande de saisir 6 entiers et les 
+// stocke dans un tableau, puis affiche le 
+// contenu de ce tableau une fois qu’il est 
+// rempli.
+
+Algorithme exo25
+DEBUT
+    
+    Variable tab : Tableau de Entier[6]
+    Variable index : Entier
+    Variable format : Chaine
+    format <- ""
+
+    POUR index DE 0 À size(tab) - 1 [PAR 1] FAIRE
+        Ecrire("Entrez un entier : ")
+        Lire(tab[index])
+    FINP
+    
+    POUR index DE à À size(tab) - 1 [PAR 1] FAIRE
+        format <- format & tab[index]
+
+        SI index < size(tab) - 1 ALORS
+            format <- format & " | "
+        FINSI
+        
+    FINP
+    
+    
+FIN

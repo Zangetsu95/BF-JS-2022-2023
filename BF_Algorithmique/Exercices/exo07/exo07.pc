@@ -1,0 +1,32 @@
+// exo07
+// Réalisez un algorithme convertisseur de secondes. 
+// Ce dernier reçoit un nombre de secondes et 
+// détermine le nombre de jours, heures, minutes et secondes 
+// auquel il correspond.
+
+// Exemple : 
+// 4561 secondes correspondent à 0 jour 1 heure 16 minutes et 1 seconde.
+// Réfléchissez à la méthode que nous devons utiliser.
+
+Algorithme exo07
+DEBUT
+
+    // Déclaration
+    Constante NB_SEC_JOUR = 86400
+    Constante NB_SEC_HEURE = 3600
+    Constante NB_SEC_MINUTE = 60
+
+    Variable nbSecondes, jour, heure, minute, seconde : Entier
+
+    // Demander à l'utilisateur de rentrer un nombre de secondes
+    Ecrire("Entrez un nombre de secondes à convertir :")
+    Lire(nbSecondes)
+
+    jour ← nbSecondes / NB_SEC_JOUR // 90061 / 86400 => 1
+    heure ← (nbSecondes % NB_SEC_JOUR) / NB_SEC_HEURE // 3661 / 3600 => 1
+    minute ← ((nbSecondes % NB_SEC_JOUR) % NB_SEC_HEURE) / NB_SEC_MINUTE
+    seconde ← ((nbSecondes % NB_SEC_JOUR) % NB_SEC_HEURE) % NB_SEC_MINUTE
+    
+    // Affichage
+    Ecrire(nbSecondes & " correspond à " & jour & " jour(s), " & heure & " heure(s), " & minute & " minute(s) et " & seconde & " seconde(s)")
+FIN

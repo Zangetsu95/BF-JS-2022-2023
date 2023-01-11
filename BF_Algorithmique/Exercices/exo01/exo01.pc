@@ -1,0 +1,45 @@
+// exo01
+// Déclarez et initialisez 5 variables (de la vie de tous les jours) 
+// de chacun des types qui existent :
+// ○ Chaine
+// ○ Entier
+// ○ Reel
+// ○ Booleen
+
+Algorithme exo01
+DEBUT
+    // ○ Chaine
+    Variable adresseCommune, email, telephone, modelePC, date : Chaine
+    adresseCommune <- "Auderghem"
+    email <- "alexandra@gmail.com"
+    telephone <- "0123/45.67.89"
+    modelePC <- "Acer"
+    date <- "23/11/2022"
+
+    // ○ Entier
+    Variable distanceEcole, nbEtudiants, nbChats, remise, nbFrereSoeur : Entier
+    distanceEcole <- 5
+    nbEtudiants <- 13
+    nbChats <- 1
+    remise <- 20
+    nbFrereSoeur <- 5
+
+    // ○ Reel
+    Variable taille, prixEssence, actionTesla, prixHTVA, prixTVAC : Reel
+    taille <- 1.84
+    prixEssence <- 1.957
+    actionTesla <- 169.91
+    prixHTVA <- 52.98
+    prixTVAC <- prixHTVA * 1.21
+
+    // ○ Booleen
+    Variable aPermisB, aLunettes, enPause, estGeek, estFumeur : Booleen
+    aPermisB <- true
+    aLunettes <- false
+    enPause <- true
+    estGeek <- true
+    estFumeur <- false
+    estParent <- true
+    
+
+FIN

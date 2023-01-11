@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="quentin"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2022-11-24 03:53:18 "/>
+        <attribute name="created" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNDsiMDM6MzI6NDMgIjszMDE2"/>
+        <attribute name="edited" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNDsiMDM6MzU6MzkgIjsxO3F1ZW50aW47REVTS1RPUC1LTUtBQTZCOzIwMjItMTEtMjQ7IjAzOjMyOjQzICI7NjIwNw=="/>
+        <attribute name="edited" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNDsiMDM6NTM6MTggIjszOzMxMzE="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="compteur" type="Integer" array="False" size=""/>
+            <comment text="Initialisation"/>
+            <assign variable="compteur" expression="0"/>
+            <comment text="Condition"/>
+            <while expression="compteur &lt; 10">
+                <output expression="&quot;La valeur du compteur est &quot; &amp; compteur" newline="True"/>
+                <comment text="Incr&#233;mentation"/>
+                <assign variable="compteur" expression="compteur + 1"/>
+            </while>
+        </body>
+    </function>
+</flowgorithm>

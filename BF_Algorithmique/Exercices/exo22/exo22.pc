@@ -1,0 +1,27 @@
+// exo22
+// À l’aide de la boucle TantQue … Faire, réalisez un algorithme calculant le 
+// résultat de N10. N étant un nombre saisi par l’utilisateur.
+
+Algorithme exo22
+DEBUT
+    
+    Variable base, exposant, resultat, i : Entier
+
+    exposant <- 10
+
+    Ecrire("Entrez une base : ")
+    Lire(base)
+
+    i <- 0
+
+    TANTQUE i < exposant FAIRE
+        
+        resultat <- resultat * base
+
+        i <- i + 1
+
+    FINTQ
+    
+    Ecrire(base & " ^ " & exposant & " = " & resultat)
+
+FIN

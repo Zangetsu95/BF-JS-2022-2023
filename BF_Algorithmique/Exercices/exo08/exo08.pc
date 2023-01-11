@@ -1,0 +1,59 @@
+// A = 3, B = 9, C = Faux, D = NON (C), E = 9.
+
+// 1. 
+// (A > 8)
+// (3 > 8)
+// (false)
+
+
+// 2. 
+// (B == 9)
+// (9 == 9)
+// (true)
+
+
+// 3. 
+// (NON(A != 3))
+// (NON(3 != 3))
+// (NON(false))
+// (true)
+
+
+// 4. 
+// (NON(C))
+// (NON(false))
+// (true)
+
+
+// 5. 
+// ((A < B) OU C)
+// ((3 < 9) OU false)
+// ((true) OU false)
+// (true)
+
+
+// 6. 
+// NON((A + B) != 12)
+// NON((3 + 9) != 12)
+// NON(12 != 12)
+// NON(false)
+// true
+
+
+// 7. 
+// ((B == 5) OU ( (E > 10) ET (A < 8) ))
+// ((9 == 5) OU ( (9 > 10) ET (3 < 8) ))
+// (false OU ( false ET true ))
+// (false OU false)
+// (false)
+
+
+// 8. 
+// ((((B == 5) OU ((E > 10) ET (A < 8))) OU (A < B) OU C) ET C)
+// ((((9 == 5) OU ((9 > 10) ET (3 < 8))) OU (3 < 9) OU false) ET false)
+// (((false OU (false ET true)) OU true OU false) ET false)
+// (((false OU false) OU true) ET false)
+// ((false OU true) ET false)
+// (true ET false)
+// (false)
+

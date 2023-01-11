@@ -1,0 +1,29 @@
+//  exo23
+// Reprenez l’exercice précédent et modifiez-le pour que l’utilisateur entre 
+// également l’exposant qu’il désire calculer.
+
+
+Algorithme exo23
+DEBUT
+    
+    Variable base, exposant, resultat, i : Entier
+
+    Ecrire("Entrez une base : ")
+    Lire(base)
+
+    Ecrire("Entrez un exposant")
+    Lire(exposant)
+
+    i <- 0
+
+    TANTQUE i < exposant FAIRE
+        
+        resultat <- resultat * base
+
+        i <- i + 1
+
+    FINTQ
+    
+    Ecrire(base & " ^ " & exposant & " = " & resultat)
+
+FIN

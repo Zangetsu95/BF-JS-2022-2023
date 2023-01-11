@@ -1,0 +1,12 @@
+3. Encapsulation
+
+Changez la force, l'endurance et les points de vie en privé. Ajoutez ce qu'il faut pour 
+que le programme continue de tourner.
+<!> Les bonus d’endurance et de force offerts par les classes (Humain, Nain, Orque et Dragonnet)
+ne doivent pas modifier la caractéristique de base du personnage. <!>
+Pour les héros, 
+    - les humains qui ont +1 aux caractéristiques de Force et d’Endurance 
+    - les nains qui ont plus 2 en Endurance.
+Pour les monstres,
+    - les orques qui ont +1 en Force
+    - les dragonnets qui ont +1 en Endurance

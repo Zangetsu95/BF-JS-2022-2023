@@ -1,0 +1,48 @@
+// exo29 - Ecrivez un algorithme qui trouve qui est le nombre :
+// - le plus grand
+// - le plus petit
+// dans un tableau de 5 données (1, 4, 3, 5, 2)
+// exo30 - Ecrivez un algorithme qui calcule la somme des valeurs du tableau
+// exo31 - Ecrivez un algorithme qui calcule la moyenne des valeurs du tableau
+
+Algorithme exo
+DEBUT
+    Variable tab : Tableau de Entier[5]
+    Variable min, max, index : Entier
+
+    Variable somme : Entier
+    Variable moyenne : Reel
+
+    tab[0] <- 1
+    tab[1] <- 4
+    tab[2] <- 3
+    tab[3] <- 5
+    tab[4] <- 2
+
+    min <- tab[0]
+    max <- tab[0]
+
+    somme <- 0
+
+    // Recherche du minimum et maximum
+    POUR index DE 1 À size(tab) - 1 [PAR 1] FAIRE
+        
+        SI tab[index] < min ALORS
+            min <- tab[index]
+        FINSI
+        
+        SI tab[index] > max ALORS
+            max <- tab[index]
+        FINSI
+    FINP
+
+    // Calcul de la somme
+    POUR index DE 0 À size(tab) - 1 [PAR 1] FAIRE
+        somme <- somme + tab[index]
+    FINP
+    
+    // Calcul de la moyenne
+    moyenne <- somme / size(tab)
+    
+
+FIN

@@ -1,0 +1,22 @@
+2. Inheritance
+
+C'est bien beau d'avoir des personnages mais il serait plus intéressant de différencier qui est le héros et qui est le monstre.
+Pour ce faire, vous allez créer une classe Hero et une classe Monstre.
+Ceux-ci sont des personnages donc ils hériteront des membres !
+Les héros ont une méthode Loot() qui prend en paramètre un monstre.
+Cette méthode permet de récupérer la quantité d'or et de cuir disponible sur un monstre.
+Elle permet ainsi d'augmenter le stock du héros sans limite.
+Afin de diversifier un peu ces classes, nous allons créer d'autres sous-classes : 
+Pour le héros : 
+    - Humain
+    - Nain 
+Pour le monstre :
+    - Loup 
+        ~ donne du cuir
+    - Orque 
+        ~ donne de l'or
+    - Dragonnet 
+        ~ donne du cuir et de l'or
+Lorsqu'un monstre est créé, il possède une certaine quantité d'or et/ou de cuir.
+L’or et le cuir sont calculé à la création du monstre en sachant que l’or est calculé sur 
+base d’un dé 6 faces tandis que le cuir est calculé sur base d’un dé 4 faces.

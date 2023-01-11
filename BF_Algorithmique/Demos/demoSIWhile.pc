@@ -1,0 +1,14 @@
+Algorithme demoSIWhile
+DEBUT
+    
+    Variable compteur : Entier
+
+    compteur <- 0
+
+    TANTQUE compteur < 10 FAIRE
+        Ecrire("La valeur du compteur " & compteur)
+        compteur <- compteur + 1
+    FINTQ
+    
+
+FIN

@@ -1,0 +1,20 @@
+Algorithme demoIO
+DEBUT
+    
+    Variable prenom : Chaine
+    prenom <- "Quentin"
+
+    // Sortie (ecriture)
+    Ecrire("Bonjour") // Bonjour
+    Ecrire(prenom) // Quentin
+
+    Ecrire("Bonjour " & prenom) // Bonjour Quentin
+
+    Ecrire("Entrez votre prénom : ")
+    // Entree (lecture)
+    lire(prenom)
+
+    Ecrire("Vous vous appelez " & prenom)
+    
+
+FIN

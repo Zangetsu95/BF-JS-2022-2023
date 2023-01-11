@@ -1,0 +1,23 @@
+// exo03
+// Trouvez une méthode permettant d’inverser le contenu de deux variables (du type chaine). 
+// Si nb1 = 5 et nb2 = 7, après ce traitement, nb1 = 7 et nb2 = 5.
+
+Algorithme exo03
+DEBUT
+    
+    // Déclaration
+    Variable nb1, nb2, temp : Chaine
+
+    // Affectation
+    nb1 <- "5"
+    nb2 <- "7"
+
+    Ecrire("Avant : nb1 = " & nb1 & " et nb2 = " & nb2)
+
+    // Traitement
+    temp <- nb1 // 5
+    nb1 <- nb2 // 7
+    nb2 <- temp // 5
+
+    Ecrire("Après : nb1 = " & nb1 & " et nb2 = " & nb2)
+FIN

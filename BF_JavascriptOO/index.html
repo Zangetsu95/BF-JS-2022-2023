@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+
+        const obj = {
+            // Fonction anonyme
+            a: function () { return this; },
+
+            // Fonction flèchée
+            b: () => this,
+
+            c: {
+                d: function () { return this; },
+                e: () => this,
+            }
+        };
+
+        console.log("a > ", obj.a());
+        console.log("b > ", obj.b());
+        console.log("d > ", obj.c.d());
+        console.log("e > ", obj.c.e());
+
+    </script>
+
+</body>
+
+</html>

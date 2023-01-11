@@ -1,0 +1,24 @@
+1. Class - Method - Properties
+
+Créer une classe Dé avec deux caractéristiques : minimum et maximum.
+Lorsque nous créons un dé, le maximum doit être paramétrer.
+Un dé possède une méthode Lancer() qui retourne un entier aléatoire (entre le min et max)
+
+Créer une classe personnage avec en caractéristiques : endurance, force et points de vie.
+
+La caractéristique de force et d'endurance sont calculées en lançant quatre dés à 6 faces  et en n'en reprenant que les 3 meilleurs
+Les points de vie sont calculés sur base de l'endurance additionnée avec le modificateur 
+basé sur l'endurance.
+
+Un personnage possède une méthode Frapper() avec une cible passé en paramètre.
+Lorsqu’un personnage frappe sur un autre, les dégâts sont déterminés par le jet d’un dé
+à 4 faces auquel on ajoute un modificateur basé sur la caractéristique de Force. 
+Une fois calculé, les dégâts sont retirés des points de vies de la cible.
+
+Le modificateur se base sur le score de la caractéristique pour ajouter un bonus ou 
+un malus sur base des tests suivants : 
+    - si la caractéristique est inférieure à 5 on ajoute -1, 
+    - sinon si elle est inférieure à 10 alors on ajoute 0, 
+    - sinon si elle est inférieure à 15 alors on ajoute +1, 
+    - sinon on ajoute +2.
+    

@@ -1,0 +1,18 @@
+Algorithme demoIntro
+DEBUT
+    // Déclaration
+
+    Variable prenom, nom : Chaine
+    Constante URL_API = "https://www.mon-api.be"
+
+    Variable lowerCamelCase : Entier
+    Variable UpperCamelCase : Entier
+
+    Variable snake_case : Entier
+
+    prenom <- "Quentin"
+    nom ← "Geerts"
+    
+    
+
+FIN

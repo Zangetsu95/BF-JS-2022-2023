@@ -1,0 +1,40 @@
+Algorithme demoProcedure
+DEBUT
+    
+    Variable t1 : Tableau de Entier[2]
+    Variable t2 : Tableau de Entier[5]
+
+    t1[0] <- 2
+    t1[1] <- 4
+    
+    t2[0] <- 4
+    t2[1] <- 4
+    t2[2] <- 4
+    t2[3] <- 4
+    t2[4] <- 4
+
+    displayArray(t1) // [ 2, 4 ]
+    displayArray(t2) // [ 4, 4, 4, 4, 4 ]
+
+FIN
+
+PROCEDURE displayArray(tab : Tableau) : 
+DEBUT
+    Variable format : Chaine
+    Variable i : Entier
+
+    format <- "[ "
+
+    // [ 1, 2, 3, 4, 5 ]
+    POUR i DE 0 À size(tab) - 1 [PAR 1] FAIRE
+        format <- format & tab[i]
+
+        SI i < size(tab) - 1 ALORS
+            format <- format & ", "
+        FINSI
+    FINP
+    
+    format <- format & " ]"
+
+    Ecrire(format)
+FIN

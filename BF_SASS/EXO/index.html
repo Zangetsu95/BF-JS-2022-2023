@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Demo - Sass</title>
+
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+</head>
+
+<body>
+
+	<div class="container">
+
+		<header>
+			<h1><a href=".">Cours</a></h1>
+			<h2>Sass
+				<!-- <code> -->
+				<code class="hide">
+					<a href="https://github.com/QuentinGeerts/preparation-sass" target="_blank">GitHub</a>
+				</code>
+			</h2>
+		</header>
+
+		<nav>
+			<ul>
+				<li><a href="#introduction">00 - Introduction <i class="fa-solid fa-check text-success"></i></a></li>
+				<li><a href="#syntax">01 - Syntax <i class="fa-solid fa-check text-success"></i></a></li>
+				<li><a href="#nesting">02 - Nesting <i class="fa-solid fa-check text-success"></i></a></li>
+				<li><a href="#nested-properties">03 - Nested Properties <i
+							class="fa-solid fa-check text-success"></i></a></li>
+				<li><a href="#variables">04 - Variables <i class="fa-solid fa-check text-success"></i></a></li>
+				<li><a href="#interpolation">05 - Interpolation <i class="fa-solid fa-check text-success"></i></a></li>
+				<li><a href="#data-types">06 - Data Types <i class="fa-solid fa-check text-success"></i></a></li>
+				<li><a href="#operations">07 - Operations <i class="fa-solid fa-check text-success"></i></a></li>
+				<li><a href="#import-directive">08 - @import directive <i
+							class="fa-solid fa-check text-success"></i></a></li>
+				<li><a href="#partials">09 - Partials <i class="fa-solid fa-check text-success"></i></a></li>
+				<li><a href="#media-directive">10 - @media directive <i class="fa-solid fa-check text-success"></i></a>
+				</li>
+				<li><a href="#extend-directive">11 - @extend directive <i
+							class="fa-solid fa-check text-success"></i></a></li>
+				<li><a href="#if-for-directives">12 - @if and @for directives <i
+							class="fa-solid fa-check text-success"></i></a>
+				</li>
+				<li><a href="#each-while-directives">13 - @each and @while directives <i
+							class="fa-solid fa-check text-success"></i></a></li>
+				<li><a href="#mixins">14 - Mixins <i class="fa-solid fa-check text-success"></i></a></li>
+			</ul>
+		</nav>
+
+		<main>
+
+			<section id="introduction">
+				<header>
+					<h1><a href="#introduction">Introduction</a></h1>
+				</header>
+
+				<hr>
+
+				<p>
+					<abbr title="Syntactically Awesome Style Sheets">Sass</abbr> est un préprocesseur qui permet de
+					compiler et/ou
+					interprété du Sass ou Scss en CSS.
+				</p>
+
+				<p>Un préprocesseur permet de transformer un type de données en un autre type de données.</p>
+
+				<h2>Outils</h2>
+
+				<ul>
+					<li><a href="https://nodejs.org/" target="_blank">Node JS</a></li>
+					<li><a href="https://sass-lang.com/" target="_blank">Sass</a></li>
+				</ul>
+
+				<p>
+					Pour installer Sass de manière globale sur votre machine :
+				</p>
+
+				<code><span class="keyword">npm</span> install <span class="grey">-g</span> sass</code>
+
+				<p>
+					Pour lancer la compilation :
+				</p>
+
+				<p>
+					<code><span class="keyword">sass</span> <span class="grey">--watch</span> dossier_sass/fichier.scss dossier_css/fichier.css</code>
+				</p>
+				<p>
+					<code><span class="keyword">sass</span> <span class="grey">--watch</span> dossier_sass:dossier_css</code>
+				</p>
+
+
+			</section>
+
+			<section id="syntax">
+				<header>
+					<h1><a href="#syntax">Syntax</a></h1>
+				</header>
+
+				<hr>
+
+				<p>Lorsque nous utilisons Sass, nous avons la posibilité entre deux formes d'écriture :
+					<code>.sass</code> ou
+					<code>.scss</code>
+				</p>
+				<p>La syntaxe Scss est une surcouche du CSS, ce qui signifie que toutes les instructions valides en CSS
+					le sont
+					également en Scss. Cette syntaxe est plus facile à utiliser grâce à sa ressemblance avec le CSS.</p>
+				<p>La seconde syntaxe est celle d'origine de Sass. Elle s'écrit de manière indentée et sans accolade et
+					point
+					virgule.</p>
+
+				<div class="content-compare">
+					<div>
+						<h4>Exemple de code en Scss</h4>
+
+						<pre>
+<span class="keyword-at">@mixin</span> button-base() {
+		<span class="keyword-at">@include</span> typography(button);
+		<span class="keyword-at">@include</span> ripple-surface;
+		<span class="keyword-at">@include</span> ripple-radius-bounded;
+	
+		<span class="keyword-property">display</span>: inline-flex;
+		<span class="keyword-property">position</span>: relative;
+		<span class="keyword-property">height</span>: $button-height;
+		<span class="keyword-property">border</span>: none;
+		<span class="keyword-property">vertical-align</span>: middle;
+	
+		&<span class="keyword-pseudo-class">:hover</span> { <span class="keyword-property">cursor</span>: pointer; }
+	
+		&<span class="keyword-pseudo-class">:disabled</span> {
+				<span class="keyword-property">color</span>: $mdc-button-disabled-ink-color;
+				<span class="keyword-property">cursor</span>: default;
+				<span class="keyword-property">pointer-events</span>: none;
+		}
+}</pre>
+
+					</div>
+					<div>
+						<h4>Exemple de code en Sass</h4>
+						<pre>
+<span class="keyword-at">@mixin</span> button-base()
+		<span class="keyword-at">@include</span> typography(button)
+		<span class="keyword-at">@include</span> ripple-surface
+		<span class="keyword-at">@include</span> ripple-radius-bounded
+
+		<span class="keyword-property">display</span>: inline-flex
+		<span class="keyword-property">position</span>: relative
+		<span class="keyword-property">height</span>: $button-height
+		<span class="keyword-property">border</span>: none
+		<span class="keyword-property">vertical-align</span>: middle
+
+		&<span class="keyword-pseudo-class">:hover</span>
+				<span class="keyword-property">cursor</span>: pointer
+
+		&<span class="keyword-pseudo-class">:disabled</span>
+				<span class="keyword-property">color</span>: $mdc-button-disabled-ink-color
+				<span class="keyword-property">cursor</span>: default
+				<span class="keyword-property">pointer-events</span>: none</pre>
+					</div>
+				</div>
+
+			</section>
+
+			<section id="nesting">
+				<header>
+					<h1><a href="#nesting">Nesting</a></h1>
+				</header>
+
+				<hr>
+
+				<p>Nesting signifie <cite>Imbrication</cite> en anglais.</p>
+				<p>Lorsque vous écrivez du code HTML, vous avez probablement remarqué qu'il possède une hiérarchie
+					imbriquée et
+					visuelle claire. CSS, en revanche, ne le fait pas.</p>
+				<p>Sass permet d'imbriquer les sélecteurs CSS de la même manière que vous le faite pour HTML.</p>
+				<p>Attention tout de fois que trop imbriquer rendra plus difficile la maintenance du code. C'est
+					généralement
+					considéré comme une mauvaise pratique</p>
+
+
+				<div class="content-compare">
+					<div>
+						<h4>Exemple de Nesting</h4>
+						<pre>
+nav {
+	ul {
+		<span class="keyword-property">margin</span>: 0;
+		<span class="keyword-property">padding</span>: 0;
+		<span class="keyword-property">list-style</span>: none;
+	}
+
+	li { <span class="keyword-property">display</span>: inline-block; }
+
+	a {
+		<span class="keyword-property">display</span>: block;
+		<span class="keyword-property">padding</span>: 6px 12px;
+		<span class="keyword-property">text-decoration</span>: none;
+	}
+}</pre>
+					</div>
+
+					<div>
+						<h4>Sélecteur parent : &</h4>
+						<pre>
+a {
+	<span class="keyword-property">text-decoration</span>: none;
+
+	&:<span class="keyword-pseudo-class">hover</span> {
+		<span class="keyword-property">text-decoration</span>: underline wavy;
+	}
+
+}</pre>
+					</div>
+					<div>
+
+						<h4>Exemple Scss</h4>
+
+						<pre>
+<span class="keyword-pseudo-class">#demo</span> {
+	&-child {
+		<span class="keyword-property">margin</span>: .5em;
+	}
+
+	&child {
+		<span class="keyword-property">margin</span>: .5em;
+	}
+
+	&.child {
+		<span class="keyword-property">margin</span>: .5em;
+	}
+
+	& .child {
+		<span class="keyword-property">margin</span>: .5em;
+	}
+}</pre>
+					</div>
+
+
+					<div>
+						<h4>Exemple CSS</h4>
+						<pre>
+
+<span class="keyword-pseudo-class">#demo-child</span> {
+	<span class="keyword-property">margin</span>: .5em;
+}
+
+<span class="keyword-pseudo-class">#demochild</span> {
+	<span class="keyword-property">margin</span>: .5em;
+}
+
+<span class="keyword-pseudo-class">#demo</span>.child {
+	<span class="keyword-property">margin</span>: .5em;
+}
+
+<span class="keyword-pseudo-class">#demo</span> .child {
+	<span class="keyword-property">margin</span>: .5em;
+}</pre>
+					</div>
+
+				</div>
+
+				<p>Le sélecteur parent permet de reprendre le nom du parent. Le nom du parent sera injecté dans le code
+					après
+					compilation.</p>
+
+			</section>
+
+			<section id="nested-properties">
+				<header>
+					<h1><a href="#nested-properties">Nested properties</a></h1>
+				</header>
+
+				<hr>
+
+				<p>
+					L'utilisation de propriétés imbriquées permet de ne pas répéter plusieurs fois ces propriétés. Nous
+					pouvons
+					écrire comme namespace (espace de noms), le nom de la propriété. Par exemple, toutes les propriétés
+					font
+					(font-style, font-size, font-weight, etc.) peuvent être raccourcies et donc n'écrire qu'une seule
+					fois
+					l'espace de noms.
+				</p>
+
+				<div class="content-compare">
+					<div>
+						<h4>Exemple SCSS</h4>
+						<pre>
+.enlarge {
+	<span class="keyword-property">font-size</span>: 14px;
+	<span class="keyword-property">transition</span>: {
+		property: font-size;
+		duration: 4s;
+		delay: 2s;
+	}
+
+	&:<span class="keyword-pseudo-class">hover</span> { font-size: 36px; }
+}</pre>
+					</div>
+					<div>
+						<h4>Exemple SCSS</h4>
+						<pre>
+.enlarge {
+	<span class="keyword-property">font-size</span>: 14px;
+	<span class="keyword-property">transition-property</span>: font-size;
+	<span class="keyword-property">transition-duration</span>: 4s;
+	<span class="keyword-property">transition-delay</span>: 2s;
+}
+.enlarge:<span class="keyword-pseudo-class">hover</span> {
+	<span class="keyword-property">font-size</span>: 36px;
+}</pre>
+					</div>
+					<div>
+						<h4>Ecriture raccourcie Scss</h4>
+						<pre>
+.info-page {
+	<span class="keyword-property">margin</span>: auto {
+		bottom: 10px;
+		top: 2px;
+	}
+}</pre>
+					</div>
+					<div>
+						<h4>Ecriture raccourcie CSS</h4>
+						<pre>
+.info-page {
+	<span class="keyword-property">margin</span>: auto;
+	<span class="keyword-property">margin-bottom</span>: 10px;
+	<span class="keyword-property">margin-top</span>: 2px;
+}</pre>
+					</div>
+				</div>
+			</section>
+
+			<section id="variables">
+				<header>
+					<h1><a href="#variables">Variables</a></h1>
+				</header>
+
+				<hr>
+
+				<p>La notion de variable en Sass est la même que dans n'importe quel langage de programmation. Le but
+					étant de
+					stocker une valeur sous un alias et d'utiliser l'alias plutôt que la valeur elle-même à divers
+					endroit. Cela
+					permet ainsi d'éviter de recopier la valeur plusieurs fois mais aussi de ne modifier la valeur qu'à
+					un seul
+					endroit pour toutes les modifier.</p>
+
+				<p>Une variable en Sass s'écrit de la manière suivante :</p>
+				<code>$<span class="keyword-property">variable_name</span> : some value;</code>
+
+				<p>Ainsi une variable commencera par un dollar et finira par un point virgule. La structure se base à la
+					déclaration d'une propriété CSS classique.</p>
+
+				<div class="content-compare">
+					<div>
+						<h4>Scss</h4>
+						<pre>
+$<span class="keyword-property">txtcolor</span>:#008000;
+$<span class="keyword-property">fontSize</span>: 20px;
+
+p{
+	<span class="keyword-property">color</span>:$<span class="keyword-property">txtcolor</span>;
+		<span class="keyword-property">font-size</span>:$<span class="keyword-property">fontSize</span>;
+}</pre>
+					</div>
+					<div>
+						<h4>CSS</h4>
+						<pre>
+p {
+	<span class="keyword-property">color</span>: #008000;
+	<span class="keyword-property">font-size</span>: 20px;
+}</pre>
+					</div>
+				</div>
+
+				<p><i class="fa-solid fa-triangle-exclamation"></i> La portée des variables ! Lorsqu'une variable est
+					déclarée
+					dans un bloc, elle n'est accessible uniquement dans ce bloc.</p>
+				<p>Vous pouvez ajouter un !global à la fin d'une déclaration de variable pour passer la variable globale
+					et plus
+					locale</p>
+
+			</section>
+
+			<section id="interpolation">
+				<header>
+					<h1><a href="#interpolation">Interpolation</a></h1>
+				</header>
+
+				<hr>
+
+				<p>L'interpolation est fortement utilisé dans Sass. Elle permet d'intégrer un résultat dans une
+					expression.</p>
+				<p>Il suffit juste d'écrire une expression entre moustache précédé d'un diese.</p>
+				<code>#{ expression }</code>
+
+				<div class="content-compare">
+					<div>
+						<h4>Scss</h4>
+						<pre>
+<span class="keyword-at">@mixin</span> <span class="keyword-property">corner-icon</span>($<span class="keyword-property">name</span>, $<span class="keyword-property">top-or-bottom</span>, $<span class="keyword-property">left-or-right</span>) {
+	.icon-#{$name} {
+		<span class="keyword-property">background-image</span>: url("/icons/#{$name}.svg");
+		<span class="keyword-property">position</span>: absolute;
+		#{$<span class="keyword-property">top-or-bottom</span>}: 0;
+		#{$<span class="keyword-property">left-or-right</span>}: 0;
+	}
+}
+
+<span class="keyword-at">@include</span> corner-icon("mail", top, left);</pre>
+					</div>
+					<div>
+						<h4>CSS</h4>
+						<pre>
+.icon-mail {
+	<span class="keyword-property">background-image</span>: url("/icons/mail.svg");
+	<span class="keyword-property">position</span>: absolute;
+	<span class="keyword-property">top</span>: 0;
+	<span class="keyword-property">left</span>: 0;
+}</pre>
+					</div>
+				</div>
+			</section>
+
+			<section id="data-types">
+				<header>
+					<h1><a href="#data-types">Data types</a></h1>
+				</header>
+
+				<hr>
+
+				<p>Le type de données est le type d'une information qui nécessite de déclarer le type de données pour
+					chaque
+					objet de données.</p>
+				<p>Il existe plusieurs types de données tels que : </p>
+
+				<h3>Numbers</h3>
+				<p>Les nombres en Sass ont deux composants : la valeur et l'unité (optionnel)</p>
+
+				<p>Exemple : <code>12</code> <code>100px</code> <code>5px * 2px</code> <code>5.2e3</code></p>
+
+				<p><i class="fa-solid fa-triangle-exclamation"></i> Lors des opérations, vous ne pouvez pas calculer 2
+					unités
+					différentes. Pour régler le soucis, vous pouvez donner une unité à la première valeur et omettre la
+					suivante.
+				</p>
+
+
+				<h3>Strings</h3>
+				<p>Les chaines de caractères sont des séquences de caractères.</p>
+				<p>Sass supporte deux types de chaînes de caractères : les chaînes entre guillemets, comme "Helvetica
+					Neue", et
+					les chaînes sans guillements (également appelées identificateurs)</p>
+
+				<p>Exemple : <code>".widget:hover"</code> <code>bold</code></p>
+
+				<p>Vous pouvez utiliser la fonction <code>string.unquote(".widget:hover"); // .widget:hover</code> ou la
+					fonction <code>string.quote(bold); // "bold" </code> pour récupérer une chaine de caractères entre
+					guillemets
+					ou pas.</p>
+
+				<p>Pour échapper un caractère, vous pouvez utiliser le caractère d'échappement : <code>\</code></p>
+
+
+				<h3>Colors</h3>
+				<p>Sass intègre un support pour les valeurs des couleurs. Il est possible de créer des couleurs de
+					plusieurs
+					façons : </p>
+				<div class="content-compare">
+					<div>
+						<pre>
+<span class="keyword-at">@debug</span> #f2ece4; <span class="keyword-comment">// #f2ece4</span>
+<span class="keyword-at">@debug</span> #b37399aa; <span class="keyword-comment">// rgba(179, 115, 153, 67%)</span>
+<span class="keyword-at">@debug</span> midnightblue; <span class="keyword-comment">// #191970</span>
+<span class="keyword-at">@debug</span> <span class="keyword-property">rgb</span>(204, 102, 153); <span class="keyword-comment">// #c69</span>
+<span class="keyword-at">@debug</span> <span class="keyword-property">rgba</span>(107, 113, 127, 0.8); <span class="keyword-comment">// rgba(107, 113, 127, 0.8)</span>
+<span class="keyword-at">@debug</span> <span class="keyword-property">hsl</span>(228, 7%, 86%); <span class="keyword-comment">// #dadbdf</span>
+<span class="keyword-at">@debug</span> <span class="keyword-property">hsla</span>(20, 20%, 85%, 0.7); <span class="keyword-comment">// rgb(225, 215, 210, 0.7)</span>
+</pre>
+					</div>
+				</div>
+
+				<h3>Lists</h3>
+				<p>Les listes continennent une séquence d'autres valeurs. Dans Sass, les éléments des listes peuvent
+					être
+					séparés par des virgules (Helvetica, Arial, sans-serif), des espaces (10px 15px 0 0) ou des barres
+					obliques
+					tant qu'ils sont cohérents dans la liste.</p>
+
+				<p>Contrairement aux autres langages, les listes dans Sass ne nécessitent pas de crochets spéciaux ;
+					toutes les
+					expressions séparées par des espaces ou des virgules comptent comme une liste.</p>
+
+				<p>Exemple : <code>margin: 10px auto 15px;</code>
+					<code>font-family: Arial, Helvetica, sans-serif;</code>
+				</p>
+
+
+				<h3>Maps</h3>
+				<p>Les maps sont des listes qui contiennent des paires de clefs et de valeurs. Pour récupérer une
+					valeur, il
+					faudra entrer la clef associée. Dans le même principe qu'un dictionnaire avec des mots et leur
+					définition.</p>
+				<p>Les maps sont stockées dans une variable et construites entre parenthèse. Chaque paires est
+					construite en
+					stipulant <code>expression: valeur</code> et séparées par une virgule.</p>
+				<p>Comme chaque valeur est définie par une clef, celle-ci doit être unique au sein de la map. Il ne peut
+					donc
+					pas avoir deux clefs identiques.</p>
+
+				<p>Exemple : <code>$font-weights: ("regular": 400, "medium": 500, "bold": 700);</code>
+					<code>$colors: (1: #89C3AB, 2: #636363);</code>
+				</p>
+
+				<p>Pour récupérer un élément de la liste, il vous faudra utiliser la méthode
+					<code>map-get($variable, clef)</code>
+				</p>
+
+				<h3>Booleans</h3>
+				<p>Les bolléens sont des valeurs logiques vrai et faux. En plus de leurs formes littérales, les booléens
+					sont
+					renvoyés par des opérateurs d'égalité et relationnels, ainsi que par de nombreuses fonctions
+					intégrées telles
+					que <code>math.comparable()</code> ou <code>map.has-key()</code></p>
+
+				<div class="content-compare">
+					<div>
+						<h4>Scss</h4>
+						<pre>
+<span class="keyword-at">@mixin</span> <span class="keyword-property">avatar</span>($size, $circle: false) {
+	<span class="keyword-property">width</span>: $size;
+	<span class="keyword-property">height</span>: $size;
+
+	<span class="keyword-at">@if</span> $circle {
+		<span class="keyword-property">border-radius</span>: $size / 2;
+	}
+}
+
+.square-av {
+	<span class="keyword-at">@include</span> avatar(100px, $circle: false);
+}
+.circle-av {
+	<span class="keyword-at">@include</span> avatar(100px, $circle: true);
+}
+						</pre>
+					</div>
+					<div>
+						<h4>CSS</h4>
+						<pre>
+.square-av {
+	<span class="keyword-property">width</span>: 100px;
+	<span class="keyword-property">height</span>: 100px;
+}
+
+.circle-av {
+	<span class="keyword-property">width</span>: 100px;
+	<span class="keyword-property">height</span>: 100px;
+	<span class="keyword-property">border-radius</span>: 50px;
+}
+						</pre>
+					</div>
+				</div>
+
+			</section>
+
+			<section id="operations">
+				<header>
+					<h1><a href="#operations">Operations</a></h1>
+				</header>
+
+				<hr>
+
+				<p>Sass prend en charge une poignée d'opérateurs utiles pour travailler avec différentes valeurs.</p>
+
+				<h3>Opérateurs arithmétique : <code>+</code> <code>-</code> <code>*</code> <code>/</code></h3>
+
+				<p>Les opérateurs mathématiques sont utilisés par réaliser des opérations classiques entre les nombres,
+					seulement pour les nombres avec la même unité (px => px, vh => vh, etc...)</p>
+
+				<p>Les deux membres de part et d'autre du signe sont calculés sur base de l'unité à gauche du signe.</p>
+				<p>Attention lors d'une multiplication, l'unité y est également multiplié, il faut donc l'omettre pour
+					la partie
+					de droite.</p>
+				<code>12px + 12px // 24px</code>
+				<code>1in - 10px; // 0.8958333333in</code>
+				<code>12px * 2px // 24px*px</code>
+				<code>12px / 12px // 12px / 12px</code>
+
+				<p>Pour la division, vous devez mettre l'expression entre <code>()</code> pour la réaliser.</p>
+
+				<h3>Opérateurs d'égalité : <code>==</code> <code>!=</code></h3>
+
+				<p>Les opérateurs d'égalité permettent de vérifier l'égalité entre le membre de gauche et celui de
+					droite du
+					signe.</p>
+				<p><code>==</code> vérifie si les deux valeurs sont les mêmes. Dans le cas où ils sont les mêmes, la
+					valeur
+					<code>true</code> est renvoyée, dans le cas contraire <code>false</code>.
+				</p>
+				<p><code>!=</code> fait l'inverse du <code>==</code>.</p>
+
+				<h3>Opérateurs relationnels : <code><</code> <code>></code> <code><=</code> <code>>=</code></h3>
+
+				<p>L'opérateur relationnels déterminent si les nombres sont plus grands ou plus petits les uns que les
+					autres.
+					Ils convertissent automatiquement entre les unités compatibles.</p>
+
+				<p><code>></code> retourne si le premier élément est supérieur par rapport au second.</p>
+				<p><code><</code> retourne si le premier élément est inférieur par rapport au second.</p>
+				<p><code>>=</code> retourne si le premier élément est supérieur OU égal par rapport au second.</p>
+				<p><code><=</code> retourne si le premier élément est inférieur OU égal par rapport au second.</p>
+
+				<h3>Opérateurs de concaténation : <code>+</code> <code>-</code></h3>
+
+				<p>La concaténation permet de coller deux valeurs ensemble. (cfr. Interpolation).</p>
+
+				<p><code>+</code> retourne une chaine de caractères contenant les deux expressions. Si l'expression de
+					gauche
+					est entre guillemet, le résultat le sera également. Sans guillemet dans le cas contraire.</p>
+
+				<p><code>-</code> retourne une chaine de caractères sans guillemet contenant les deux expressions
+					séparées par
+					-.</p>
+				<p>Il s'agit d'un ancien opérateur, utilisez l'interpolation à la place.</p>
+
+				<h3>Opérateurs booléens : <code>not</code> <code>and</code> <code>or</code></h3>
+
+				<p>Contrairement aux autres langages, Sass utilise des mots plutôt que des symbales pour les opérateurs
+					booléens.</p>
+
+				<p><code>not</code> retourne la valeur opposée de l'expression. Elle transforme vrai en faux et faux en
+					vrai.
+				</p>
+				<p><code>and</code> retourne vrai si la valeur des deux expressions est à vrai. Sinon faux.</p>
+				<p><code>or</code> retourne vrai si l'une des valeurs des deux expression est à vrai. Sinon faux.</p>
+
+			</section>
+
+			<section id="import-directive">
+				<header>
+					<h1><a href="#import-directive">@import directive</a></h1>
+				</header>
+
+				<hr>
+
+				<p>Sass étend la règle @import de CSS avec la possibilité d'importer des feuilles de style Sass et Css.
+				</p>
+				<p>Ainsi nous pouvons importer des mixins, fonctions, variables et plusieurs feuilles de styles
+					ensemble.</p>
+				<p>L'import se fait dès la compilation contrairement aux imports css qui réalisent des requêtes HTTP.
+				</p>
+
+				<p><i class="fa-solid fa-triangle-exclamation"></i> la directive <code>@import</code> va devenir
+					dépréciée. Il
+					faudra priorisé la directive <code>@use</code> à la place. </p>
+				<p>Plus d'informations au lien suivant : <a
+						href="https://sass-lang.com/documentation/at-rules/import">https://sass-lang.com/documentation/at-rules/import</a>
+				</p>
+
+				<div class="content-compare">
+					<div>
+						<h4>SCSS</h4>
+						<div>
+							<pre>
+<span class="keyword-comment">// foundation/_code.scss</span>
+code {
+	<span class="keyword-property">padding</span>: .25em;
+	<span class="keyword-property">line-height</span>: 0;
+}
+							</pre>
+						</div>
+						<div>
+							<pre>
+<span class="keyword-comment">// foundation/_lists.scss</span>
+ul, ol {
+  <span class="keyword-property">text-align</span>: left;
+
+  & & {
+    <span class="keyword-property">padding</span>: {
+      <span class="keyword-property">bottom</span>: 0;
+      <span class="keyword-property">left</span>: 0;
+    }
+  }
+}
+							</pre>
+						</div>
+						<div>
+							<pre>
+<span class="keyword-comment">// style.scss</span>
+<span class="keyword-at">@import</span> 'foundation/code', 'foundation/lists';
+							</pre>
+						</div>
+
+					</div>
+					<div>
+						<h4>CSS</h4>
+						<pre>
+code {
+	<span class="keyword-property">padding</span>: .25em;
+	<span class="keyword-property">line-height</span>: 0;
+}
+
+ul, ol {
+	<span class="keyword-property">text-align</span>: left;
+}
+ul ul, ol ol {
+	<span class="keyword-property">padding-bottom</span>: 0;
+	<span class="keyword-property">padding-left</span>: 0;
+}							
+						</pre>
+					</div>
+				</div>
+
+				<p>
+					Ce ne serait pas amusant d'écrire des URL absolues pour chaque feuille de style que vous importez,
+					donc
+					l'algorithme de Sass pour trouver un fichier à importer le rend un peu plus facile.
+				</p>
+				<p>
+					Pour commencer, vous n'avez pas besoin d'écrire explicitement l'extension du fichier que vous
+					souhaitez
+					importer
+				</p>
+
+				<p>Exemple : <code>@import "variables"</code> va automatiquement charger variables.scss, variables.sass,
+					ou
+					variables.css</p>
+
+
+			</section>
+
+			<section id="partials">
+				<header>
+					<h1><a href="#partials">Partials</a></h1>
+				</header>
+
+				<hr>
+
+				<p>Les fichiers partiels sont des fichiers destinés à être importés uniquement. Pour indiquer au
+					compilateur que
+					ce sont des fichiers partiels, nous indiqueront un "_" devant les noms des fichiers.</p>
+
+				<p>Exemple : <code>_variables.scss</code></p>
+
+				<p>Lorsque le compilateur compile tous les fichiers, les fichiers partiels sont ignorés et ne sont
+					qu'importés
+					dans les fichiers avec un @import à l'intérieur.</p>
+
+				<p>Pour voir un exemple, rendez-vous dans l'exemple du précédent chapitre. (cfr. <a
+						href="#import-directive">@import directive</a>)</p>
+
+				<p>Une utilisation intéressante avec les imports est le nesting.</p>
+				<p>Vous pouvez importer un fichier CSS pour un sélecteur particulier :</p>
+
+				<div class="content-compare">
+					<div>
+						<h4>SCSS</h4>
+						<pre>
+<span class="keyword-comment">// _theme.scss</span>
+pre, code {
+	<span class="keyword-property">font-family</span>: 'Source Code Pro', Helvetica, Arial;
+	<span class="keyword-property">border-radius</span>: 4px;
+}
+						</pre>
+						<pre>
+<span class="keyword-comment">// style.scss</span>
+.theme-sample {
+	<span class="keyword-at">@import</span> "theme";
+}
+						</pre>
+					</div>
+					<div>
+						<h4>CSS</h4>
+						<pre>
+.theme-sample pre, .theme-sample code {
+	<span class="keyword-property">font-family</span>: 'Source Code Pro', Helvetica, Arial;
+	<span class="keyword-property">border-radius</span>: 4px;
+}
+						</pre>
+					</div>
+				</div>
+
+			</section>
+
+			<section id="media-directive">
+				<header>
+					<h1><a href="#media-directive">@media directive</a></h1>
+				</header>
+
+				<hr>
+
+				<p>L'avantage d'utiliser les @media avec Sass est que vous n'avez pas besoin de réécrire le.s chemin.s
+					si vous
+					les modifier</p>
+				<p>Vous pourrez ainsi imbriquer les @media dans votre structure scss.</p>
+
+				<div class="content-compare">
+					<div>
+						<h4>Scss</h4>
+						<pre>
+nav {
+	ul {
+		<span class="keyword-property">list-style</span>: none;
+		li {
+			<span class="keyword-property">float</span>: left;
+			a {
+				<span class="keyword-property">display</span>: inline-block;
+			}
+			&<span class="keyword-pseudo-class">:after</span> {
+				<span class="keyword-property">content</span>: " - ";
+				<span class="keyword-property">border</span>: 1px dotted #ccc;
+				<span class="keyword-property">width</span>: 1px;
+				<span class="keyword-property">height</span>: 100%;
+			}
+			<span class="keyword-at">@media</span> screen and (max-width: 768px) {
+				<span class="keyword-property">float</span>: none;
+				a {
+					<span class="keyword-property">display</span>: block;
+				}
+				<span class="keyword-at">@media</span> (orientation: portrait) {
+					<span class="keyword-property">border-bottom</span>: 1px;
+				}
+			}
+		}
+	}
+}
+						</pre>
+					</div>
+					<div>
+						<h4>CSS</h4>
+						<pre>
+nav ul {
+	<span class="keyword-property">list-style</span>: none;
+}
+nav ul li {
+	<span class="keyword-property">float</span>: left;
+}
+nav ul li a {
+	<span class="keyword-property">display</span>: inline-block;
+}
+nav ul li:<span class="keyword-pseudo-class">after</span> {
+	<span class="keyword-property">content</span>: " - ";
+	<span class="keyword-property">border</span>: 1px dotted #ccc;
+	<span class="keyword-property">width</span>: 1px;
+	<span class="keyword-property">height</span>: 100%;
+}
+<span class="keyword-at">@media</span> screen and (<span class="keyword-property">max-width</span>: 768px) {
+	nav ul li {
+		<span class="keyword-property">float</span>: none;
+	}
+	nav ul li a {
+		<span class="keyword-property">display</span>: block;
+	}
+}
+<span class="keyword-at">@media</span> screen and (<span class="keyword-property">max-width</span>: 768px) and (orientation: portrait) {
+	nav ul li {
+		<span class="keyword-property">border-bottom</span>: 1px;
+	}
+}
+						</pre>
+					</div>
+				</div>
+			</section>
+
+			<section id="extend-directive">
+				<header>
+					<h1><a href="#extend-directive">@extend directive</a></h1>
+				</header>
+
+				<hr>
+
+				<p>
+					Il y a souvent des cas lors de la conception d'une page où une classe doit avoir tous les styles
+					d'une autre
+					classe, ainsi que ses propres styles spécifiques
+				</p>
+				<p>Par exemple, lors de la création d'une div avec une erreur, nous précisons parfois 2 classes. L'un
+					pour
+					indiquer que l'élément est une erreur et la deuxième pour signaler le niveau d'erreur. (fonctionne
+					également
+					avec d'autres types de div)</p>
+				<div class="content-compare">
+					<div>
+						<h4>Scss</h4>
+						<pre>
+&lt;div class="error error--serious"&gt;
+	Oh no! You've been hacked!
+&lt;/div&gt;
+						</pre>
+					</div>
+					<div>
+						<h4>CSS</h4>
+						<pre>
+.error {
+	<span class="keyword-property">order</span>: 1px #f00;
+	<span class="keyword-property">background-color</span>: #fdd;
+}
+
+.error--serious {
+	<span class="keyword-property">border-width</span>: 3px;
+}
+						</pre>
+					</div>
+				</div>
+
+				<p>Pour une raison de facilité d'écriture, il est préférable de faire hériter une classe à une autre
+					classe.
+					Ainsi nous ne devons plus réécrire les propriétés en commun.</p>
+
+				<div class="content-compare">
+					<div>
+						<h4>Scss</h4>
+						<pre>
+.error {
+	<span class="keyword-property">border</span>: 1px #f00;
+	<span class="keyword-property">background-color</span>: #fdd;
+
+	&--serious {
+		<span class="keyword-at">@extend</span> .error;
+		<span class="keyword-property">border-width</span>: 3px;
+	}
+}
+						</pre>
+					</div>
+					<div>
+						<h4>CSS</h4>
+						<pre>
+.error, .error--serious {
+	<span class="keyword-property">border</span>: 1px #f00;
+	<span class="keyword-property">background-color</span>: #fdd;
+}
+.error--serious {
+	<span class="keyword-property">border-width</span>: 3px;
+}	
+						</pre>
+					</div>
+				</div>
+
+				<p><i class="fa-solid fa-triangle-exclamation"></i> Attention, vous ne pouvez pas @extend un sélecteur
+					en dehors
+					du sélecteur dans lequel vous êtes.</p>
+
+			</section>
+
+			<section id="if-for-directives">
+				<header>
+					<h1><a href="#if-for-directives">@if and @for directives</a></h1>
+				</header>
+
+				<hr>
+
+				<h2>@if directive</h2>
+				<p>Une structure conditionnelle permet d'exécuter un bloc d'instructions en cas de validité de la
+					condition.</p>
+				<p>Si la condition est vérifiée, le bloc d'instructions dans le cas où elle est vérifiée est exécuté.
+					Sinon, le
+					bloc d'instruction dans le cas où elle n'est pas vérifiée est exécuté.</p>
+
+				<p>La règle <code>@if</code> peut être accompagnée de l'instruction <code>@else</code> pour réaliser les
+					instructions dans le cas où la condition n'est pas vérifiée.</p>
+				<p>Une règle supplémentaire existe également, <code>@else if</code> peut être ajouté un nombre
+					indéterminé de
+					fois où nous souhaitons vérifier d'autres conditions.</p>
+
+				<p>Le résultat de la condition est une valeur booléenne. (true ou false)</p>
+
+				<div class="content-compare">
+					<div>
+						<h4>SCSS</h4>
+						<pre>
+<span class="keyword-comment">// cold, warm, neutral</span>
+$<span class="keyword-property">theme</span>: neutral;
+
+.button {
+	<span class="keyword-at">@if</span> $theme == warm {
+		<span class="keyword-property">background-color</span>: orange;
+	}
+
+	<span class="keyword-at">@else if</span> $theme == cold {
+		<span class="keyword-property">background-color</span>: blue;
+	}
+
+	<span class="keyword-at">@else</span> {
+		<span class="keyword-property">background-color</span>: gray;
+	}
+}
+						</pre>
+					</div>
+					<div>
+						<h4>CSS</h4>
+						<pre>
+.button {
+	<span class="keyword-property">background-color</span>: gray;
+}
+						</pre>
+					</div>
+				</div>
+
+
+				<h2>@for directive</h2>
+
+				<p>La directive <code>@for</code> permet de compter vers le haut ou vers le bas d'un nombre à un autre.
+				</p>
+				<p></p>
+
+				<h3>Utilisation du to : (1 à 4 non compris)</h3>
+				<p>Le mot-clé <code>@for</code> utilise le mot-clé <code>to</code> qui spécifie la plage de la valeur de
+					début
+					jusqu'à avant la valeur de fin.</p>
+				<div class="content-compare">
+					<div>
+						<h4>SCSS</h4>
+						<pre>
+<span class="keyword-at">@for</span> $<span class="keyword-property">i</span> from 1 to 4 {
+	.btn-#{$<span class="keyword-property">i</span>} {
+		<span class="keyword-property">background-color</span>: rgb(50*$<span class="keyword-property">i</span>, 50*$<span class="keyword-property">i</span>, 50*$<span class="keyword-property">i</span>);
+	}
+}
+						</pre>
+					</div>
+					<div>
+						<h4>CSS</h4>
+						<pre>
+.btn-1 {
+	<span class="keyword-property">background-color</span>: #323232;
+}
+
+.btn-2 {
+	<span class="keyword-property">background-color</span>: #646464;
+}
+
+.btn-3 {
+	<span class="keyword-property">background-color</span>: #969696;
+}
+						</pre>
+					</div>
+				</div>
+
+				<h3>Utilisation du through : (1 à 4 compris)</h3>
+				<p>Le <code>@for</code> utilise le mot-clé <code>through</code> qui spécifie la plage comprenant à la
+					fois les
+					valeurs de début et de fin.</p>
+				<div class="content-compare">
+					<div>
+						<h4>SCSS</h4>
+						<pre>
+<span class="keyword-at">@for</span> $<span class="keyword-property">i</span> from 1 through 4 {
+	.btn-#{$i} {
+		<span class="keyword-property">background-color</span>: rgb(50*$<span class="keyword-property">i</span>, 50*$<span class="keyword-property">i</span>, 50*$<span class="keyword-property">i</span>);
+	}
+}
+						</pre>
+					</div>
+					<div>
+						<h4>CSS</h4>
+						<pre>
+.btn-1 {
+	<span class="keyword-property">background-color</span>: #323232;
+}
+
+.btn-2 {
+	<span class="keyword-property">background-color</span>: #646464;
+}
+
+.btn-3 {
+	<span class="keyword-property">background-color</span>: #969696;
+}
+
+.btn-4 {
+	<span class="keyword-property">background-color</span>: #c8c8c8;
+}
+						</pre>
+					</div>
+				</div>
+
+			</section>
+
+			<section id="each-while-directives">
+				<header>
+					<h1><a href="#each-while-directives">@each and @while directives</a></h1>
+				</header>
+
+				<hr>
+
+				<p>Comme pour la directive <code>@for</code>, le but de ses deux autres directives est également de
+					répéter des
+					instructions un certains nombre de fois.</p>
+
+				<h2>@each</h2>
+
+				<p>Contrairement à la directive <code>@for</code>, la directive <code>@each</code> va parcourir une
+					structure
+					telle qu'une liste ou une map.</p>
+				<p>C'est idéal pour les styles répétitifs qui n'ont que quelques variations entre eux.</p>
+				<p>Le bloc est évalué tour à tour pour chaque élément de la liste, qui est affecté au nom de variable
+					donné.</p>
+
+				<div class="content-compare">
+					<div>
+						<h4>SCSS</h4>
+						<pre>
+$<span class="keyword-property">sizes</span>: 40px, 50px, 80px;
+
+<span class="keyword-at">@each</span> $<span class="keyword-property">size</span> in $<span class="keyword-property">sizes</span> {
+	.icon-#{$<span class="keyword-property">size</span>} {
+		<span class="keyword-property">font-size</span>: $<span class="keyword-property">size</span>;
+		<span class="keyword-property">height</span>: $<span class="keyword-property">size</span>;
+		<span class="keyword-property">width</span>: $<span class="keyword-property">size</span>;
+	}
+}
+						</pre>
+					</div>
+					<div>
+						<h4>CSS</h4>
+						<pre>
+.icon-40px {
+	<span class="keyword-property">font-size</span>: 40px;
+	<span class="keyword-property">height</span>: 40px;
+	<span class="keyword-property">width</span>: 40px;
+}
+
+.icon-50px {
+	<span class="keyword-property">font-size</span>: 50px;
+	<span class="keyword-property">height</span>: 50px;
+	<span class="keyword-property">width</span>: 50px;
+}
+
+.icon-80px {
+	<span class="keyword-property">font-size</span>: 80px;
+	<span class="keyword-property">height</span>: 80px;
+	<span class="keyword-property">width</span>: 80px;
+}
+						</pre>
+					</div>
+				</div>
+
+				<h2>@while</h2>
+
+				<p>La directive <code>@while</code> ressemble un peu à la directive <code>@for</code>. Cette dernière
+					comptait
+					de la valeur du début jusqu'à la valeur de fin (non) comprise.</p>
+				<p>Celle-ci va également compter mais tant que sa condition est vraie. Si elle est toujours vraie avec
+					plusieurs
+					itérations, elle continue jusqu'à ce que la condition soit fausse.</p>
+
+				<div class="content-compare">
+					<div>
+						<h4>titre</h4>
+						<pre>
+$<span class="keyword-property">i</span>: 0;
+<span class="keyword-at">@while</span> $<span class="keyword-property">i</span> < 50 {
+	.paddding-#{$<span class="keyword-property">i</span>} { 
+		<span class="keyword-property">padding-left</span>: 1px * $i; 
+	}
+	$<span class="keyword-property">i</span>: $<span class="keyword-property">i</span> + 10;
+}
+						</pre>
+					</div>
+					<div>
+						<h4>titre</h4>
+						<pre>
+.paddding-0 {
+	<span class="keyword-property">padding-left</span>: 0px;
+}
+
+.paddding-10 {
+	<span class="keyword-property">padding-left</span>: 10px;
+}
+
+.paddding-20 {
+	<span class="keyword-property">padding-left</span>: 20px;
+}
+
+.paddding-30 {
+	<span class="keyword-property">padding-left</span>: 30px;
+}
+
+.paddding-40 {
+	<span class="keyword-property">padding-left</span>: 40px;
+}
+						</pre>
+					</div>
+				</div>
+
+				<p>Il ne faut surtout pas oublier l'incrémentation/décrémentation de la variable. Sinon vous risquez
+					d'obtenir
+					une boucle infinie.</p>
+
+			</section>
+
+			<section id="mixins">
+				<header>
+					<h1><a href="#mixins">Mixins</a></h1>
+				</header>
+
+				<hr>
+
+				<p>Les mixins vous permettent de définir des styles qui peuvent être réutilisés dans votre feuille de
+					style.</p>
+				<p>Nous pourrions le comparer aux <code>@extend</code> cependant, la mixin ne doit pas créer d'autres
+					règles CSS
+					pour pouvoir être héritée.</p>
+				<p>Il suffit de créer une <code>@mixin</code> avec la directive suivi du nom de la mixin. Ensuite il
+					faut
+					définir les différentes règles que composent celle-ci.</p>
+				<p>Une fois la mixin déclarée, il faut utiliser la directive <code>@include nomMixin</code> pour
+					intégrer les
+					instructions de la mixin.</p>
+
+				<p>Vous pouvez définir des valeurs par défaut aux paramètres en préciant avec les deux points la valeur
+					initiale.</p>
+
+				<div class="content-compare">
+					<div>
+						<h4>SCSS</h4>
+						<pre>
+<span class="keyword-at">@mixin</span> <span class="keyword-property">square</span>($size, $radius: 0) {
+	<span class="keyword-property">width</span>: $size;
+	<span class="keyword-property">height</span>: $size;
+
+	<span class="keyword-at">@if</span> $radius != 0 {
+		<span class="keyword-property">border-radius</span>: $radius;
+	}
+}
+
+.avatar {
+	<span class="keyword-at">@include</span> <span class="keyword-property">square</span>(100px, $radius: 4px);
+}
+						</pre>
+					</div>
+					<div>
+						<h4>CSS</h4>
+						<pre>
+.avatar {
+	<span class="keyword-property">width</span>: 100px;
+	<span class="keyword-property">height</span>: 100px;
+	<span class="keyword-property">border-radius</span>: 4px;
+}
+							
+						</pre>
+					</div>
+				</div>
+
+				<p>Les @Mixin peuvent prendre des arguments au nombre indéfini. Pour ce faire, il faut préciser dans les
+					paramètres le <code>...</code> opérateur.</p>
+				<p>Exemple : <code><span class="keyword-at">@mixin</span> nomMixin($args...) { ... }</code></p>
+
+			</section>
+
+		</main>
+
+		<footer>
+
+		</footer>
+	</div>
+
+
+	<button id="btn-top" onclick="topFunction()"><i class="fa-solid fa-angle-up"></i></button>
+
+
+	<script>
+		var btnTop = document.getElementById("btn-top");
+
+		window.onscroll = () => {
+			if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+				btnTop.style.display = "block";
+			} else {
+				btnTop.style.display = "none";
+			}
+		};
+
+		// When the user clicks on the button, scroll to the top of the document
+		function topFunction () {
+			document.body.scrollTop = 0;
+			document.documentElement.scrollTop = 0;
+		}
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+/* 09 Partials - Exercice */
+
+/*
+ * Vrai ou Faux
+ */
+
+/*** Question 1 ***/
+/*** Les deux imports suivants ont le même résultat. Vrai ou Faux ? ***/
+@import "reset";
+@import "_reset.scss";
+
+/*** Réponse : Vrai ***/
+
+
+
+/*** Question 2 ***/
+/*** L'import suivant est correct ? Oui ou non ? ***/
+@import "_typography.sass" ;
+
+/*** Réponse : Vrai ***/
+
+
+
+/*** Question 3 ***/
+/*** Est-ce que l'import suivant est correct ? Vrai ou Faux ? ***/
+@import url("_typography.scss");
+
+/*** Réponse : Non ***/
+
+
+
+/*** Question 4 ***/
+/*** L'instruction importera les deux fichiers partiels. Vrai ou Faux ? ***/
+@import "variables", "utilities/settings";
+
+/*** Réponse : Vrai ***/
+
+
+
+/*** Question 5 ***/
+/*** L'instruction est correct. Vrai ou Faux ? ***/
+@import "_reset.scss";
+@import "reset.scss";
+
+/*** Réponse : Faux ***/
+
+

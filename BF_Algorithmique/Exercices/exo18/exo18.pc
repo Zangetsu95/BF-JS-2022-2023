@@ -1,0 +1,37 @@
+// exo18
+// À l’aide de deux boucles, affichez les tables de multiplication de 1 à 9. 
+
+Algorithme exo18
+DEBUT
+    
+    Variable multiplicateur, table, resultat : Entier
+
+    // Initialisation
+    table <- 1
+
+    // Condition
+    TANTQUE table <= 9 FAIRE
+        
+        // Initialisation
+        multiplicateur <- 1
+
+        // Condition
+        TANTQUE multiplicateur <= 10 FAIRE
+            
+            resultat <- table * multiplicateur
+
+            // Afficher le résultat
+            Ecrire(table & " x " & multiplicateur & " = " & resultat)
+            
+            // Incrémentation
+            multiplicateur <- multiplicateur + 1
+
+        FINTQ
+
+        // Incrémentation
+        table <- table + 1
+
+    FINTQ
+    
+
+FIN

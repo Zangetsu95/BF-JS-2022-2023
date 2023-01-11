@@ -1,0 +1,55 @@
+// exo12
+// Distributeur de boissons
+// Réalisez l’algorithme d’un distributeur de boissons. 
+// Ce dernier propose plusieurs boissons et l’utilisateur choisit celle qu’il désire 
+// en entrant le numéro correspondant. 
+// N'oubliez pas de vérifier s’il y a encore des  boissons en stock.
+
+Algorithme exo12
+DEBUT
+
+    Variable choix : Chaine
+    
+    Variable stockB1, stockB2, stockB3  : Entier
+    stockB1 <- 5
+    stockB2 <- 2
+    stockB3 <- 0
+
+    // Menu
+    Ecrire("Distributeur à boisson")
+    Ecrire("1. Coca")
+    Ecrire("2. Eau")
+    Ecrire("3. Milkshake")
+    Ecrire("Choix : ")
+    Lire(choix)
+
+    SI choix == "1" || choix == "2" || choix == "3" ALORS
+        
+        // Coca - Eau - Milkshake
+
+        SI choix == "1" && stockB1 > 0 ALORS
+            // Coca avec du stock
+            Ecrire("Voici votre boisson")
+            stockB1 <- stockB1 - 1
+
+        SINONSI choix == "2" && stockB2 > 0 ALORS
+            // Coca avec du stock
+            Ecrire("Voici votre boisson")
+            stockB2 <- stockB2 - 1
+
+        SINONSI choix == "3" && stockB3 > 0 ALORS
+            // Coca avec du stock
+            Ecrire("Voici votre boisson")
+            stockB3 <- stockB3 - 1
+        SINON
+            Ecrire("Plus de stock dispo")
+        
+        FINSI
+        
+
+    SINON
+        Ecrire("Choix inconnu.")
+    FINSI
+    
+
+FIN

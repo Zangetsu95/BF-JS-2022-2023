@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="quentin"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2022-11-25 10:54:51 "/>
+        <attribute name="created" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNTsiMTA6NDU6MjIgIjszMDE2"/>
+        <attribute name="edited" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNTsiMTA6NTA6MjggIjsxO3F1ZW50aW47REVTS1RPUC1LTUtBQTZCOzIwMjItMTEtMjU7IjA5OjEwOjQ1ICI7ZXhvMTYuZnByZzs3MTc3"/>
+        <attribute name="edited" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNTsiMTA6NTQ6NTEgIjszOzMxMjg="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="table, multiplicateur, resultat" type="Integer" array="False" size=""/>
+            <assign variable="table" expression="1"/>
+            <while expression="table &lt;= 9">
+                <output expression="&quot;Table de &quot; &amp; table" newline="True"/>
+                <assign variable="multiplicateur" expression="1"/>
+                <while expression="multiplicateur &lt;= 10">
+                    <assign variable="resultat" expression="table * multiplicateur"/>
+                    <output expression="table &amp; &quot; x &quot; &amp; multiplicateur &amp; &quot; = &quot; &amp; resultat" newline="True"/>
+                    <assign variable="multiplicateur" expression="multiplicateur + 1"/>
+                </while>
+                <assign variable="table" expression="table + 1"/>
+            </while>
+        </body>
+    </function>
+</flowgorithm>

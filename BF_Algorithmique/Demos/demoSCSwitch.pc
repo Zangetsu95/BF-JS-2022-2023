@@ -1,0 +1,45 @@
+Algorithme demoSCSwitch
+DEBUT
+    
+    // Selon que ...
+
+    // 0 : A pied
+    // 1 : Vélo
+    // 2 : Voiture
+    // 3 : Bus
+    // 4 : Train
+    Variable modeTransport : Entier
+
+    SELONQUE modeTransport VAUT
+        0 : 
+            // A pied
+            Ecrire("Mode de transport sélectionné : à pied")
+            // ...
+            
+        1 : 
+            // Vélo
+            Ecrire("Mode de transport sélectionné : en vélo")
+            // ...
+            
+        2 : 
+            // Voiture
+            Ecrire("Mode de transport sélectionné : à voiture")
+            // ...
+            
+        3 : 
+            // Bus
+            Ecrire("Mode de transport sélectionné : en bus")
+            // ...
+            
+        4 : 
+            // Train
+            Ecrire("Mode de transport sélectionné : en train")
+            // ...
+
+        SINON :
+            Ecrire("Mode de transport inconnu.")
+    FINSQ
+    
+
+
+FIN

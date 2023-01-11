@@ -1,0 +1,29 @@
+// exo17
+// Reprenez l’algorithme du lanceur de balles de tennis et faites en sorte 
+// qu’il lance une balle tant que le stock n’est pas vide. 
+// Il y a donc 2 variables stockBalles et pret
+
+Algorithme exo17
+DEBUT
+    
+    Variable pret : Booleen
+    Variable stockBalles : Entier
+
+    Ecrire("Combien de balles avez-vous ?")
+    Lire(stockBalles)
+
+    TANTQUE stockBalles > 0 FAIRE
+        Ecrire("Êtes-vous prêt ? (true / false)")
+        Lire(pret)
+
+        SI pret ALORS
+            Ecrire("Lancer la balle")
+            stockBalles <- stockBalles - 1
+        SINON
+            Ecrire("Ne pas lancer la balle car pas prêt")
+        FINSI
+    FINTQ
+    
+    Ecrire("Vous avez lancé toutes les balles")
+
+FIN

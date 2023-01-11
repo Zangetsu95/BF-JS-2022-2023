@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="quentin"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2022-11-25 09:12:29 "/>
+        <attribute name="created" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNTsiMDk6MTA6NDUgIjszMDIx"/>
+        <attribute name="edited" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNTsiMDk6MTI6MjkgIjsyOzMxMzQ="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <comment text="exo16 - &#192; l&#8217;aide d&#8217;une boucle, affichez la table de multiplication par 2."/>
+            <declare name="multiplicateur, table, resultat" type="Integer" array="False" size=""/>
+            <assign variable="table" expression="2"/>
+            <assign variable="multiplicateur" expression="1"/>
+            <while expression="multiplicateur &lt;= 10">
+                <assign variable="resultat" expression="table * multiplicateur"/>
+                <output expression="table &amp; &quot; x &quot; &amp; multiplicateur &amp; &quot; = &quot; &amp; resultat" newline="True"/>
+                <assign variable="multiplicateur" expression="multiplicateur + 1"/>
+            </while>
+        </body>
+    </function>
+</flowgorithm>

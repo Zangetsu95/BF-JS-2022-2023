@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="quentin"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2022-11-25 10:58:29 "/>
+        <attribute name="created" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNTsiMTA6NTQ6NTEgIjszMDE4"/>
+        <attribute name="edited" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNTsiMTA6NTg6MjkgIjszOzMxMzc="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <assign variable="i" expression="0"/>
+            <do expression="i &lt; 10">
+                <output expression="&quot;Valeur de i = &quot; &amp; i" newline="True"/>
+                <assign variable="i" expression="i + 1"/>
+            </do>
+            <assign variable="i" expression="0"/>
+            <while expression="i &lt; 10">
+                <output expression="&quot;Valeur de i = &quot; &amp; i" newline="True"/>
+                <assign variable="i" expression="i + 1"/>
+            </while>
+        </body>
+    </function>
+</flowgorithm>

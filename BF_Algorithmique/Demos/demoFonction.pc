@@ -1,0 +1,21 @@
+Algorithme demoFonction
+DEBUT
+    Variable n1, n2, res : Entier
+    n1 <- 1
+    n2 <- 2
+
+    res <- addition(8, 3)
+    Ecrire(addition(n1, n2))
+
+FIN
+
+FONCTION addition(nb1: Entier, nb2: Entier) : Entier
+DEBUT
+    // Variable somme : Entier
+
+    // somme <- nb1 + nb2
+
+    // RENVOIE somme
+
+    RENVOIE nb1 + nb2
+FIN

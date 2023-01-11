@@ -1,0 +1,24 @@
+// exo06
+// Imaginez une méthode permettant d’inverser le contenu d’une 
+// variable  entière SANS utiliser une variable temporaire.
+
+Algorithme exo06
+DEBUT
+    
+    // Déclaration
+    Variable nb1, nb2 : Entier
+
+    // Affectation
+    nb1 <- 5
+    nb2 <- 7
+
+    Ecrire("Avant : nb1 = " & nb1 & " et nb2 = " & nb2)
+
+    // Traitement 
+    nb1 <- nb1 + nb2 // 12
+    nb2 <- nb1 - nb2 //  5
+    nb1 <- nb1 - nb2 //  7
+
+    Ecrire("Après : nb1 = " & nb1 & " et nb2 = " & nb2)
+
+FIN

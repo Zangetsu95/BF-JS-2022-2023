@@ -1,0 +1,18 @@
+Algorithme demoTableau
+DEBUT
+    Constante nbStagiaires = 13
+    Variable compteur : Entier
+    Variable stagiaires : Tableau de Chaine[nbStagiaires]
+
+    stagiaires[0] <- "Frédéric"
+    stagiaires[1] <- "Alexandra"
+    stagiaires[2] <- "Laurente"
+    stagiaires[3] <- "Eric"
+    stagiaires[4] <- "Sylvain"
+
+    POUR compteur DE 0 À nbStagiaires - 1 [PAR 1] FAIRE
+        Ecrire(stagiaires[compteur])
+    FINP
+    
+    
+FIN

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="quentin"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2022-11-23 01:41:46 "/>
+        <attribute name="created" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yMzsiMDE6Mzg6NDUgIjszMDIx"/>
+        <attribute name="edited" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yMzsiMDE6NDE6NDYgIjsyOzMxMjU="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <comment text="exo03 - Trouvez une m&#233;thode permettant d&#8217;inverser le contenu de deux variables (du type chaine). &#13;&#10;Si nb1 = 5 et nb2 = 7, apr&#232;s ce traitement, nb1 = 7 et nb2 = 5."/>
+            <declare name="nb1, nb2, temp" type="String" array="False" size=""/>
+            <assign variable="nb1" expression="&quot;5&quot;"/>
+            <assign variable="nb2" expression="&quot;7&quot;"/>
+            <output expression="&quot;Avant : nb1 = &quot; &amp; nb1 &amp; &quot; et nb2 = &quot; &amp; nb2" newline="True"/>
+            <assign variable="temp" expression="nb1"/>
+            <assign variable="nb1" expression="nb2"/>
+            <assign variable="nb2" expression="temp"/>
+            <output expression="&quot;Apr&#232;s : nb1 = &quot; &amp; nb1 &amp; &quot; et nb2 = &quot; &amp; nb2" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

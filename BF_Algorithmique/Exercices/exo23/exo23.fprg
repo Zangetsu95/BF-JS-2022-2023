@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="quentin"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2022-11-25 11:50:08 "/>
+        <attribute name="created" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNTsiMTE6NDA6NDAgIjszMDEy"/>
+        <attribute name="edited" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNTsiMTE6NTA6MDggIjs0OzMxMjg="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="base, exposant, resultat, i" type="Integer" array="False" size=""/>
+            <assign variable="resultat" expression="1"/>
+            <output expression="&quot;Entrez une base : &quot;" newline="True"/>
+            <input variable="base"/>
+            <output expression="&quot;Entrez un exposant: &quot;" newline="True"/>
+            <input variable="exposant"/>
+            <assign variable="i" expression="0"/>
+            <while expression="i &lt; exposant">
+                <assign variable="resultat" expression="resultat * base"/>
+                <assign variable="i" expression="i + 1"/>
+            </while>
+            <output expression="base &amp; &quot; ^ &quot; &amp; exposant &amp; &quot; = &quot; &amp; resultat" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

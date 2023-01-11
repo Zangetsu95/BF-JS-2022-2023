@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="quentin"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2022-11-23 11:51:17 "/>
+        <attribute name="created" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yMzsiMTE6Mzc6MjAgIjszMDE0"/>
+        <attribute name="edited" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yMzsiMTE6NTE6MTcgIjsyOzMxMjU="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="prenom" type="String" array="False" size=""/>
+            <assign variable="prenom" expression="&quot;Quentin&quot;"/>
+            <output expression="&quot;Bonjour&quot;" newline="True"/>
+            <output expression="prenom" newline="True"/>
+            <output expression="&quot;Bonjour &quot; &amp; prenom" newline="True"/>
+            <comment text="Entr&#233;e"/>
+            <output expression="&quot;Entrez votre pr&#233;nom : &quot;" newline="True"/>
+            <input variable="prenom"/>
+            <output expression="&quot;Vous vous appelez : &quot; &amp; prenom" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

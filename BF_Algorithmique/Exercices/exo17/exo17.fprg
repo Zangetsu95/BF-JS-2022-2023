@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="quentin"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2022-11-25 10:45:20 "/>
+        <attribute name="created" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNTsiMTA6NDE6MzYgIjszMDE3"/>
+        <attribute name="edited" value="cXVlbnRpbjtERVNLVE9QLUtNS0FBNkI7MjAyMi0xMS0yNTsiMTA6NDU6MjAgIjsxOzMxMjI="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="pret" type="Boolean" array="False" size=""/>
+            <declare name="stockBalles" type="Integer" array="False" size=""/>
+            <output expression="&quot;Combien de balles avez-vous ?&quot;" newline="True"/>
+            <input variable="stockBalles"/>
+            <while expression="stockBalles &gt; 0">
+                <output expression="&quot;&#202;tes-vous pret ? (true / false)&quot;" newline="True"/>
+                <input variable="pret"/>
+                <if expression="pret">
+                    <then>
+                        <output expression="&quot;Lancer la balle&quot;" newline="True"/>
+                        <assign variable="stockBalles" expression="stockBalles - 1"/>
+                    </then>
+                    <else>
+                        <output expression="&quot;Ne pas lancer la balle car pas pr&#234;t&quot;" newline="True"/>
+                    </else>
+                </if>
+            </while>
+            <output expression="&quot;Vous avez lanc&#233; toutes les balles&quot;" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>
