@@ -73,12 +73,13 @@ function exempleOperateur (a: MouseEvent | HTMLInputElement) {
 
     if ("value" in a) {
         // value est une propriété de HTMLInputElement
-        console.log('a VALUE :>> ', a);
+        console.log('a VALUE :>> ', a.value);
     }
 
     else if ("toto" in a) {
         console.log('a TOTO :>> ', a); // NE rentrera jamais
     }
+
     else {
         // MouseEvent
         console.log('a MOUSEEVENT :>> ', a);
@@ -107,3 +108,5 @@ export function isUser (a: any): a is TUser {
 // mais dans la lecture de la documentation au survol de la fonction
 // Il est plus intéressant de savoir que le retour d'un booléen sera 
 // sur un TUSer et non d'un booléen
+
+// ✏ Exercice 01
