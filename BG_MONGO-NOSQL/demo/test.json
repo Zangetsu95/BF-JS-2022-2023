@@ -1,0 +1,26 @@
+[
+  {
+    "numCli": "",
+    "nom": "",
+    "adresse": {
+      "rue": "",
+      "ville": "",
+      "numero": ""
+    },
+    "commandes": [
+      {
+        "numCom": "",
+        "date": "",
+        "details": [
+          {
+            "numProd": "",
+            "qtt": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "numCli": 42
+  }
+]
