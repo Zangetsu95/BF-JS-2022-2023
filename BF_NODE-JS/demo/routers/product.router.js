@@ -1,4 +1,6 @@
 // /category/15/product/155 tester l'url
+// rappel : urlParams[0] = ''
+
 
 function productRouter(urlParams, res) {
     if (urlParams[1] == "category") {
