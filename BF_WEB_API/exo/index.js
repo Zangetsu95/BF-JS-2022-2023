@@ -4,9 +4,7 @@ const port = process.env.PORT || 3000
 
 const routerBase = require("./routers/base.router")
 app.use("/api/v1", routerBase)
-
-
-
+app.use(express.json())
 app.all("*", (req, res, next) => {
     res.json({ error: "404" })
 })
