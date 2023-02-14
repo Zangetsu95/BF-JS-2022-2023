@@ -1,3 +1,6 @@
+import PropTypes from 'prop-types'
+import style from './exo2.module.css'
+
 const ProductHead = () =>(
     <thead>
         <tr>
@@ -11,7 +14,7 @@ const ProductHead = () =>(
 const ProductTableRow =({name,price,promo}) =>(
     <tr>
         <td>{name}</td>
-        <td>{price}</td>
+        <td className={ promo ? style.none : style.price}>{price}</td>
         <td>{promo ? 'Oui' : 'Non'}</td>
     </tr>
 )
@@ -19,8 +22,7 @@ const ProductTableRow =({name,price,promo}) =>(
 
 
 const ProductTable = ({data}) => {
-    const dataJSX = data.map(product => <ProductTableRow {...product} key={personalbar.id}/>)
-
+    const dataJSX = data.map(product => <ProductTableRow {...product} key={product.id} />)
     return(
         <table>
             <ProductHead/>

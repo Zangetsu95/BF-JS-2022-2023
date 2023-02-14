@@ -4,6 +4,8 @@ import Welcome from './components/welcome/welcome';
 import Exo1 from './components/exercice-1/exo1';
 import PersonTable from './components/person-table/person-table';
 import ProductTable from './components/exercice-2/exerice2';
+import Compteur from './components/compteur/compteur';
+import ExemplpeInput from './components/calculatrice/calculatrice';
 
 
 const people = [
@@ -35,6 +37,11 @@ function App() {
 
       <h2>Product en promo ?</h2>
       <ProductTable data={product} />
+      <h2>Compteur en useState()</h2>
+      <Compteur data={0} />
+
+      <h2>Un formulaire</h2>
+      <ExemplpeInput />
     </div>
 
   );
