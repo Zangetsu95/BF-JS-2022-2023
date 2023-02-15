@@ -6,6 +6,7 @@ import PersonTable from './components/person-table/person-table';
 import ProductTable from './components/exercice-2/exerice2';
 import Compteur from './components/compteur/compteur';
 import ExemplpeInput from './components/calculatrice/calculatrice';
+import Calculatrice from './components/calculatrice/calculatrice';
 
 
 const people = [
@@ -41,7 +42,7 @@ function App() {
       <Compteur data={0} />
 
       <h2>Un formulaire</h2>
-      <ExemplpeInput />
+      <Calculatrice />
     </div>
 
   );
