@@ -1,10 +1,12 @@
 import { useState } from "react"
 import styles from "./add-task.module.css"
+import ListTaskForm from "../listTask/listTask"
 
 function AddTaskForm({ onAddTask }) {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [priority, setPriority] = useState("normal")
+  const [taskList, setTaskList] = useState([])
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -13,6 +15,7 @@ function AddTaskForm({ onAddTask }) {
     setName("")
     setDescription("")
     setPriority("normal")
+    setTaskList([...taskList, task]) // add the new task to the taskList
   }
 
   return (

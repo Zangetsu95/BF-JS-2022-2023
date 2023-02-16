@@ -60,7 +60,7 @@ function App() {
       <h2 className={styles.container}>TODOLIST</h2>
       <AddTaskForm onAddTask={addTask} />
       <h3 className={styles.container}>Liste des tâches</h3>
-      <ListTaskForm taskList={taskList} />
+      <ListTaskForm taskList={taskList} setTaskList={setTaskList} />
 
 
     </div>
