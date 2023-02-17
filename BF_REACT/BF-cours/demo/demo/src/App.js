@@ -11,6 +11,9 @@ import Calculatrice from './components/calculatrice/calculatrice';
 import AddTaskForm from './components/AddTaskForm/addTaskForm';
 import ListTaskForm from './components/listTask/listTask';
 import styles from '../src/components/AddTaskForm/add-task.module.css'
+import Horloge from './components/UseEffect/horloge';
+import DateDujour from './components/UseEffect/date-jour';
+import Display from './components/UseEffect/button';
 
 
 const people = [
@@ -35,6 +38,7 @@ function App() {
     setTaskList([...taskList, task]);
   };
 
+
   return (
     <div className="App">
       {/* <Welcome
@@ -57,10 +61,13 @@ function App() {
       <Calculatrice /> */}
 
 
-      <h2 className={styles.container}>TODOLIST</h2>
+      {/* <h2 className={styles.container}>TODOLIST</h2>
       <AddTaskForm onAddTask={addTask} />
       <h3 className={styles.container}>Liste des tâches</h3>
-      <ListTaskForm taskList={taskList} setTaskList={setTaskList} />
+      <ListTaskForm taskList={taskList} setTaskList={setTaskList} /> */}
+
+      <h2>Use Effect</h2>
+      <Display />
 
 
     </div>
