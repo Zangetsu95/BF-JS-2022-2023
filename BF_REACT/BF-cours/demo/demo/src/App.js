@@ -14,6 +14,8 @@ import styles from '../src/components/AddTaskForm/add-task.module.css'
 import Horloge from './components/UseEffect/horloge';
 import DateDujour from './components/UseEffect/date-jour';
 import Display from './components/UseEffect/button';
+import Request from './components/AJAX/request';
+import AjaxForm from './components/AJAX/form';
 
 
 const people = [
@@ -33,10 +35,15 @@ const product = [
 
 function App() {
   const [taskList, setTaskList] = useState([]);
+  const [city, setCity] = useState('');
 
   const addTask = (task) => {
     setTaskList([...taskList, task]);
   };
+
+  function handleCitySubmit(city) {
+    setCity(city)
+  }
 
 
   return (
@@ -69,6 +76,9 @@ function App() {
       <h2>Use Effect</h2>
       <Display />
 
+      <h2>requête ajax</h2>
+      <AjaxForm onSubmit={handleCitySubmit} />
+      {city && <Request city={city} />}
 
     </div>
 
