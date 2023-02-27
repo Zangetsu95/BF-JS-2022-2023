@@ -9,7 +9,7 @@ function AjaxForm() {
   const handleSubmit = (e) => {
     e.preventDefault()
     const API_KEY = "6a96333424ccb0635a53e6f653f1aada"
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=fr`
     axios
       .get(url)
       .then((response) => {
