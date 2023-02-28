@@ -1,0 +1,29 @@
+.main {
+  padding: 0.5ch;
+  background-color: silver;
+  width: 100%;
+}
+
+.main ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  gap: 2ch;
+  margin: 0;
+  padding: 0;
+}
+
+/* .main ul li::not(:last-child) {
+    margin-right: 2ch;
+  } */
+
+a,
+a:hover,
+a:active {
+  color: black;
+}
+
+.active {
+  color: cornflowerblue;
+}
