@@ -319,3 +319,13 @@ google-services.json
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/react,reactnative
+
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
