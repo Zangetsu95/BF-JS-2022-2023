@@ -1,5 +1,12 @@
+import { Outlet } from "react-router-dom"
+
 const FormationsPage = () => {
-  return <p>Voici nos formations</p>
+  return (
+    <>
+      <p>Formations</p>
+      <Outlet />
+    </>
+  )
 }
 
 export default FormationsPage
