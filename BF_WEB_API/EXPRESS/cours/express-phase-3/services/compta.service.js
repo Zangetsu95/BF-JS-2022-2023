@@ -1,32 +1,35 @@
 const comptaModels = require("../models/compta.models")
 
 const comptaService = {
-    getAll : () => {
+    getAll: () => {
         let allFact = comptaModels.getAll()
         //BAL
         allFact = allFact.reverse()
         return allFact
     },
 
-    getOne : (id) => {
+    getOne: (id) => {
         let oneFact = comptaModels.getOne(id)
         //BAL
+        if (!oneFact) {
+            throw new Error("facture non trouvé");
+        }
         return oneFact
     },
 
-    create : (newFact) => {
+    create: (newFact) => {
         let newFactCreated = comptaModels.create(newFact)
         //BAL
         return newFactCreated
     },
 
-    update : (id) => {
+    update: (id) => {
         let upFact = comptaModels.update(id)
         //BAL       
         return upFact
     },
 
-    delete : (id) => {
+    delete: (id) => {
         let oldFact = comptaModels.delete(id)
         //BAL
         return oldFact

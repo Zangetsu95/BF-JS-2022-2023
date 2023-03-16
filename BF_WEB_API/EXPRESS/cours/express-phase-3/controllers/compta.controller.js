@@ -2,29 +2,33 @@ const comptaService = require("../services/compta.service")
 
 const comptaController = {
 
-    getAll : (req, res) => {
+    getAll: (req, res) => {
         let allFact = comptaService.getAll()
         //BAL TO DTO
         res.json(allFact)
     },
 
-    getOne : (req, res) => {
-        let id = parseInt(req.params.id)-1
+    getOne: (req, res) => {
+        let id = parseInt(req.params.id) - 1
+        try {
+            let oneFact = comptaService.getOne(id)
+            //BAL TO DTO
+            res.json(oneFact)
+        } catch (error) {
+            res.status(404).send(error.message)
+        }
 
-        let oneFact = comptaService.getOne(id)
-        //BAL TO DTO
-        res.json(oneFact)
     },
 
-    create : (req, res) => {
-        let newFact = req.body.name
+    create: (req, res) => {
+        let newFact = req.body
         let newFactCreated = comptaService.create(newFact)
         //BAL TO DTO
         res.json(newFactCreated)
     },
 
-    update : (req, res) => {
-        let id = parseInt(req.params.id)-1
+    update: (req, res) => {
+        let id = parseInt(req.params.id) - 1
 
         let upFact = comptaService.update(id)
         //BAL TO DTO
@@ -32,13 +36,13 @@ const comptaController = {
     },
 
 
-    delete : (req, res) => {
-        let id = parseInt(req.params.id)-1
+    delete: (req, res) => {
+        let id = parseInt(req.params.id) - 1
 
         let oldFact = comptaService.delete(id)
         //BAL TO DTO
         res.json(oldFact)
     }
-} 
+}
 
 module.exports = comptaController
