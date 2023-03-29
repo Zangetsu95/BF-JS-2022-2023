@@ -1,5 +1,4 @@
 const facturesModelsSql = require('../models/factures.sql.models')
-const employeesServiceSql = require('./employees.sql.service')
 
 
 const facturesServiceSql = {
@@ -31,4 +30,4 @@ const facturesServiceSql = {
     }
 }
 
-module.exports = employeesServiceSql
+module.exports = facturesServiceSql

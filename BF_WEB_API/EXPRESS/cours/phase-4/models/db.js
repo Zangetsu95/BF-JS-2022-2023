@@ -2,7 +2,6 @@ const config = {
     user: 'amine',
     password: 'root',
     server: 'localhost',
-    // database: 'BF_express',
     database: 'express_database',
     options: {
         trustServerCertificate: true,
@@ -12,14 +11,14 @@ const config = {
 const mssql = require('mssql')
 
 
-const getDbConnection = async () => {
+const setDbConnection = async () => {
     db = await mssql.connect(config)
     return db
 }
 
 const testDbConnection = async () => {
     try {
-        const db = await getDbConnection()
+        const db = await setDbConnection()
         db.close()
         console.log('Connection DB - OK')
     }
@@ -30,6 +29,6 @@ const testDbConnection = async () => {
 }
 
 module.exports = {
-    getDbConnection,
+    setDbConnection,
     testDbConnection
 }

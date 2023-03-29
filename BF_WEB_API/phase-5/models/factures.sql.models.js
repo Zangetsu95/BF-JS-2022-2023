@@ -35,7 +35,7 @@ const facturesModelsSql = {
         try {
             db = await getDbConnection()
             //id,credit,active,limitDate(yy-mm-dd)
-            const querySQL = 'INSERT INTO employees(credit,active,limitDate)'
+            const querySQL = 'INSERT INTO factures(credit,active,limitDate)'
                 + 'OUTPUT inserted.id'
                 + 'VALUES (@credit,@active,@limitDate)'
 
