@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DonationEntity } from '../../entities/donation.entity';
+import { AnimalDTO } from 'src/shared/DTO/animals/Animal.dto';
+import { DonationDTO } from 'src/shared/DTO/animals/Donation.dto';
+import { NewDonationDTO } from 'src/shared/DTO/animals/NewDonation.dto';
 
 @Injectable()
 export class DonationService {
@@ -18,7 +21,7 @@ export class DonationService {
     return this.donationRepository.findOne({ where: { id } });
   }
 
-  async create(donation: DonationEntity): Promise<DonationEntity> {
+  async create(donation: NewDonationDTO): Promise<NewDonationDTO> {
     return this.donationRepository.save(donation);
   }
 
