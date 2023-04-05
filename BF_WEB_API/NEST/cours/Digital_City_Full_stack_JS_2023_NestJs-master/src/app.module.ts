@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { IncomingModule } from './animals/incoming/incoming.module';
 import { DonationModule } from './animals/donation/donation.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { DonationModule } from './animals/donation/donation.module';
     }),
     IncomingModule,
     DonationModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],
