@@ -69,10 +69,10 @@ export class ProductService {
     newProduct.price = product.price;
     newProduct.quantity = product.quantity;
 
-    const category = await this.categoryRepository.findOne({
+    const categoryId = await this.categoryRepository.findOne({
       where: { id: product.category_id },
     });
-    newProduct.category = category;
+    newProduct.category = categoryId;
 
     try {
       const savedProduct = await this.productRepo.save(newProduct);
@@ -125,10 +125,10 @@ export class ProductService {
               productToUpdate.quantity = product[property];
               break;
             case 'category_id':
-              const category = await this.categoryRepository.findOne({
+              const categoryId = await this.categoryRepository.findOne({
                 where: { id: product[property] },
               });
-              productToUpdate.category = category;
+              productToUpdate.category = categoryId;
               break;
             default:
               break;

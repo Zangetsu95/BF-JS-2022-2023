@@ -5,9 +5,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { CategoryEntity } from '../category/category.entity';
+import { SupplierEntity } from '../supplier/supplier.entity';
 
 @Entity()
 export class ProductEntity {
@@ -39,4 +41,8 @@ export class ProductEntity {
   @ManyToOne((type) => CategoryEntity, (category) => category.products)
   @JoinColumn({ name: 'category_id' })
   category: CategoryEntity;
+
+  @OneToMany(() => SupplierEntity, (supplier) => supplier.product)
+  @JoinColumn({ name: 'supplier_id' })
+  supplier: SupplierEntity[];
 }
