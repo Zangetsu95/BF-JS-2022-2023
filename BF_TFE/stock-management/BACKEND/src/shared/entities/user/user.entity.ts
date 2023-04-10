@@ -2,11 +2,13 @@ import {
   BeforeInsert,
   Column,
   Entity,
+  OneToMany,
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 import { IsNotEmpty, IsEmail } from 'class-validator';
+import { TransactionEntity } from '../transaction/transaction.entity';
 
 @Entity()
 export class UserEntity {
@@ -27,4 +29,7 @@ export class UserEntity {
 
   @Column()
   role: string;
+
+  @OneToMany(() => TransactionEntity, (transaction) => transaction.user)
+  transactions: TransactionEntity[];
 }

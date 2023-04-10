@@ -11,6 +11,7 @@ import {
 import { CategoryEntity } from '../category/category.entity';
 import { SupplierEntity } from '../supplier/supplier.entity';
 import { StockEntity } from '../stock/stock.entity';
+import { TransactionEntity } from '../transaction/transaction.entity';
 
 @Entity()
 export class ProductEntity {
@@ -49,4 +50,7 @@ export class ProductEntity {
 
   @OneToMany(() => StockEntity, (stock) => stock.product)
   stocks: StockEntity[];
+
+  @OneToMany(() => TransactionEntity, (transaction) => transaction.product)
+  transactions: TransactionEntity[];
 }
