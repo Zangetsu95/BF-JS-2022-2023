@@ -9,10 +9,16 @@ import { CategoryService } from 'src/category/category.service';
 import { SupplierEntity } from 'src/shared/entities/supplier/supplier.entity';
 import { SupplierService } from 'src/supplier/supplier.service';
 import { SupplierModule } from 'src/supplier/supplier.module';
+import { StockEntity } from 'src/shared/entities/stock/stock.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ProductEntity, CategoryEntity, SupplierEntity]),
+    TypeOrmModule.forFeature([
+      ProductEntity,
+      CategoryEntity,
+      SupplierEntity,
+      StockEntity,
+    ]),
     // CategoryModule,
     // forwardRef(() => SupplierModule),
   ],

@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { CategoryEntity } from '../category/category.entity';
 import { SupplierEntity } from '../supplier/supplier.entity';
+import { StockEntity } from '../stock/stock.entity';
 
 @Entity()
 export class ProductEntity {
@@ -45,4 +46,7 @@ export class ProductEntity {
   @OneToMany(() => SupplierEntity, (supplier) => supplier.product)
   @JoinColumn({ name: 'supplier_id' })
   supplier: SupplierEntity[];
+
+  @OneToMany(() => StockEntity, (stock) => stock.product)
+  stocks: StockEntity[];
 }

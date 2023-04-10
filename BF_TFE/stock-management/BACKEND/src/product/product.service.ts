@@ -4,6 +4,7 @@ import { ProductCreateDTO } from 'src/shared/DTO/product/NewProduct.dto';
 import { UpdateProductDTO } from 'src/shared/DTO/product/UpdatedProduct.dto';
 import { CategoryEntity } from 'src/shared/entities/category/category.entity';
 import { ProductEntity } from 'src/shared/entities/product/product.entity';
+import { StockEntity } from 'src/shared/entities/stock/stock.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -13,6 +14,8 @@ export class ProductService {
     private productRepo: Repository<ProductEntity>,
     @InjectRepository(CategoryEntity)
     private categoryRepository: Repository<CategoryEntity>,
+    @InjectRepository(StockEntity)
+    private stockRepo: Repository<StockEntity>,
   ) {}
 
   /**
@@ -45,7 +48,10 @@ export class ProductService {
    * message "Produit non trouvé" and a status code of `NOT_FOUND` (404).
    */
   async findOne(id: number): Promise<ProductEntity> {
-    const product = await this.productRepo.findOne({ where: { id } });
+    const product = await this.productRepo.findOne({
+      where: { id },
+      relations: ['category'],
+    });
 
     if (!product) {
       throw new HttpException('Produit non trouvé', HttpStatus.NOT_FOUND);
@@ -139,10 +145,49 @@ export class ProductService {
       return this.productRepo.save(productToUpdate);
     } catch (error) {
       throw new HttpException(
-        'Impossible de mettre a jour la produit',
+        'Impossible de mettre a jour le produit',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  async updateQuantity(
+    id: number,
+    newQuantity: number,
+  ): Promise<{ product: ProductEntity; stock: StockEntity }> {
+    const product = await this.productRepo.findOne({
+      where: { id },
+      relations: ['stocks'],
+    });
+    if (!product) {
+      throw new HttpException('Produit non trouvé', HttpStatus.NOT_FOUND);
+    }
+    const stock = await this.stockRepo.findOne({ where: { id } });
+
+    if (!stock) {
+      throw new HttpException(
+        'Stock non trouvé pour ce produit',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    console.log('Before update:');
+    console.log('Stock:', product);
+    console.log('Product:', stock);
+
+    product.quantity = newQuantity;
+    stock.quantity = newQuantity;
+
+    await this.productRepo.save(product);
+    // await this.stockRepo.save(stock);
+    const updatedStock = await this.stockRepo.save(stock);
+
+    console.log('After update:');
+    console.log('Stock:', product);
+    console.log('Product:', stock);
+
+    // return this.productRepo.save(product);
+    return { product, stock: updatedStock };
   }
 
   /**

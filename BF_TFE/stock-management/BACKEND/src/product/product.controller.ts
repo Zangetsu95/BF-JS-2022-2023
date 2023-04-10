@@ -16,6 +16,19 @@ import { CategoryService } from 'src/category/category.service';
 import { ProductEntity } from 'src/shared/entities/product/product.entity';
 import { ProductCreateDTO } from 'src/shared/DTO/product/NewProduct.dto';
 import { UpdateProductDTO } from 'src/shared/DTO/product/UpdatedProduct.dto';
+import { StockEntity } from 'src/shared/entities/stock/stock.entity';
+
+export interface UpdateQuantityResponse {
+  message: string;
+  data: {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    quantity: number;
+    stock: StockEntity;
+  };
+}
 
 @Controller('api/product')
 export class ProductController {
@@ -120,6 +133,40 @@ export class ProductController {
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
+  }
+
+  /**
+   * This function updates the quantity of a product with a given ID.
+   * @param {number} productId - a number representing the ID of the product that needs to be updated.
+   * @param {number} newQuantity - The new quantity value that will be used to update the quantity of a
+   * product with the specified productId.
+   * @returns A Promise that resolves to void (nothing).
+   */
+  @Put(':id/quantity')
+  async updateProductQuantity(
+    @Param('id') productId: number,
+    @Body('quantity') newQuantity: number,
+  ): Promise<UpdateQuantityResponse> {
+    try {
+      const { product, stock } = await this.productService.updateQuantity(
+        productId,
+        newQuantity,
+      );
+      return {
+        message: 'Quantité modifié!',
+        data: {
+          id: product.id,
+          name: product.name,
+          description: product.description,
+          price: product.price,
+          quantity: product.quantity,
+          stock,
+        },
+      };
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+    // return this.productService.updateQuantity(productId, newQuantity);
   }
 
   @Delete(':id')
