@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TransactionCreateDTO } from 'src/shared/DTO/transaction/NewTransaction.dto';
 import { ProductEntity } from 'src/shared/entities/product/product.entity';
+import { StockEntity } from 'src/shared/entities/stock/stock.entity';
 import { TransactionEntity } from 'src/shared/entities/transaction/transaction.entity';
 import { UserEntity } from 'src/shared/entities/user/user.entity';
 import { Repository } from 'typeorm';
@@ -15,6 +16,8 @@ export class TransactionService {
     private productRepo: Repository<ProductEntity>,
     @InjectRepository(UserEntity)
     private userRepo: Repository<UserEntity>,
+    @InjectRepository(StockEntity)
+    private stockRepo: Repository<StockEntity>,
   ) {}
 
   /**
@@ -74,6 +77,7 @@ export class TransactionService {
 
     const productId = await this.productRepo.findOne({
       where: { id: transaction.product_id },
+      relations: ['stocks'],
     });
     newTransaction.product = productId;
 
@@ -81,6 +85,26 @@ export class TransactionService {
       where: { id: transaction.user_id },
     });
     newTransaction.user = userId;
+
+    const stock = await this.stockRepo.findOne({
+      where: { id: transaction.product_id },
+      relations: ['product'],
+    });
+
+    if (!stock) {
+      throw new HttpException('Stock non trouvé', HttpStatus.NOT_FOUND);
+    }
+
+    //update du stock
+    if (transaction.type == 'purchasse') {
+      productId.quantity += newTransaction.quantity;
+      stock.quantity += newTransaction.quantity;
+    } else if (transaction.type == 'sale') {
+      productId.quantity -= newTransaction.quantity;
+      stock.quantity -= newTransaction.quantity;
+    }
+    await this.productRepo.save(productId);
+    await this.stockRepo.save(stock);
 
     try {
       const savedTransaction = await this.transactionRepo.save(newTransaction);

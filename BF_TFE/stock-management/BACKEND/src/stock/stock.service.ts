@@ -144,11 +144,12 @@ export class StockService {
 
     const product = await this.productRepo.findOne({
       where: { id: stock.product.id },
+      relations: ['stocks'],
     });
 
-    console.log('Before update:');
-    console.log('Stock:', stock);
-    console.log('Product:', product);
+    // console.log('Before update:');
+    // console.log('Stock:', stock);
+    // console.log('Product:', product);
 
     stock.quantity = newQuantity;
     product.quantity = newQuantity;
@@ -156,9 +157,9 @@ export class StockService {
     await this.stockRepo.save(stock);
     const updatedProduct = await this.productRepo.save(product);
 
-    console.log('After update:');
-    console.log('Stock:', stock);
-    console.log('Product:', updatedProduct);
+    // console.log('After update:');
+    // console.log('Stock:', stock);
+    // console.log('Product:', updatedProduct);
 
     return { stock, product: updatedProduct };
   }

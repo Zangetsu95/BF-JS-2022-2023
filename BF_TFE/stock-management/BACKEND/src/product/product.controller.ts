@@ -80,17 +80,17 @@ export class ProductController {
   }
 
   @Post()
+  /**
+   * This is an async function that creates a new product with the given data and returns a success
+   * message along with the created product entity, while also handling errors.
+   * @param {ProductCreateDTO} productData - The product data that is being passed in the request body
+   * and validated using the ValidationPipe. It is of type ProductCreateDTO.
+   * @returns This function returns a Promise that resolves to an object containing a message and data.
+   * The message is a string indicating whether the product was successfully created or not. The data is
+   * an object containing the details of the created product. If there is an error, it throws an
+   * HttpException with a message and a status code.
+   */
   async createProduct(
-    /**
-     * This is an async function that creates a new product with the given data and returns a success
-     * message along with the created product entity, while also handling errors.
-     * @param {ProductCreateDTO} productData - The product data that is being passed in the request body
-     * and validated using the ValidationPipe. It is of type ProductCreateDTO.
-     * @returns This function returns a Promise that resolves to an object containing a message and data.
-     * The message is a string indicating whether the product was successfully created or not. The data is
-     * an object containing the details of the created product. If there is an error, it throws an
-     * HttpException with a message and a status code.
-     */
     @Body(ValidationPipe) productData: ProductCreateDTO,
   ): Promise<{ message: string; data: ProductEntity }> {
     try {

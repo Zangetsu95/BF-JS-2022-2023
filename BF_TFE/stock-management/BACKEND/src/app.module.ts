@@ -8,6 +8,7 @@ import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { StockModule } from './stock/stock.module';
+import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { StockModule } from './stock/stock.module';
     ProductModule,
     SupplierModule,
     StockModule,
+    TransactionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

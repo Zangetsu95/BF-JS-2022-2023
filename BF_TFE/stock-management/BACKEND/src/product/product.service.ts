@@ -69,11 +69,14 @@ export class ProductService {
    */
   async create(product: ProductCreateDTO): Promise<ProductEntity> {
     const newProduct = new ProductEntity();
+    const newStock = new StockEntity();
 
     newProduct.description = product.description;
     newProduct.name = product.name;
     newProduct.price = product.price;
     newProduct.quantity = product.quantity;
+
+    newStock.quantity = product.quantity;
 
     const categoryId = await this.categoryRepository.findOne({
       where: { id: product.category_id },
@@ -82,14 +85,25 @@ export class ProductService {
 
     try {
       const savedProduct = await this.productRepo.save(newProduct);
+      newStock.product = savedProduct;
+      await this.stockRepo.save(newStock);
+
       return savedProduct;
     } catch (error) {
+      console.log(error);
       throw new HttpException(
-        'une erreur est survenu lors de la création de la catéogry',
+        'une erreur est survenu lors de la création de la catégory',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
+
+  // const savedProduct = await this.productRepo.save(newProduct);
+  //   newStock.product = savedProduct;
+
+  //   await this.stockRepository.save(newStock);
+
+  //   return savedProduct;
 
   /**
    * This function updates a product entity in the database based on the provided ID and properties in
@@ -162,8 +176,10 @@ export class ProductService {
     if (!product) {
       throw new HttpException('Produit non trouvé', HttpStatus.NOT_FOUND);
     }
-    const stock = await this.stockRepo.findOne({ where: { id } });
-
+    const stock = await this.stockRepo.findOne({
+      where: { id: product.stocks[0].id },
+      relations: ['product'],
+    });
     if (!stock) {
       throw new HttpException(
         'Stock non trouvé pour ce produit',
@@ -178,7 +194,7 @@ export class ProductService {
     product.quantity = newQuantity;
     stock.quantity = newQuantity;
 
-    await this.productRepo.save(product);
+    const updatedQuantityProduct = await this.productRepo.save(product);
     // await this.stockRepo.save(stock);
     const updatedStock = await this.stockRepo.save(stock);
 
@@ -187,7 +203,7 @@ export class ProductService {
     console.log('Product:', stock);
 
     // return this.productRepo.save(product);
-    return { product, stock: updatedStock };
+    return { product: updatedQuantityProduct, stock: updatedStock };
   }
 
   /**

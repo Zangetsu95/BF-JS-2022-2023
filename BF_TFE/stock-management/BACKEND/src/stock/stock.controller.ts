@@ -154,7 +154,7 @@ export class StockController {
       data: {
         id: stock.id,
         quantity: stock.quantity,
-        product,
+        product: product,
       },
     };
   }

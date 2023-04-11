@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { ProductEntity } from '../product/product.entity';
 import { UserEntity } from '../user/user.entity';
+import { Transform } from 'class-transformer';
 
 @Entity()
 export class TransactionEntity {

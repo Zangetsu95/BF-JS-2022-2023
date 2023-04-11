@@ -23,7 +23,7 @@ export class TransactionDTO {
   @IsDefined({ message: "L'ID de l'user ne peut pas être vide." })
   user_id: number;
 
-  @IsDefined({ message: 'La date de donation ne peut pas être vide.' })
+  @IsDefined({ message: 'La date de tranasction ne peut pas être vide.' })
   @IsDateString()
   @MaxLength(10)
   date: Date[];
