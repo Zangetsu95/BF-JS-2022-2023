@@ -49,6 +49,13 @@ export class UserService {
     return user;
   }
 
+  async findOneByEmail(email: string): Promise<UserEntity | undefined> {
+    return this.userRepo.findOne({
+      where: { email },
+      select: ['email', 'password', 'role'],
+    });
+  }
+
   /**
    * This function creates a new user entity with a hashed password and saves it to the user
    * repository.

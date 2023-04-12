@@ -9,6 +9,9 @@ import { ProductModule } from './product/product.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { StockModule } from './stock/stock.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { AuthModule } from './auth/auth.module';
+import { config } from 'dotenv';
+config();
 
 @Module({
   imports: [
@@ -35,6 +38,7 @@ import { TransactionModule } from './transaction/transaction.module';
     SupplierModule,
     StockModule,
     TransactionModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
