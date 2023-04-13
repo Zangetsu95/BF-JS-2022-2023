@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDefined,
   IsInt,
@@ -10,6 +11,7 @@ import {
 export class SupplierDTO {
   @IsInt({ message: "l'identifiant doit être un nombre entier" })
   @IsDefined({ message: "l'identifiant ne peut pas être vide" })
+  @ApiProperty()
   id: number;
   /*-------------------------------------------------------- */
 
@@ -23,6 +25,7 @@ export class SupplierDTO {
   @MinLength(2, {
     message: 'Le nom du fournisseur doit comporter au moins 2 caractères.',
   })
+  @ApiProperty()
   name: string;
   /*-------------------------------------------------------- */
 
@@ -36,6 +39,7 @@ export class SupplierDTO {
   @MinLength(2, {
     message: "L'adresse du fournisseur doit comporter au moins 2 caractères.",
   })
+  @ApiProperty()
   adress: string;
   /*-------------------------------------------------------- */
 
@@ -49,10 +53,12 @@ export class SupplierDTO {
   @MinLength(2, {
     message: 'Le numéro de téléphone doit comporter au moins 2 caractères.',
   })
+  @ApiProperty()
   phone_number: string;
   /*-------------------------------------------------------- */
 
   @IsNumber({}, { message: "L'ID du produit doit être un nombre." })
   @IsDefined({ message: "L'ID du produit ne peut pas être vide." })
+  @ApiProperty()
   product_id: number;
 }

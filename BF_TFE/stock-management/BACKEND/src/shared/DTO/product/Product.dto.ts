@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDecimal,
   IsDefined,
@@ -14,6 +15,7 @@ import {
 export class ProductDTO {
   @IsInt({ message: "l'identifiant doit être un nombre entier" })
   @IsDefined({ message: "l'identifiant ne peut pas être vide" })
+  @ApiProperty()
   id: number;
   /*-------------------------------------------------------- */
   @IsString({
@@ -26,6 +28,7 @@ export class ProductDTO {
   @MinLength(2, {
     message: 'Le nom du produit doit comporter au moins 2 caractères.',
   })
+  @ApiProperty()
   name: string;
   /*-------------------------------------------------------- */
   @IsString({
@@ -38,16 +41,20 @@ export class ProductDTO {
   @MinLength(2, {
     message: 'La déscription doit comporter au moins 2 caractères.',
   })
+  @ApiProperty()
   description: string;
   /*-------------------------------------------------------- */
   @IsNumber({ maxDecimalPlaces: 2 })
   @IsPositive()
+  @ApiProperty()
   price: number;
   /*-------------------------------------------------------- */
   @IsPositive({ message: 'La quantité doit être positive.' })
+  @ApiProperty()
   quantity: number;
 
   @IsNumber({}, { message: "L'ID de la catégorie doit être un nombre." })
   @IsDefined({ message: "L'ID de la catégorie ne peut pas être vide." })
+  @ApiProperty()
   category_id: number;
 }

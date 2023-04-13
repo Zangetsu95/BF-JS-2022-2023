@@ -1,7 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CategoryDTO } from 'src/shared/DTO/category/Category.dto';
 import { CategoryCreateDTO } from 'src/shared/DTO/category/NewCategory.dto';
 import { UpdateCategoryDTO } from 'src/shared/DTO/category/UpdatedCategory.dto';
+import { UserDTO } from 'src/shared/DTO/user/User.dto';
 import { CategoryEntity } from 'src/shared/entities/category/category.entity';
 import { Repository } from 'typeorm';
 
@@ -14,10 +16,10 @@ export class CategoryService {
 
   /**
    * This is an asynchronous function that retrieves all categories from a repository and returns them
-   * as a Promise, with error handling.
-   * @returns An array of CategoryEntity objects wrapped in a Promise is being returned.
+   * as an array of CategoryDTO objects, or throws an HTTP exception if an error occurs.
+   * @returns An array of CategoryDTO objects wrapped in a Promise is being returned.
    */
-  async findAll(): Promise<CategoryEntity[]> {
+  async findAll(): Promise<CategoryDTO[]> {
     try {
       return await this.categoryRepo.find();
     } catch (error) {
@@ -29,12 +31,13 @@ export class CategoryService {
   }
 
   /**
-   * This is an asynchronous function that finds a category by its ID and throws an error if it is not
-   * found.
-   * @param {number} id - a number representing the ID of the category to be found in the database.
-   * @returns a Promise that resolves to a CategoryEntity object.
+   * This function finds a category by its ID and returns it as a CategoryDTO, or throws an error if it
+   * is not found.
+   * @param {number} id - The id parameter is a number that represents the unique identifier of a
+   * category that needs to be retrieved from the database.
+   * @returns a Promise that resolves to a CategoryDTO object.
    */
-  async findOne(id: number): Promise<CategoryEntity> {
+  async findOne(id: number): Promise<CategoryDTO> {
     const category = await this.categoryRepo.findOne({ where: { id } });
 
     if (!category) {
@@ -48,16 +51,17 @@ export class CategoryService {
    * This function creates a new category entity and saves it to the database, returning the saved
    * category or throwing an error if there is an issue.
    * @param {CategoryCreateDTO} category - CategoryCreateDTO object that contains the data needed to
-   * create a new category entity.
-   * @returns a Promise that resolves to a CategoryEntity object.
+   * create a new category. It likely includes properties such as the name of the category.
+   * @returns a Promise that resolves to a CategoryDTO object.
    */
-  async create(category: CategoryCreateDTO): Promise<CategoryEntity> {
+  async create(category: CategoryCreateDTO): Promise<CategoryDTO> {
     const newCateg = new CategoryEntity();
 
     newCateg.name = category.name;
 
     try {
       const savedCategory = await this.categoryRepo.save(newCateg);
+
       return savedCategory;
     } catch (error) {
       throw new HttpException(
@@ -68,20 +72,14 @@ export class CategoryService {
   }
 
   /**
-   * This is an async function that updates a category entity in a database based on the provided ID
-   * and category data.
-   * @param {number} id - The ID of the category to be updated, which is a number.
-   * @param {UpdateCategoryDTO} category - UpdateCategoryDTO is a data transfer object that contains
-   * the updated information for a category entity. It may include properties such as name,
-   * description, or any other relevant fields that can be updated. The function checks if the name
-   * property is present in the category object and updates the corresponding property in the category
-   * entity
-   * @returns This function returns a Promise that resolves to a CategoryEntity object.
+   * This is an async function that updates a category in a database and returns a CategoryDTO object,
+   * throwing an error if the category is not found or if the update fails.
+   * @param {number} id - A number representing the ID of the category to be updated.
+   * @param {UpdateCategoryDTO} category - UpdateCategoryDTO, which is a data transfer object
+   * containing the updated information for a category.
+   * @returns A Promise that resolves to a CategoryDTO object.
    */
-  async update(
-    id: number,
-    category: UpdateCategoryDTO,
-  ): Promise<CategoryEntity> {
+  async update(id: number, category: UpdateCategoryDTO): Promise<CategoryDTO> {
     const categoryToUpdate = await this.categoryRepo.findOne({ where: { id } });
     if (!categoryToUpdate) {
       throw new HttpException('Category non trouvé', HttpStatus.NOT_FOUND);

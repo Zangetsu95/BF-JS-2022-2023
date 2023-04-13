@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDefined,
   IsEmail,
@@ -12,6 +13,7 @@ import {
 export class UserDTO {
   @IsInt({ message: "l'identifiant doit être un nombre entier" })
   @IsDefined({ message: "l'identifiant ne peut pas être vide" })
+  @ApiProperty()
   id: number;
 
   @IsString({
@@ -24,17 +26,21 @@ export class UserDTO {
   @MinLength(2, {
     message: 'Le nom du donateur doit comporter au moins 2 caractères.',
   })
+  @ApiProperty()
   username: string;
 
   @IsEmail()
   @IsNotEmpty()
+  @ApiProperty()
   email: string;
 
   @IsNotEmpty({ message: 'Le mot de passe est requis' })
   @Length(8, 20, {
     message: 'Le mot de passe doit avoir entre 8 et 20 caractères',
   })
+  @ApiProperty()
   password: string;
 
+  @ApiProperty({ enum: ['Admin', 'User'] })
   role: string;
 }

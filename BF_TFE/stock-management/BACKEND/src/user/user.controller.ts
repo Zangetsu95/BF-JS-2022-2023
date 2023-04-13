@@ -15,11 +15,23 @@ import { UserService } from './user.service';
 import { UserEntity } from 'src/shared/entities/user/user.entity';
 import { UserCreateDTO } from 'src/shared/DTO/user/NewUser.dto';
 import { UpdateUserDTO } from 'src/shared/DTO/user/UpdateUser.dto';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { UserDTO } from 'src/shared/DTO/user/User.dto';
+import { UpdateProductDTO } from 'src/shared/DTO/product/UpdatedProduct.dto';
 
+@ApiTags('Getsion des utilisateurs')
 @Controller('api/user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @ApiOperation({ summary: 'Get all users' })
+  @ApiResponse({ type: UserDTO })
   @Get()
   /**
    * This function retrieves all user entities and throws an exception if none are found.
@@ -27,7 +39,7 @@ export class UserController {
    * objects. If there are no users found, it throws an `HttpException` with a message "Aucun
    * utilisateur trouvé" and a status code of `HttpStatus.NOT_FOUND`.
    */
-  async findAll(): Promise<UserEntity[]> {
+  async findAll(): Promise<UserDTO[]> {
     const users = await this.userService.findAll();
     if (users.length === 0) {
       throw new HttpException('Aucun utilisateur trouvé', HttpStatus.NOT_FOUND);
@@ -35,6 +47,9 @@ export class UserController {
     return users;
   }
 
+  @ApiOperation({ summary: 'Get one user avec son ID' })
+  @ApiParam({ required: true, name: 'userID', example: '1' })
+  @ApiResponse({ type: UserDTO })
   @Get(':id')
   /**
    * This is an asynchronous function that finds a user by their ID and returns it, or throws an error
@@ -45,7 +60,7 @@ export class UserController {
    * @returns a Promise that resolves to a UserEntity object. If the user is not found, it throws an
    * HttpException with a message "Utilisateur non trouvé" and a status code of 404 (NOT_FOUND).
    */
-  async findOne(@Param('id', ParseIntPipe) id: number): Promise<UserEntity> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<UserDTO> {
     const user = await this.userService.findOne(+id);
     if (!user) {
       throw new HttpException('Utilisateur non trouvé', HttpStatus.NOT_FOUND);
@@ -54,6 +69,9 @@ export class UserController {
     return user;
   }
 
+  @ApiOperation({ summary: "Création d'un user" })
+  @ApiBody({ type: UserCreateDTO })
+  @ApiResponse({ type: UserDTO })
   @Post()
   /**
    * This is an async function that creates a user with input data and returns a success message with
@@ -66,7 +84,9 @@ export class UserController {
    * is an object containing the created user's information. If an error occurs during the creation
    * process, a HttpException with a BAD_REQUEST status code is thrown.
    */
-  async createUser(@Body(ValidationPipe) userData: UserCreateDTO) {
+  async createUser(
+    @Body(ValidationPipe) userData: UserCreateDTO,
+  ): Promise<{ message: string; data: UserDTO }> {
     // return this.userService.create(userData);
     try {
       const createdUser = await this.userService.create(userData);
@@ -79,6 +99,10 @@ export class UserController {
     }
   }
 
+  @ApiOperation({ summary: "Modification d'un user" })
+  @ApiBody({ type: UpdateProductDTO })
+  @ApiResponse({ type: UserDTO })
+  @ApiParam({ required: true, name: 'userID', example: '5' })
   @Put(':id')
   /**
    * This is an async function that updates a user with the given ID using the data provided in the
@@ -107,6 +131,9 @@ export class UserController {
     }
   }
 
+  @ApiOperation({ summary: 'supprimer un utilisateur' })
+  @ApiResponse({ type: UserDTO })
+  @ApiParam({ required: true, name: 'userID', example: '5' })
   @Delete(':id')
   /**
    * This is an asynchronous function that removes a user by their ID and throws an HTTP exception if

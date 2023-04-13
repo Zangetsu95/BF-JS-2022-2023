@@ -15,19 +15,29 @@ import { CategoryService } from './category.service';
 import { CategoryEntity } from 'src/shared/entities/category/category.entity';
 import { CategoryCreateDTO } from 'src/shared/DTO/category/NewCategory.dto';
 import { UpdateCategoryDTO } from 'src/shared/DTO/category/UpdatedCategory.dto';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { CategoryDTO } from 'src/shared/DTO/category/Category.dto';
 
+@ApiTags('Gestion des catégories')
 @Controller('api/category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
+  @ApiOperation({ summary: 'Get all des categories' })
+  @ApiResponse({ type: CategoryDTO })
   @Get()
-  /**
-   * This function retrieves all categories and throws an error if none are found.
-   * @returns The `findAll()` method returns a Promise that resolves to an array of `CategoryEntity`
-   * objects. If there are no categories found, it throws an `HttpException` with a message "Aucune
-   * catégory trouvé" and a status code of `HttpStatus.NOT_FOUND`.
-   */
-  async findAll(): Promise<CategoryEntity[]> {
+  async findAll(): Promise<CategoryDTO[]> {
+    /**
+     * This function retrieves all categories and throws an error if none are found.
+     * @returns An array of CategoryDTO objects is being returned.
+     */
     const categories = await this.categoryService.findAll();
 
     if (categories.length === 0) {
@@ -36,20 +46,21 @@ export class CategoryController {
     return categories;
   }
 
+  @ApiOperation({ summary: 'Get one category avec son ID' })
+  @ApiParam({ required: true, name: 'categoryID', example: '7' })
+  @ApiResponse({ type: CategoryDTO })
   @Get(':id')
   /**
-   * This function finds a category by its ID and returns it, throwing an error if it is not found.
-   * @param {number} id - The id parameter is a number that is passed as a route parameter using the
-   * @Param decorator from the @nestjs/common package. It is parsed using the ParseIntPipe to ensure
-   * that it is a valid integer. The method returns a Promise that resolves to a CategoryEntity object.
-   * If the category is not
-   * @returns a Promise that resolves to a CategoryEntity object. If the category with the specified id
-   * is not found, it throws an HttpException with a message "Category non trouvé" and a status code of
-   * 404 (NOT_FOUND).
+   * This is an asynchronous function that finds a category by its ID and returns it as a CategoryDTO,
+   * throwing an error if it is not found.
+   * @param {number} id - The id parameter is a number that is passed as a route parameter to the
+   * findOne() method. It is decorated with the ParseIntPipe, which ensures that the value is parsed as
+   * an integer before it is used in the method.
+   * @returns The `findOne` method is returning a `Promise` that resolves to a `CategoryDTO` object.
+   * This object is then returned by the `findOne` method. If the `category` object is not found, an
+   * `HttpException` is thrown with a message "Category non trouvé" and a status code of `NOT_FOUND`.
    */
-  async findOne(
-    @Param('id', ParseIntPipe) id: number,
-  ): Promise<CategoryEntity> {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<CategoryDTO> {
     const category = await this.categoryService.findOne(+id);
     if (!category) {
       throw new HttpException('Category non trouvé', HttpStatus.NOT_FOUND);
@@ -57,14 +68,18 @@ export class CategoryController {
     return category;
   }
 
+  @ApiOperation({ summary: "Création d'une category" })
+  @ApiBody({ type: CategoryCreateDTO })
+  @ApiResponse({ type: CategoryDTO })
   @Post()
   /**
    * This is an async function that creates a category using data provided in the request body and
    * returns a success message with the created category data or throws an HTTP exception with a bad
    * request status if an error occurs.
    * @param {CategoryCreateDTO} categoryData - The categoryData parameter is of type CategoryCreateDTO
-   * and is being passed in the request body. It is being validated using the ValidationPipe to ensure
-   * that it meets the specified criteria before being passed to the categoryService.create() method.
+   * and is being passed to the create method of the categoryService. It is being validated using the
+   * ValidationPipe, which ensures that the data being passed meets the specified validation rules
+   * before it is processed.
    * @returns An object with a message and data property is being returned. The message property
    * contains a success message and the data property contains the created category data.
    */
@@ -80,11 +95,14 @@ export class CategoryController {
     }
   }
 
+  @ApiOperation({ summary: "Modification d'une category" })
+  @ApiBody({ type: UpdateCategoryDTO })
+  @ApiBody({ type: CategoryDTO })
   @Put(':id')
   /**
    * This is an async function that updates a category entity with the given ID and returns a message
    * and the updated category data.
-   * @param {number} id - a number parameter that is being passed as a route parameter in the URL.
+   * @param {number} id - a number parameter that represents the ID of the category to be updated.
    * @param {UpdateCategoryDTO} category - The `category` parameter is of type `UpdateCategoryDTO`,
    * which is a data transfer object used to update a category entity. It is passed in the request body
    * and validated using the `ValidationPipe`.
@@ -96,7 +114,7 @@ export class CategoryController {
   async update(
     @Param('id') id: number,
     @Body(ValidationPipe) category: UpdateCategoryDTO,
-  ): Promise<{ message: string; data: CategoryEntity }> {
+  ): Promise<{ message: string; data: CategoryDTO }> {
     try {
       const updatedCategory = await this.categoryService.update(+id, category);
       return {
@@ -108,7 +126,17 @@ export class CategoryController {
     }
   }
 
+  @ApiOperation({ summary: 'Supprimer une category' })
+  @ApiResponse({ type: CategoryDTO })
+  @ApiParam({ required: true, name: 'categoryID', example: '7' })
   @Delete(':id')
+  /**
+   * This is an asynchronous function that removes a category by its ID and throws an HTTP exception if
+   * there is an error.
+   * @param {number} id - The "id" parameter is a number that is passed as a route parameter in an HTTP
+   * request. It is used to identify the specific category that needs to be removed. The "+" sign
+   * before the "id" parameter is used to convert the string value of "id" to a number. The "
+   */
   async remove(@Param('id') id: number): Promise<void> {
     try {
       await this.categoryService.remove(+id);

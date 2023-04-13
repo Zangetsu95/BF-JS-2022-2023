@@ -15,7 +15,17 @@ import { TransactionService } from './transaction.service';
 import { UserService } from 'src/user/user.service';
 import { TransactionEntity } from 'src/shared/entities/transaction/transaction.entity';
 import { TransactionCreateDTO } from 'src/shared/DTO/transaction/NewTransaction.dto';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { TransactionDTO } from 'src/shared/DTO/transaction/Transaction.dto';
 
+@ApiTags('Gestion des transactions')
 @Controller('api/transaction')
 export class TransactionController {
   constructor(
@@ -23,6 +33,8 @@ export class TransactionController {
     private readonly userService: UserService,
   ) {}
 
+  @ApiOperation({ summary: 'Get all transaction' })
+  @ApiResponse({ type: TransactionDTO })
   @Get()
   /**
    * This function retrieves all transactions and maps them to include the user ID, throwing an error
@@ -32,21 +44,29 @@ export class TransactionController {
    * Otherwise, it maps each transaction object to a new object that includes the `user_id` property,
    * which is the ID of the user associated with the transaction.
    */
-  async findAll(): Promise<TransactionEntity[]> {
+  async findAll(): Promise<TransactionDTO[]> {
     const transactions = await this.transactionService.findAll();
 
     if (transactions.length === 0) {
       throw new HttpException(
-        'Aucune transaction trouvé',
+        'Aucune transaction trouvée',
         HttpStatus.NOT_FOUND,
       );
     }
+
     return transactions.map((transaction) => ({
-      ...transaction,
+      id: transaction.id,
+      product_id: transaction.product.id, // Ajouter la propriété "product_id"
       user_id: transaction.user.id,
+      date: [transaction.date],
+      type: transaction.type,
+      quantity: transaction.quantity,
+      price: transaction.price,
     }));
   }
-
+  @ApiOperation({ summary: 'Get one transaction avec son ID' })
+  @ApiParam({ required: true, name: 'transactionID', example: '5' })
+  @ApiResponse({ type: TransactionDTO })
   @Get(':id')
   /**
    * This function finds a transaction by its ID and returns it, or throws an error if it is not found.
@@ -60,15 +80,28 @@ export class TransactionController {
    */
   async findOne(
     @Param('id', ParseIntPipe) id: number,
-  ): Promise<TransactionEntity> {
+  ): Promise<TransactionDTO> {
     const transaction = await this.transactionService.findOne(+id);
 
     if (!transaction) {
       throw new HttpException('Transaction non trouvé', HttpStatus.NOT_FOUND);
     }
-    return transaction;
+    const transactionDto: TransactionDTO = {
+      id: transaction.id,
+      date: [transaction.date],
+      price: transaction.price,
+      product_id: transaction.product.id,
+      quantity: transaction.quantity,
+      type: transaction.type,
+      user_id: transaction.user.id,
+    };
+
+    return transactionDto;
   }
 
+  @ApiOperation({ summary: "Création d'une transaction" })
+  @ApiBody({ type: TransactionCreateDTO })
+  @ApiResponse({ type: TransactionDTO })
   @Post()
   /**
    * This is an async function that creates a transaction and returns a success message along with the
@@ -82,7 +115,7 @@ export class TransactionController {
    */
   async createTransaction(
     @Body(ValidationPipe) transactionData: TransactionCreateDTO,
-  ): Promise<{ message: string; data: TransactionEntity }> {
+  ): Promise<{ message: string; data: TransactionDTO }> {
     try {
       const userId = await this.userService.findOne(transactionData.user_id);
       if (!userId) {
@@ -95,9 +128,12 @@ export class TransactionController {
       const createdTransaction = await this.transactionService.create(
         transactionData,
       );
+      const createdTransactionDTO = new TransactionDTO();
+      Object.assign(createdTransactionDTO, createdTransaction);
+
       return {
         message: 'Transaction crée avec succès',
-        data: { ...createdTransaction },
+        data: { ...createdTransactionDTO },
       };
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);

@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsOptional,
@@ -12,13 +13,16 @@ export class UpdateUserDTO {
   @IsString()
   @MaxLength(15)
   @MinLength(2)
+  @ApiProperty()
   username?: string;
 
   @IsOptional()
   @IsEmail()
+  @ApiProperty()
   email?: string;
 
   @IsOptional()
   @Length(8, 20)
+  @ApiProperty()
   password?: string;
 }

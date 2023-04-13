@@ -16,10 +16,10 @@ export class StockService {
   ) {}
 
   /**
-   * This is an asynchronous function that retrieves all stock entities with their related product
-   * entities and throws an error if there is an issue.
-   * @returns The `findAll()` method is returning a Promise that resolves to an array of `StockEntity`
-   * objects.
+   * This function retrieves all stock entities with their related product entities and returns them as
+   * a Promise, handling any errors that may occur.
+   * @returns An array of StockEntity objects with their associated ProductEntity objects (through the
+   * "product" relation).
    */
   async findAll(): Promise<StockEntity[]> {
     try {
@@ -34,13 +34,13 @@ export class StockService {
   }
 
   /**
-   * This is an asynchronous function that finds a stock entity by its ID and throws an error if it is
-   * not found.
-   * @param {number} id - The id parameter is a number that represents the unique identifier of a stock
-   * entity that needs to be retrieved from the database.
+   * This is an asynchronous function that finds a stock entity by its ID and returns it, or throws an
+   * error if it is not found.
+   * @param {number} id - The id parameter is a number that is used to find a specific stock entity in
+   * the database.
    * @returns The `findOne` method is returning a `Promise` that resolves to a `StockEntity` object. If
-   * the `id` passed as argument is not found in the database, the method throws an `HttpException`
-   * with a message "Stock non trouvé" and a status code of `NOT_FOUND` (404).
+   * the `id` provided is not found in the database, it throws an `HttpException` with a message "Stock
+   * non trouvé" and a status code of `NOT_FOUND` (404).
    */
   async findOne(id: number): Promise<StockEntity> {
     const stock = await this.stockRepo.findOne({
@@ -82,45 +82,47 @@ export class StockService {
     }
   }
 
+  // async update(id: number, stock: UpdateStockDTO): Promise<StockEntity> {
+  //   const stockToUpdate = await this.stockRepo.findOne({ where: { id } });
+
+  //   if (!stockToUpdate) {
+  //     throw new HttpException('Stock non trouvé', HttpStatus.NOT_FOUND);
+  //   }
+
+  //   try {
+  //     for (const proprety in stock) {
+  //       switch (proprety) {
+  //         case 'quantity':
+  //           stockToUpdate.quantity = stock[proprety];
+  //           break;
+  //         case 'product_id':
+  //           const productId = await this.productRepo.findOne({
+  //             where: { id: stock[proprety] },
+  //           });
+  //           stockToUpdate.product = productId;
+  //           break;
+  //         default:
+  //           break;
+  //       }
+  //     }
+  //     return this.stockRepo.save(stockToUpdate);
+  //   } catch (error) {
+  //     throw new HttpException(
+  //       'Impossible de mettre à jour le stock',
+  //       HttpStatus.INTERNAL_SERVER_ERROR,
+  //     );
+  //   }
+  // }
+
   /**
-   * This is an async function that updates a stock entity based on the provided ID and stock data.
-   * @param {number} id - The ID of the stock entity that needs to be updated.
-   * @param {UpdateStockDTO} stock - UpdateStockDTO, which is a data transfer object containing the
-   * updated stock information such as quantity and product_id.
-   * @returns a Promise that resolves to a StockEntity object.
+   * This function updates the stock quantity of a product and returns the updated stock and product
+   * entities.
+   * @param {number} id - The ID of the stock entity to be updated.
+   * @param {number} newQuantity - The new quantity value that will be assigned to the stock and
+   * product entities.
+   * @returns An object with two properties: "stock" and "product". The "stock" property contains the
+   * updated stock entity, while the "product" property contains the updated product entity.
    */
-  async update(id: number, stock: UpdateStockDTO): Promise<StockEntity> {
-    const stockToUpdate = await this.stockRepo.findOne({ where: { id } });
-
-    if (!stockToUpdate) {
-      throw new HttpException('Stock non trouvé', HttpStatus.NOT_FOUND);
-    }
-
-    try {
-      for (const proprety in stock) {
-        switch (proprety) {
-          case 'quantity':
-            stockToUpdate.quantity = stock[proprety];
-            break;
-          case 'product_id':
-            const productId = await this.productRepo.findOne({
-              where: { id: stock[proprety] },
-            });
-            stockToUpdate.product = productId;
-            break;
-          default:
-            break;
-        }
-      }
-      return this.stockRepo.save(stockToUpdate);
-    } catch (error) {
-      throw new HttpException(
-        'Impossible de mettre à jour le stock',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-  }
-
   async updateStockQuantity(
     /**
      * This function updates the stock quantity of a product and returns the updated stock and product

@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDecimal,
   IsDefined,
@@ -14,12 +15,14 @@ export class UpdateProductDTO {
   @IsString()
   @MaxLength(15)
   @MinLength(2)
+  @ApiProperty()
   name: string;
 
   @IsOptional()
   @IsString()
   @MaxLength(20)
   @MinLength(2)
+  @ApiProperty()
   description: string;
 
   @IsOptional()
@@ -32,6 +35,7 @@ export class UpdateProductDTO {
     { message: 'Le prix doit être un nombre décimal avec deux décimales.' },
   )
   @IsPositive({ message: 'Le prix doit être positif.' })
+  @ApiProperty()
   price: number;
 
   @IsOptional()
@@ -40,10 +44,12 @@ export class UpdateProductDTO {
     { message: 'La quantité doit être un nombre.' },
   )
   @IsPositive({ message: 'La quantité doit être positive.' })
+  @ApiProperty()
   quantity: number;
 
   @IsOptional()
   @IsNumber({}, { message: "L'ID de la catégorie doit être un nombre." })
   @IsDefined({ message: "L'ID de la catégorie ne peut pas être vide." })
+  @ApiProperty()
   category_id: number;
 }

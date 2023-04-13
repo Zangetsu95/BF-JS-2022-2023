@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDefined, IsNumber, IsOptional, IsPositive } from 'class-validator';
+import { IsNumber, IsOptional, IsPositive } from 'class-validator';
 
-export class UpdateStockDTO {
+export class UpdateQuantityProductDTO {
   @IsOptional()
   @IsNumber(
     { allowNaN: false, allowInfinity: false },

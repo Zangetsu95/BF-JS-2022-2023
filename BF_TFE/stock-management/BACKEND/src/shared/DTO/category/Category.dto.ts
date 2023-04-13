@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDefined,
   IsInt,
@@ -9,6 +10,7 @@ import {
 export class CategoryDTO {
   @IsInt({ message: "l'identifiant doit être un nombre entier" })
   @IsDefined({ message: "l'identifiant ne peut pas être vide" })
+  @ApiProperty()
   id: number;
 
   @IsString({
@@ -21,5 +23,6 @@ export class CategoryDTO {
   @MinLength(2, {
     message: 'Le nom de la catégorie doit comporter au moins 2 caractères.',
   })
+  @ApiProperty()
   name: string;
 }

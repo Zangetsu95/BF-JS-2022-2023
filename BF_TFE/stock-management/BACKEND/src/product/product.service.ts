@@ -1,7 +1,16 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import {
+  classToPlain,
+  instanceToPlain,
+  plainToClass,
+  plainToInstance,
+} from 'class-transformer';
 import { ProductCreateDTO } from 'src/shared/DTO/product/NewProduct.dto';
+import { ProductDTO } from 'src/shared/DTO/product/Product.dto';
 import { UpdateProductDTO } from 'src/shared/DTO/product/UpdatedProduct.dto';
+import { StockDTO } from 'src/shared/DTO/stock/Stock.dto';
+import { UpdateStockDTO } from 'src/shared/DTO/stock/UpdatedStock.dto';
 import { CategoryEntity } from 'src/shared/entities/category/category.entity';
 import { ProductEntity } from 'src/shared/entities/product/product.entity';
 import { StockEntity } from 'src/shared/entities/stock/stock.entity';
@@ -19,10 +28,16 @@ export class ProductService {
   ) {}
 
   /**
-   * This is an asynchronous function that retrieves all products with their associated category from a
-   * database and returns them as an array of ProductEntity objects, or throws an error if there is a
-   * problem with the database connection.
-   * @returns An array of ProductEntity objects is being returned.
+   * This function retrieves an array of ProductDTO objects from the database based on optional
+   * parameters using a query builder and class-transformer library.
+   * @param {string} [productName] - A string parameter that represents the name of a product. If
+   * provided, the function will filter the results to only include products whose name contains the
+   * provided string. If not provided, all products will be returned.
+   * @param {string} [categoryName] - A string parameter that represents the name of the category to
+   * filter the products by. If provided, the function will only return products that belong to the
+   * category with the specified name. If not provided, all products will be returned regardless of
+   * their category.
+   * @returns An array of `ProductDTO` objects.
    */
   async findAll(
     productName?: string,
@@ -35,7 +50,6 @@ export class ProductService {
 
       if (productName) {
         query.andWhere('product.name LIKE :productName', {
-          //LOWER(product.name) LIKE LOWER(:productName)
           productName: `%${productName}%`,
         });
       }
@@ -45,32 +59,33 @@ export class ProductService {
           categoryName: `%${categoryName}%`,
         });
       }
+
+      /* This code retrieves an array of `ProductEntity` objects from the database using a query
+      builder and assigns it to the `products` constant. Then, it uses the `plainToInstance`
+      function from the `class-transformer` library to transform the `ProductEntity` objects into
+      `ProductDTO` objects, which are plain JavaScript objects that only contain the properties
+      defined in the `ProductDTO` class. The `excludeExtraneousValues` option is set to `true`,
+      which means that any properties in the `ProductEntity` objects that are not defined in the
+      `ProductDTO` class will be excluded from the resulting `ProductDTO` objects. Finally, the
+      function returns the array of `ProductDTO` objects. */
+
       const products = await query.getMany();
       return products;
-
-      // const products = await this.productRepo.find({ relations: ['category'] });
-      // return products;
     } catch (error) {
       console.log(error);
       throw new HttpException(
-        'Une erreur est survenu lors de la récupération des produit',
+        'Une erreur est survenue lors de la récupération des produits',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
 
   /**
-   * This is an asynchronous function that finds a product by its ID and throws an error if it is not
-   * found.
-   * @param {number} id - The id parameter is a number that represents the unique identifier of a
-   * product entity. The function uses this id to search for a product in the database using the
-   * findOne method of the productRepo object. If the product is not found, the function throws an
-   * HttpException with a message "Produit non trouvé
-   * @returns The `findOne` method is returning a `Promise` that resolves to a `ProductEntity` object.
-   * If the product with the specified `id` is not found, the method throws an `HttpException` with a
-   * message "Produit non trouvé" and a status code of `NOT_FOUND` (404).
+   * This function finds a product by its ID and returns its details in a ProductDTO format.
+   * @param {number} id - The ID of the product that needs to be retrieved from the database.
+   * @returns a Promise that resolves to a ProductDTO object.
    */
-  async findOne(id: number): Promise<ProductEntity> {
+  async findOne(id: number): Promise<ProductDTO> {
     const product = await this.productRepo.findOne({
       where: { id },
       relations: ['category'],
@@ -79,18 +94,26 @@ export class ProductService {
     if (!product) {
       throw new HttpException('Produit non trouvé', HttpStatus.NOT_FOUND);
     }
+    const productDto: ProductDTO = {
+      id: product.id,
+      category_id: product.category.id,
+      description: product.description,
+      name: product.name,
+      price: product.price,
+      quantity: product.quantity,
+    };
 
-    return product;
+    return productDto;
   }
 
   /**
-   * This function creates a new product entity with the given product information and saves it to the
-   * database, while also associating it with a category.
-   * @param {ProductCreateDTO} product - A DTO (Data Transfer Object) representing the data needed to
-   * create a new product. It contains the following properties:
-   * @returns a Promise that resolves to a ProductEntity object.
+   * This is an async function that creates a new product and saves it to the database along with its
+   * stock quantity and returns a ProductDTO object.
+   * @param {ProductCreateDTO} product - ProductCreateDTO object, which contains the information needed
+   * to create a new product, such as description, name, price, quantity, and category_id.
+   * @returns a Promise that resolves to a ProductDTO object.
    */
-  async create(product: ProductCreateDTO): Promise<ProductEntity> {
+  async create(product: ProductCreateDTO): Promise<ProductDTO> {
     const newProduct = new ProductEntity();
     const newStock = new StockEntity();
 
@@ -111,33 +134,29 @@ export class ProductService {
       newStock.product = savedProduct;
       await this.stockRepo.save(newStock);
 
-      return savedProduct;
+      const productDTO = instanceToPlain(savedProduct) as ProductDTO;
+      productDTO.category_id = savedProduct.category.id; // Ajouter la propriété manquante
+
+      return productDTO;
     } catch (error) {
       console.log(error);
       throw new HttpException(
-        'une erreur est survenu lors de la création de la catégory',
+        'Une erreur est survenue lors de la création du produit',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
   }
 
-  // const savedProduct = await this.productRepo.save(newProduct);
-  //   newStock.product = savedProduct;
-
-  //   await this.stockRepository.save(newStock);
-
-  //   return savedProduct;
-
   /**
-   * This function updates a product entity in the database based on the provided ID and properties in
-   * the UpdateProductDTO object.
-   * @param {number} id - A number representing the ID of the product to be updated.
+   * This is an async function that updates a product in the database based on the provided ID and
+   * properties in the UpdateProductDTO object.
+   * @param {number} id - The ID of the product to be updated.
    * @param {UpdateProductDTO} product - The `product` parameter is an object of type
    * `UpdateProductDTO` which contains the updated information for a product. It may have the following
    * properties: `name`, `description`, `price`, `quantity`, and `category_id`.
-   * @returns a Promise that resolves to a ProductEntity object.
+   * @returns a Promise that resolves to a ProductDTO object.
    */
-  async update(id: number, product: UpdateProductDTO): Promise<ProductEntity> {
+  async update(id: number, product: UpdateProductDTO): Promise<ProductDTO> {
     const productToUpdate = await this.productRepo.findOne({ where: { id } });
 
     if (!productToUpdate) {
@@ -178,8 +197,16 @@ export class ProductService {
           }
         }
       }
+      const productDto: ProductDTO = {
+        id: productToUpdate.id,
+        description: productToUpdate.description,
+        name: productToUpdate.name,
+        price: productToUpdate.price,
+        quantity: productToUpdate.quantity,
+        category_id: productToUpdate.category.id,
+      };
 
-      return this.productRepo.save(productToUpdate);
+      return this.productRepo.save(productDto);
     } catch (error) {
       throw new HttpException(
         'Impossible de mettre a jour le produit',
@@ -188,10 +215,19 @@ export class ProductService {
     }
   }
 
+  /**
+   * This is an async function that updates the quantity of a product and its corresponding stock
+   * entity in a database and returns the updated product and stock entities.
+   * @param {number} id - The ID of the product to update the quantity for.
+   * @param {number} newQuantity - The new quantity value that will be assigned to both the product and
+   * its associated stock.
+   * @returns A Promise that resolves to an object containing the updated ProductEntity and
+   * StockEntity.
+   */
   async updateQuantity(
     id: number,
     newQuantity: number,
-  ): Promise<{ product: ProductEntity; stock: StockEntity }> {
+  ): Promise<{ product: ProductDTO; stock: UpdateStockDTO }> {
     const product = await this.productRepo.findOne({
       where: { id },
       relations: ['stocks'],
@@ -218,15 +254,21 @@ export class ProductService {
     stock.quantity = newQuantity;
 
     const updatedQuantityProduct = await this.productRepo.save(product);
-    // await this.stockRepo.save(stock);
     const updatedStock = await this.stockRepo.save(stock);
+
+    const productDTO = new ProductDTO();
+    productDTO.id = updatedQuantityProduct.id;
+    productDTO.name = updatedQuantityProduct.name;
+    productDTO.description = updatedQuantityProduct.description;
+    productDTO.price = updatedQuantityProduct.price;
+    productDTO.quantity = updatedQuantityProduct.quantity;
+    productDTO.category_id = updatedQuantityProduct.category.id;
 
     console.log('After update:');
     console.log('Stock:', product);
     console.log('Product:', stock);
 
-    // return this.productRepo.save(product);
-    return { product: updatedQuantityProduct, stock: updatedStock };
+    return { product: productDTO, stock: updatedStock };
   }
 
   /**
