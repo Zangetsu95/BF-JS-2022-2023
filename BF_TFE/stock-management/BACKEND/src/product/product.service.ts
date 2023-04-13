@@ -24,11 +24,34 @@ export class ProductService {
    * problem with the database connection.
    * @returns An array of ProductEntity objects is being returned.
    */
-  async findAll(): Promise<ProductEntity[]> {
+  async findAll(
+    productName?: string,
+    categoryName?: string,
+  ): Promise<ProductEntity[]> {
     try {
-      const products = await this.productRepo.find({ relations: ['category'] });
+      const query = this.productRepo
+        .createQueryBuilder('product')
+        .leftJoinAndSelect('product.category', 'category');
+
+      if (productName) {
+        query.andWhere('product.name LIKE :productName', {
+          //LOWER(product.name) LIKE LOWER(:productName)
+          productName: `%${productName}%`,
+        });
+      }
+
+      if (categoryName) {
+        query.andWhere('category.name LIKE :categoryName', {
+          categoryName: `%${categoryName}%`,
+        });
+      }
+      const products = await query.getMany();
       return products;
+
+      // const products = await this.productRepo.find({ relations: ['category'] });
+      // return products;
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         'Une erreur est survenu lors de la récupération des produit',
         HttpStatus.INTERNAL_SERVER_ERROR,

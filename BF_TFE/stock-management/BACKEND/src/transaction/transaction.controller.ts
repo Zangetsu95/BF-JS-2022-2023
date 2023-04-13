@@ -16,8 +16,6 @@ import { UserService } from 'src/user/user.service';
 import { TransactionEntity } from 'src/shared/entities/transaction/transaction.entity';
 import { TransactionCreateDTO } from 'src/shared/DTO/transaction/NewTransaction.dto';
 
-//TODO finishing the controller +  module + check the relations
-
 @Controller('api/transaction')
 export class TransactionController {
   constructor(

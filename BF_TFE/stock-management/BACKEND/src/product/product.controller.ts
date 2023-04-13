@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -39,7 +40,10 @@ export class ProductController {
   ) {}
 
   @Get()
-  async findAll(): Promise<ProductEntity[]> {
+  async findAll(
+    @Query('productName') productName?: string,
+    @Query('categoryName') categoryName?: string,
+  ): Promise<ProductEntity[]> {
     /**
      * This function retrieves all products and maps them to include their category ID, throwing an error
      * if no products are found.
@@ -48,7 +52,12 @@ export class ProductController {
      * trouvé" and a status code of `NOT_FOUND`. If the array is not empty, it maps each `ProductEntity`
      * object to a new object with an additional `category_id` property and returns
      */
-    const products = await this.productService.findAll();
+    // const products = await this.productService.findAll();
+    const products = await this.productService.findAll(
+      productName,
+      categoryName,
+    );
+
     if (products.length === 0) {
       throw new HttpException('Aucune produits trouvé', HttpStatus.NOT_FOUND);
     }
