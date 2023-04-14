@@ -5,6 +5,7 @@ import { SupplierController } from './supplier.controller';
 import { SupplierService } from './supplier.service';
 import { ProductModule } from 'src/product/product.module';
 import { ProductEntity } from 'src/shared/entities/product/product.entity';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { ProductEntity } from 'src/shared/entities/product/product.entity';
   ],
 
   controllers: [SupplierController],
-  providers: [SupplierService],
+  providers: [SupplierService, AuthGuard],
   exports: [SupplierService],
 })
 export class SupplierModule {}

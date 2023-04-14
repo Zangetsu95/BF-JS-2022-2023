@@ -11,6 +11,7 @@ import {
   Put,
   Delete,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { StockService } from './stock.service';
 import { ProductService } from 'src/product/product.service';
@@ -19,6 +20,7 @@ import { StockCreateDTO } from 'src/shared/DTO/stock/NewStock.dto';
 import { UpdateStockDTO } from 'src/shared/DTO/stock/UpdatedStock.dto';
 import { ProductEntity } from 'src/shared/entities/product/product.entity';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -26,6 +28,9 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { StockDTO } from 'src/shared/DTO/stock/Stock.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { RoleGuard } from 'src/auth/role.guard';
+import { Roles } from 'src/auth/roles.decorator';
 
 interface UpdateQuantityResponse {
   message: string;
@@ -93,6 +98,9 @@ export class StockController {
     return stockDto;
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: "Création d'un stock" })
   @ApiBody({ type: StockCreateDTO })
   @ApiResponse({ type: StockDTO })
@@ -149,6 +157,9 @@ export class StockController {
   //   }
   // }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: 'Modification de la quantité' })
   @ApiBody({ type: UpdateStockDTO })
   @ApiResponse({ type: StockDTO })
@@ -170,6 +181,9 @@ export class StockController {
    * has been updated. The data property is an object that contains the updated stock id, quantity, and
    * product information.
    */
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   async updateQuantity(
     @Param('id', ParseIntPipe) stockId: number,
     @Body('quantity', ParseIntPipe) newQuantity: number,
@@ -189,6 +203,9 @@ export class StockController {
     };
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: 'Supprimer un stock' })
   @ApiResponse({ type: StockDTO })
   @ApiParam({ required: true, name: 'stockID', example: '15' })

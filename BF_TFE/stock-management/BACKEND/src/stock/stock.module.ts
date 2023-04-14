@@ -6,12 +6,13 @@ import { StockService } from './stock.service';
 import { ProductEntity } from 'src/shared/entities/product/product.entity';
 import { ProductService } from 'src/product/product.service';
 import { CategoryEntity } from 'src/shared/entities/category/category.entity';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([StockEntity, ProductEntity, CategoryEntity]),
   ],
   controllers: [StockController],
-  providers: [StockService, ProductService],
+  providers: [StockService, ProductService, AuthGuard],
 })
 export class StockModule {}

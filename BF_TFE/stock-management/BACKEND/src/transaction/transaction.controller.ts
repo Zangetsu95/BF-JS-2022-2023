@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
@@ -16,6 +17,7 @@ import { UserService } from 'src/user/user.service';
 import { TransactionEntity } from 'src/shared/entities/transaction/transaction.entity';
 import { TransactionCreateDTO } from 'src/shared/DTO/transaction/NewTransaction.dto';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -24,6 +26,9 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { TransactionDTO } from 'src/shared/DTO/transaction/Transaction.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { RoleGuard } from 'src/auth/role.guard';
+import { Roles } from 'src/auth/roles.decorator';
 
 @ApiTags('Gestion des transactions')
 @Controller('api/transaction')
@@ -33,6 +38,9 @@ export class TransactionController {
     private readonly userService: UserService,
   ) {}
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: 'Get all transaction' })
   @ApiResponse({ type: TransactionDTO })
   @Get()
@@ -64,6 +72,9 @@ export class TransactionController {
       price: transaction.price,
     }));
   }
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: 'Get one transaction avec son ID' })
   @ApiParam({ required: true, name: 'transactionID', example: '5' })
   @ApiResponse({ type: TransactionDTO })
@@ -99,6 +110,9 @@ export class TransactionController {
     return transactionDto;
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: "Création d'une transaction" })
   @ApiBody({ type: TransactionCreateDTO })
   @ApiResponse({ type: TransactionDTO })

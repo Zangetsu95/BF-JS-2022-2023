@@ -16,27 +16,20 @@ export class UpdateProductDTO {
   @MaxLength(15)
   @MinLength(2)
   @ApiProperty()
-  name: string;
+  name?: string;
 
   @IsOptional()
   @IsString()
-  @MaxLength(20)
+  @MaxLength(50)
   @MinLength(2)
   @ApiProperty()
-  description: string;
+  description?: string;
 
   @IsOptional()
-  @IsNumber(
-    { allowNaN: false, allowInfinity: false },
-    { message: 'Le prix doit être un nombre.' },
-  )
-  @IsDecimal(
-    { decimal_digits: '2' },
-    { message: 'Le prix doit être un nombre décimal avec deux décimales.' },
-  )
+  @IsNumber({ maxDecimalPlaces: 2 })
   @IsPositive({ message: 'Le prix doit être positif.' })
   @ApiProperty()
-  price: number;
+  price?: number;
 
   @IsOptional()
   @IsNumber(
@@ -45,11 +38,11 @@ export class UpdateProductDTO {
   )
   @IsPositive({ message: 'La quantité doit être positive.' })
   @ApiProperty()
-  quantity: number;
+  quantity?: number;
 
   @IsOptional()
   @IsNumber({}, { message: "L'ID de la catégorie doit être un nombre." })
-  @IsDefined({ message: "L'ID de la catégorie ne peut pas être vide." })
+  // @IsDefined({ message: "L'ID de la catégorie ne peut pas être vide." })
   @ApiProperty()
-  category_id: number;
+  category_id?: number;
 }

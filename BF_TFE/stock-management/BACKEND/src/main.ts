@@ -18,6 +18,16 @@ async function bootstrap() {
     .setTitle('TFE-stock management')
     .setDescription('Mon api de fin de formation')
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        name: 'Bearer',
+        bearerFormat: 'Bearer',
+        in: 'Header',
+        scheme: 'Bearer',
+      },
+      'access_token',
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('documentation', app, document);

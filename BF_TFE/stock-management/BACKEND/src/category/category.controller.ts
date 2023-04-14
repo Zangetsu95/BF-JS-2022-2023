@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { CategoryService } from './category.service';
@@ -16,6 +17,7 @@ import { CategoryEntity } from 'src/shared/entities/category/category.entity';
 import { CategoryCreateDTO } from 'src/shared/DTO/category/NewCategory.dto';
 import { UpdateCategoryDTO } from 'src/shared/DTO/category/UpdatedCategory.dto';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -24,6 +26,9 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CategoryDTO } from 'src/shared/DTO/category/Category.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { RoleGuard } from 'src/auth/role.guard';
+import { Roles } from 'src/auth/roles.decorator';
 
 @ApiTags('Gestion des catégories')
 @Controller('api/category')
@@ -68,6 +73,9 @@ export class CategoryController {
     return category;
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: "Création d'une category" })
   @ApiBody({ type: CategoryCreateDTO })
   @ApiResponse({ type: CategoryDTO })
@@ -95,6 +103,9 @@ export class CategoryController {
     }
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: "Modification d'une category" })
   @ApiBody({ type: UpdateCategoryDTO })
   @ApiBody({ type: CategoryDTO })
@@ -111,6 +122,9 @@ export class CategoryController {
    * is an object containing the updated category entity. If an error occurs, the function throws an
    * HttpException with a message and a status code of 400 (Bad Request).
    */
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   async update(
     @Param('id') id: number,
     @Body(ValidationPipe) category: UpdateCategoryDTO,
@@ -126,6 +140,9 @@ export class CategoryController {
     }
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: 'Supprimer une category' })
   @ApiResponse({ type: CategoryDTO })
   @ApiParam({ required: true, name: 'categoryID', example: '7' })

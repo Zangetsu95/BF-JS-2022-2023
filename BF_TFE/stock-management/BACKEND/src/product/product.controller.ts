@@ -21,6 +21,7 @@ import { ProductCreateDTO } from 'src/shared/DTO/product/NewProduct.dto';
 import { UpdateProductDTO } from 'src/shared/DTO/product/UpdatedProduct.dto';
 import { StockEntity } from 'src/shared/entities/stock/stock.entity';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -32,6 +33,9 @@ import { ProductDTO } from 'src/shared/DTO/product/Product.dto';
 import { UpdateQuantityProductDTO } from 'src/shared/DTO/product/ProductQuantity.dto';
 import { StockDTO } from 'src/shared/DTO/stock/Stock.dto';
 import { UpdateStockDTO } from 'src/shared/DTO/stock/UpdatedStock.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { RoleGuard } from 'src/auth/role.guard';
+import { Roles } from 'src/auth/roles.decorator';
 
 export interface UpdateQuantityResponse {
   message: string;
@@ -126,6 +130,9 @@ export class ProductController {
     return productDto;
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: "Création d'un produit" })
   @ApiBody({ type: ProductCreateDTO })
   @ApiResponse({ type: ProductDTO })
@@ -174,8 +181,11 @@ export class ProductController {
     }
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: "Modification d'un produit" })
-  @ApiBody({ type: UpdateProductDTO })
+  @ApiBody({ type: UpdateProductDTO, description: 'test' })
   @ApiResponse({ type: ProductDTO })
   @ApiParam({ required: true, name: 'productID', example: '10' })
   @Put(':id')
@@ -206,6 +216,9 @@ export class ProductController {
     }
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: "modification de la quantité d'un produit" })
   @ApiBody({ type: UpdateQuantityProductDTO })
   @ApiResponse({ type: ProductDTO })
@@ -253,6 +266,9 @@ export class ProductController {
     // return this.productService.updateQuantity(productId, newQuantity);
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: 'Supprimer un produit' })
   @ApiResponse({ type: ProductDTO })
   @ApiParam({ required: true, name: 'productID', example: '25' })

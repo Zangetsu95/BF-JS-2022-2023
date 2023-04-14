@@ -10,6 +10,7 @@ import {
   Put,
   ValidationPipe,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { SupplierService } from './supplier.service';
 import { ProductService } from 'src/product/product.service';
@@ -17,6 +18,7 @@ import { SupplierEntity } from 'src/shared/entities/supplier/supplier.entity';
 import { SupplierCreateDTO } from 'src/shared/DTO/supplier/NewSupplier.dto';
 import { UpdateSupplierDTO } from 'src/shared/DTO/supplier/UpdateSupplier.dto';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -25,6 +27,9 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { SupplierDTO } from 'src/shared/DTO/supplier/Supplier.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { RoleGuard } from 'src/auth/role.guard';
+import { Roles } from 'src/auth/roles.decorator';
 @ApiTags('Gestion des fournisseurs')
 @Controller('api/supplier')
 export class SupplierController {
@@ -83,6 +88,9 @@ export class SupplierController {
     return supplierDto;
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: "Création d'un fournisseur" })
   @ApiBody({ type: SupplierCreateDTO })
   @ApiResponse({ type: SupplierDTO })
@@ -123,6 +131,9 @@ export class SupplierController {
     }
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: "Modification d'un fournisseur" })
   @ApiBody({ type: UpdateSupplierDTO })
   @ApiResponse({ type: SupplierDTO })
@@ -154,6 +165,9 @@ export class SupplierController {
     }
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: 'Supprimer un produit' })
   @ApiResponse({ type: SupplierDTO })
   @ApiParam({ required: true, name: 'supplierID', example: '5' })

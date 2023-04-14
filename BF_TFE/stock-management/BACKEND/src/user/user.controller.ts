@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -16,6 +17,7 @@ import { UserEntity } from 'src/shared/entities/user/user.entity';
 import { UserCreateDTO } from 'src/shared/DTO/user/NewUser.dto';
 import { UpdateUserDTO } from 'src/shared/DTO/user/UpdateUser.dto';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -24,6 +26,9 @@ import {
 } from '@nestjs/swagger';
 import { UserDTO } from 'src/shared/DTO/user/User.dto';
 import { UpdateProductDTO } from 'src/shared/DTO/product/UpdatedProduct.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { RoleGuard } from 'src/auth/role.guard';
+import { Roles } from 'src/auth/roles.decorator';
 
 @ApiTags('Getsion des utilisateurs')
 @Controller('api/user')
@@ -47,6 +52,9 @@ export class UserController {
     return users;
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: 'Get one user avec son ID' })
   @ApiParam({ required: true, name: 'userID', example: '1' })
   @ApiResponse({ type: UserDTO })
@@ -69,6 +77,9 @@ export class UserController {
     return user;
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: "Création d'un user" })
   @ApiBody({ type: UserCreateDTO })
   @ApiResponse({ type: UserDTO })
@@ -99,6 +110,9 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: "Modification d'un user" })
   @ApiBody({ type: UpdateProductDTO })
   @ApiResponse({ type: UserDTO })
@@ -131,6 +145,9 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard, RoleGuard)
+  @ApiBearerAuth('access_token')
+  @Roles('admin')
   @ApiOperation({ summary: 'supprimer un utilisateur' })
   @ApiResponse({ type: UserDTO })
   @ApiParam({ required: true, name: 'userID', example: '5' })

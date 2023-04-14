@@ -7,6 +7,7 @@ import { TransactionService } from './transaction.service';
 import { ProductEntity } from 'src/shared/entities/product/product.entity';
 import { UserService } from 'src/user/user.service';
 import { StockEntity } from 'src/shared/entities/stock/stock.entity';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Module({
   imports: [
@@ -18,6 +19,6 @@ import { StockEntity } from 'src/shared/entities/stock/stock.entity';
     ]),
   ],
   controllers: [TransactionController],
-  providers: [TransactionService, UserService],
+  providers: [TransactionService, UserService, AuthGuard],
 })
 export class TransactionModule {}
