@@ -13,6 +13,9 @@ import {
 } from "@mui/material"
 import { Link, Outlet } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import { useState } from "react"
+import { useEffect } from "react"
 
 // Création du style pour le composant
 const ProductPageWrapper = styled("div")({
@@ -22,79 +25,114 @@ const ProductPageWrapper = styled("div")({
   padding: "20px",
 })
 
-// Exemple de données pour un produit
-const product = {
-  id: 1,
-  name: "Produit 1",
-  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  imageUrl: "https://via.placeholder.com/150",
-  price: 12.99,
-  supplier: "Fournisseur A",
-  quantity: 10,
-}
-
 // Définition du composant ProductPage
 function ProductIndexPage() {
-  const products = [product] // Tableau de produits
   const navigate = useNavigate()
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(0)
+  const [data, setData] = useState(null)
+  // const getNumPages = (numItems) => {
+  //   return Math.ceil(numItems / 12)
+  // }
   const handleManageStock = (product) => {
     navigate(`/product/${product.id}`, { state: { product } })
   }
 
+  const options = {
+    method: "GET",
+    url: `http://localhost:5000/api/product?offset=${
+      (currentPage - 1) * 12
+    }&limit=12`,
+  }
+
+  useEffect(() => {
+    axios
+      .request(options)
+      .then(function (response) {
+        const res = response.data
+        console.log("res.items :>> ", res.items)
+        setData(res.items)
+        if (res) {
+          const numPages = Math.ceil(res.totalItems / 12)
+          setTotalPage(numPages)
+        }
+      })
+      .catch(function (error) {
+        console.error(error)
+      })
+  }, [currentPage])
+
   return (
     <ProductPageWrapper>
       <Grid container spacing={2}>
-        {products.map((product) => (
-          <Grid item xs={12} sm={6} md={4} key={product.id}>
-            <Paper>
-              <TableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell colSpan={2}>
-                        <img src={product.imageUrl} alt={product.name} />
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>Nom:</TableCell>
-                      <TableCell>{product.name}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Description:</TableCell>
-                      <TableCell>{product.description}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Prix:</TableCell>
-                      <TableCell>{product.price} €</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Fournisseur:</TableCell>
-                      <TableCell>{product.supplier}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Quantité disponible:</TableCell>
-                      <TableCell>{product.quantity}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => handleManageStock(product)}
-                        >
-                          Gérer le stock
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Paper>
-          </Grid>
-        ))}
+        {data &&
+          data.map((product) => (
+            <Grid item xs={12} sm={6} md={4} key={product.id}>
+              <Paper>
+                <TableContainer>
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell colSpan={2}>
+                          <img src={product.imageUrl} alt={product.name} />
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell>Nom:</TableCell>
+                        <TableCell>{product.name}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Description:</TableCell>
+                        <TableCell>{product.description}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Prix:</TableCell>
+                        <TableCell>{product.price} €</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Fournisseur:</TableCell>
+                        <TableCell>{product.supplier}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Quantité disponible:</TableCell>
+                        <TableCell>{product.quantity}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => handleManageStock(product)}
+                          >
+                            Voir le produit
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Paper>
+            </Grid>
+          ))}
       </Grid>
+      {totalPage > 1 && (
+        <div>
+          <Button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+          >
+            Précédent
+          </Button>
+          <Button
+            disabled={currentPage === totalPage}
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+          >
+            Suivant
+          </Button>
+        </div>
+      )}
     </ProductPageWrapper>
   )
 }

@@ -62,41 +62,45 @@ export class ProductController {
   @ApiQuery({ name: 'categoryName', required: false })
   @ApiResponse({ type: ProductDTO })
   @Get()
-  /**
-   * This function retrieves all products and maps them to include their category ID, throwing an error
-   * if no products are found.
-   * @param {string} [productName] - A string parameter used to filter products by their name. If
-   * provided, only products with a name containing the specified string will be returned. If not
-   * provided, all products will be returned.
-   * @param {string} [categoryName] - The name of the category to filter the products by.
-   * @returns The `findAll()` method returns a Promise that resolves to an array of `ProductDTO`
-   * objects.
-   */
   async findAll(
+  /**
+   * This is an async function that finds all products based on optional query parameters and returns
+   * them along with the total number of items.
+   * @param {string} [productName] - a string representing the name of the product to search for
+   * (optional)
+   * @param {string} [categoryName] - The categoryName parameter is a string that represents the name
+   * of the category that the user wants to filter the products by. It is an optional parameter,
+   * meaning that it can be undefined or null if the user does not want to filter by category.
+   * @param {number} [offset] - The number of items to skip before starting to return results.
+   * @param {number} [limit] - The limit parameter is used to specify the maximum number of items to be
+   * returned in the response. It is used in conjunction with the offset parameter to implement
+   * pagination.
+   * @returns A Promise that resolves to an object containing an array of transformed ProductDTO items
+   * and the total number of items.
+   */
     @Query('productName') productName?: string,
     @Query('categoryName') categoryName?: string,
-  ): Promise<ProductEntity[]> {
-    /**
-     * This function retrieves all products and maps them to include their category ID, throwing an error
-     * if no products are found.
-     * @returns The `findAll()` method returns a Promise that resolves to an array of `ProductEntity`
-     * objects. If the array is empty, it throws an `HttpException` with a message "Aucune produits
-     * trouvé" and a status code of `NOT_FOUND`. If the array is not empty, it maps each `ProductEntity`
-     * object to a new object with an additional `category_id` property and returns
-     */
+    @Query('offset') offset?: number,
+    @Query('limit') limit?: number,
+  ): Promise<{ items: ProductDTO[]; totalItems: number }> {
     // const products = await this.productService.findAll();
-    const products = await this.productService.findAll(
+    const { items, totalItems } = await this.productService.findAll(
       productName,
       categoryName,
+      offset,
+      limit,
     );
 
-    if (products.length === 0) {
-      throw new HttpException('Aucune produits trouvé', HttpStatus.NOT_FOUND);
+    if (items.length === 0) {
+      throw new HttpException('Aucun produit trouvé', HttpStatus.NOT_FOUND);
     }
-    return products.map((product) => ({
+
+    const transformedItems = items.map((product) => ({
       ...product,
       category_id: product.category.id,
     }));
+
+    return { items: transformedItems, totalItems };
   }
 
   @ApiOperation({ summary: 'Get one product avec son ID' })
