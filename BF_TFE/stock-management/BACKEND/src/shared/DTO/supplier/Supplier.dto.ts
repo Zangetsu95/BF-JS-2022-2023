@@ -57,8 +57,8 @@ export class SupplierDTO {
   phone_number: string;
   /*-------------------------------------------------------- */
 
-  @IsNumber({}, { message: "L'ID du produit doit être un nombre." })
-  @IsDefined({ message: "L'ID du produit ne peut pas être vide." })
-  @ApiProperty()
-  product_id: number;
+  // @IsNumber({}, { message: "L'ID du produit doit être un nombre." })
+  // @IsDefined({ message: "L'ID du produit ne peut pas être vide." })
+  // @ApiProperty()
+  // product_id: number;
 }

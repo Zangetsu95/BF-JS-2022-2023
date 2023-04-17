@@ -2,12 +2,14 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ProductEntity } from '../product/product.entity';
 import { IsString } from 'class-validator';
+import { ProductSupplierEntity } from '../product-supplier/product-supplier.entity';
 
 @Entity()
 export class SupplierEntity {
@@ -25,7 +27,9 @@ export class SupplierEntity {
   @IsString()
   phone_number: string;
 
-  @ManyToOne(() => ProductEntity, (product) => product.id)
-  @JoinColumn({ name: 'product_id' })
-  product: ProductEntity;
+  @OneToMany(
+    () => ProductSupplierEntity,
+    (productSupplier) => productSupplier.supplier,
+  )
+  productSupplier: ProductSupplierEntity[];
 }

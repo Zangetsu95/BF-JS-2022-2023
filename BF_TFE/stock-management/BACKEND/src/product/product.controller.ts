@@ -63,26 +63,30 @@ export class ProductController {
   @ApiResponse({ type: ProductDTO })
   @Get()
   async findAll(
-  /**
-   * This is an async function that finds all products based on optional query parameters and returns
-   * them along with the total number of items.
-   * @param {string} [productName] - a string representing the name of the product to search for
-   * (optional)
-   * @param {string} [categoryName] - The categoryName parameter is a string that represents the name
-   * of the category that the user wants to filter the products by. It is an optional parameter,
-   * meaning that it can be undefined or null if the user does not want to filter by category.
-   * @param {number} [offset] - The number of items to skip before starting to return results.
-   * @param {number} [limit] - The limit parameter is used to specify the maximum number of items to be
-   * returned in the response. It is used in conjunction with the offset parameter to implement
-   * pagination.
-   * @returns A Promise that resolves to an object containing an array of transformed ProductDTO items
-   * and the total number of items.
-   */
+    /**
+     * This is an async function that finds all products based on optional query parameters and returns
+     * them along with the total number of items.
+     * @param {string} [productName] - a string representing the name of the product to search for
+     * (optional)
+     * @param {string} [categoryName] - The categoryName parameter is a string that represents the name
+     * of the category that the user wants to filter the products by. It is an optional parameter,
+     * meaning that it can be undefined or null if the user does not want to filter by category.
+     * @param {number} [offset] - The number of items to skip before starting to return results.
+     * @param {number} [limit] - The limit parameter is used to specify the maximum number of items to be
+     * returned in the response. It is used in conjunction with the offset parameter to implement
+     * pagination.
+     * @returns A Promise that resolves to an object containing an array of transformed ProductDTO items
+     * and the total number of items.
+     */
     @Query('productName') productName?: string,
     @Query('categoryName') categoryName?: string,
     @Query('offset') offset?: number,
     @Query('limit') limit?: number,
   ): Promise<{ items: ProductDTO[]; totalItems: number }> {
+    //http://localhost:5000/api/product?offset=0&limit=12
+    //http://localhost:5000/api/product?offset=12&limit=12
+    //http://localhost:5000/api/product?productName=example&offset=0&limit=12
+    //http://localhost:5000/api/product?categoryName=example&offset=0&limit=12
     // const products = await this.productService.findAll();
     const { items, totalItems } = await this.productService.findAll(
       productName,

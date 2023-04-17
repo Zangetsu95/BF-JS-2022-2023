@@ -8,6 +8,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductService } from 'src/product/product.service';
 import { SupplierCreateDTO } from 'src/shared/DTO/supplier/NewSupplier.dto';
+import { SupplierDTO } from 'src/shared/DTO/supplier/Supplier.dto';
 import { UpdateSupplierDTO } from 'src/shared/DTO/supplier/UpdateSupplier.dto';
 import { ProductEntity } from 'src/shared/entities/product/product.entity';
 import { SupplierEntity } from 'src/shared/entities/supplier/supplier.entity';
@@ -19,10 +20,8 @@ export class SupplierService {
     @InjectRepository(SupplierEntity)
     private supplierRepo: Repository<SupplierEntity>,
     @InjectRepository(ProductEntity)
-    private productRepo: Repository<ProductEntity>,
-  ) // @Inject(forwardRef(() => ProductService))
-  // private readonly productService: ProductService,
-  {}
+    private productRepo: Repository<ProductEntity>, // @Inject(forwardRef(() => ProductService)) // private readonly productService: ProductService,
+  ) {}
 
   /**
    * This is an asynchronous function that retrieves all suppliers with their related products from a
@@ -32,9 +31,7 @@ export class SupplierService {
    */
   async findAll(): Promise<SupplierEntity[]> {
     try {
-      const suppliers = await this.supplierRepo.find({
-        relations: ['product'],
-      });
+      const suppliers = await this.supplierRepo.find();
       return suppliers;
     } catch (error) {
       throw new HttpException(
@@ -55,12 +52,21 @@ export class SupplierService {
    * not found, the function throws an HttpException with a message "Fournisseur non trouvé" and a
    * status code of 404 (NOT_FOUND).
    */
-  async findOne(id: number): Promise<SupplierEntity> {
+  async findOne(id: number): Promise<SupplierDTO> {
     const supplier = await this.supplierRepo.findOne({ where: { id } });
 
     if (!supplier) {
+      console.log(supplier);
       throw new HttpException('Fournisseur non trouvé', HttpStatus.NOT_FOUND);
     }
+
+    // const supplierDto: SupplierDTO = {
+    //   id: supplier.id,
+    //   adress: supplier.adress,
+    //   name: supplier.name,
+    //   phone_number: supplier.phone_number,
+    // };
+
     return supplier;
   }
 
@@ -78,12 +84,6 @@ export class SupplierService {
     newSupplier.adress = supplier.adress;
     newSupplier.name = supplier.name;
     newSupplier.phone_number = supplier.phone_number;
-
-    const productId = await this.productRepo.findOne({
-      where: { id: supplier.product_id },
-    });
-
-    newSupplier.product = productId;
 
     try {
       const savedSupplier = await this.supplierRepo.save(newSupplier);
@@ -127,12 +127,6 @@ export class SupplierService {
             case 'phone_number':
               supplierUpdate.phone_number = supplier[proprety];
               break;
-            case 'product_id':
-              const productId = await this.productRepo.findOne({
-                where: { id: supplier[proprety] },
-              });
-              supplierUpdate.product = productId;
-              break;
             default:
               break;
           }
@@ -157,4 +151,9 @@ export class SupplierService {
   async remove(id: number): Promise<void> {
     await this.supplierRepo.delete(id);
   }
+
+  // async addSupplierToProduct(
+  //   productId: number,
+  //   supplierId: number,
+  // ): Promise<ProductEntity> {}
 }

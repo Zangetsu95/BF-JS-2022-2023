@@ -55,14 +55,13 @@ export class SupplierController {
     }
     return suppliers.map((supplier) => ({
       ...supplier,
-      product_id: supplier.product.id,
     }));
   }
 
   @ApiOperation({ summary: 'Get one supplier avec son ID' })
   @ApiParam({ required: true, name: 'supplierID', example: '5' })
   @ApiResponse({ type: SupplierDTO })
-  @Get('id')
+  @Get(':id')
   /**
    * This function finds a supplier by ID and returns a DTO (Data Transfer Object) with specific
    * properties.
@@ -77,15 +76,15 @@ export class SupplierController {
     if (!supplier) {
       throw new HttpException('Fournisseur non trouvé', HttpStatus.NOT_FOUND);
     }
-    const supplierDto: SupplierDTO = {
-      id: supplier.id,
-      name: supplier.name,
-      adress: supplier.adress,
-      phone_number: supplier.phone_number,
-      product_id: supplier.product.id,
-    };
+    // const supplierDto: SupplierDTO = {
+    //   id: supplier.id,
+    //   name: supplier.name,
+    //   adress: supplier.adress,
+    //   phone_number: supplier.phone_number,
+    //   //TODO produt id
+    // };
 
-    return supplierDto;
+    return supplier;
   }
 
   @UseGuards(AuthGuard, RoleGuard)
@@ -109,16 +108,6 @@ export class SupplierController {
     @Body(ValidationPipe) supplierData: SupplierCreateDTO,
   ): Promise<{ message: string; data: SupplierDTO }> {
     try {
-      const product_id = await this.productService.findOne(
-        supplierData.product_id,
-      );
-      if (!product_id) {
-        throw new HttpException(
-          "Le produit spécifié n'existe pas",
-          HttpStatus.BAD_REQUEST,
-        );
-      }
-
       const createdSupplier = await this.supplierService.create(supplierData);
       const createdProductDTO = new SupplierDTO();
       Object.assign(createdSupplier, createdProductDTO);

@@ -12,6 +12,7 @@ import { CategoryEntity } from '../category/category.entity';
 import { SupplierEntity } from '../supplier/supplier.entity';
 import { StockEntity } from '../stock/stock.entity';
 import { TransactionEntity } from '../transaction/transaction.entity';
+import { ProductSupplierEntity } from '../product-supplier/product-supplier.entity';
 
 @Entity()
 export class ProductEntity {
@@ -44,9 +45,11 @@ export class ProductEntity {
   @JoinColumn({ name: 'category_id' })
   category: CategoryEntity;
 
-  @OneToMany(() => SupplierEntity, (supplier) => supplier.product)
-  @JoinColumn({ name: 'supplier_id' })
-  supplier: SupplierEntity[];
+  @OneToMany(
+    () => ProductSupplierEntity,
+    (supplyProduct) => supplyProduct.product,
+  )
+  supplyProduct: ProductSupplierEntity[];
 
   @OneToMany(() => StockEntity, (stock) => stock.product)
   stocks: StockEntity[];
