@@ -230,7 +230,7 @@ export class ProductService {
   ): Promise<{ product: ProductDTO; stock: UpdateStockDTO }> {
     const product = await this.productRepo.findOne({
       where: { id },
-      relations: ['stocks'],
+      relations: ['stocks', 'category'],
     });
     if (!product) {
       throw new HttpException('Produit non trouvé', HttpStatus.NOT_FOUND);

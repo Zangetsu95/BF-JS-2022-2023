@@ -95,6 +95,12 @@ export class TransactionService {
       throw new HttpException('Stock non trouvé', HttpStatus.NOT_FOUND);
     }
 
+    /* This code block is checking if the quantity of the product being transacted is greater than the
+    quantity available in the stock. */
+    if (transaction.quantity > stock.quantity) {
+      throw new HttpException('Stock insuffisant', HttpStatus.BAD_REQUEST);
+    }
+
     //update du stock
     if (transaction.type == 'purchasse') {
       productId.quantity += newTransaction.quantity;
