@@ -36,4 +36,11 @@ export class AuthController {
   getProfile(@Request() req) {
     return req.user;
   }
+
+  @Get('check')
+  @UseGuards(AuthGuard)
+  async checkAuth() {
+    // Si le middleware AuthGuard() est passé, cela signifie que le token est valide
+    return { success: true };
+  }
 }

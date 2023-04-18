@@ -1,3 +1,4 @@
+import SignIn from "../containers/login/signIn"
 import NotFound from "../pages/errors/not-found.page"
 import HomePage from "../pages/home/home.page"
 import ProductIndexPage from "../pages/products/pages/product-list.page"
@@ -22,6 +23,10 @@ const appRoute = [
         element: <ProductDetailsPage />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <SignIn />,
   },
   {
     path: "*",

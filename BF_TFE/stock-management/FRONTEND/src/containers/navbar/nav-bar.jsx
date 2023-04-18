@@ -12,10 +12,11 @@ import Button from "@mui/material/Button"
 import Tooltip from "@mui/material/Tooltip"
 import MenuItem from "@mui/material/MenuItem"
 import AdbIcon from "@mui/icons-material/Adb"
-import { NavLink } from "react-router-dom"
-
-const pages = ["Product"]
-const settings = ["Profile", "Account", "Dashboard", "Logout"]
+import { NavLink, useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import { checkAuth, logout } from "../../store/actions/authActions.js"
+import { useEffect } from "react"
 
 const CustomLink = ({ to, name }) => (
   <Button
@@ -34,6 +35,19 @@ const CustomLink = ({ to, name }) => (
 )
 
 function ResponsiveAppBar() {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+  const pagesConnected = ["Connecte", "Product", "Logout", "Home"]
+  const settingsNotConnected = [
+    "pas connecte",
+    "Product",
+    "Account",
+    "Dashboard",
+    "Login",
+    "Home",
+  ]
+  const settingsConnected = ["Profile", "Logout", "Home"]
+  const pagesToDisplay = isAuthenticated ? pagesConnected : settingsNotConnected
+
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
 
@@ -52,6 +66,19 @@ function ResponsiveAppBar() {
     setAnchorElUser(null)
   }
 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const handleLogout = async () => {
+    await dispatch(logout())
+    dispatch({ type: "SET_UNAUTHENTICATED" })
+    return navigate("/")
+  }
+
+  // Mettre à jour la navbar après une action de logout
+  useEffect(() => {
+    dispatch(checkAuth())
+  }, [dispatch, isAuthenticated])
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -61,7 +88,6 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -71,9 +97,7 @@ function ResponsiveAppBar() {
               color: "inherit",
               textDecoration: "none",
             }}
-          >
-            HOME
-          </Typography>
+          ></Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -104,8 +128,13 @@ function ResponsiveAppBar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+              {pagesToDisplay.map((page) => (
+                <MenuItem
+                  key={page}
+                  component={NavLink}
+                  to={page !== "Home" ? `/${page.toLowerCase()}` : ""}
+                  onClick={handleCloseNavMenu}
+                >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -114,10 +143,10 @@ function ResponsiveAppBar() {
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {pagesToDisplay.map((page) => (
               <CustomLink
                 key={page}
-                to={`/${page.toLowerCase() || "home"}`}
+                to={page !== "Home" ? `/${page.toLowerCase()}` : ""}
                 name={page || "Home"}
               />
             ))}
@@ -135,6 +164,25 @@ function ResponsiveAppBar() {
               <Avatar alt="user profile" src="https://picsum.photos/200" />
             </IconButton>
           </Tooltip>
+          {isAuthenticated && (
+            <MenuItem
+              key="Logout"
+              onClick={handleLogout}
+              sx={{
+                color: "white",
+                backgroundColor: "red",
+                "&:hover": {
+                  backgroundColor: "red",
+                },
+                "&:hover .MuiTypography-root": {
+                  color: "white",
+                },
+              }}
+            >
+              <Typography>Logout</Typography>
+            </MenuItem>
+          )}
+
           <Menu
             id="menu-appbar"
             anchorEl={anchorElUser}
@@ -150,7 +198,7 @@ function ResponsiveAppBar() {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            {settings.map((setting) => (
+            {settingsConnected.map((setting) => (
               <MenuItem key={setting}>
                 <Typography>{setting}</Typography>
               </MenuItem>
