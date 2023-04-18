@@ -28,25 +28,34 @@ export class ProductService {
   ) {}
 
   /**
-   * This function retrieves an array of ProductDTO objects from the database based on optional
-   * parameters using a query builder and class-transformer library.
-   * @param {string} [productName] - A string parameter that represents the name of a product. If
-   * provided, the function will filter the results to only include products whose name contains the
-   * provided string. If not provided, all products will be returned.
-   * @param {string} [categoryName] - A string parameter that represents the name of the category to
-   * filter the products by. If provided, the function will only return products that belong to the
-   * category with the specified name. If not provided, all products will be returned regardless of
-   * their category.
-   * @returns An array of `ProductDTO` objects.
+   * This function retrieves a list of products from the database based on optional search parameters
+   * and returns them as an array of ProductDTO objects along with the total number of items.
+   * @param {string} [productName] - A string that represents the name of the product to search for. If
+   * provided, the query will filter the results to only include products whose name contains the
+   * provided string.
+   * @param {string} [categoryName] - A string parameter used to filter products by category name. If
+   * provided, the query will only return products that belong to a category with a name that contains
+   * the specified string. If not provided, all products will be returned regardless of their category.
+   * @param {number} [offset=0] - The number of items to skip before starting to return items. It is
+   * used for pagination purposes.
+   * @param {number} [limit=12] - The maximum number of items to be returned in the result set. If not
+   * specified, the default value is 12.
+   * @returns A Promise that resolves to an object containing an array of `ProductEntity` objects
+   * transformed into `ProductDTO` objects and the total number of items in the database that match the
+   * query parameters.
    */
   async findAll(
     productName?: string,
     categoryName?: string,
-  ): Promise<ProductEntity[]> {
+    offset: number = 0,
+    limit: number = 12,
+  ): Promise<{ items: ProductEntity[]; totalItems: number }> {
     try {
       const query = this.productRepo
         .createQueryBuilder('product')
-        .leftJoinAndSelect('product.category', 'category');
+        .leftJoinAndSelect('product.category', 'category')
+        .skip(offset)
+        .take(limit);
 
       if (productName) {
         query.andWhere('product.name LIKE :productName', {
@@ -70,7 +79,12 @@ export class ProductService {
       function returns the array of `ProductDTO` objects. */
 
       const products = await query.getMany();
-      return products;
+      const countQuery = this.productRepo
+        .createQueryBuilder('product')
+        .leftJoin('product.category', 'category');
+      const totalItems = await countQuery.getCount();
+
+      return { items: products, totalItems };
     } catch (error) {
       console.log(error);
       throw new HttpException(

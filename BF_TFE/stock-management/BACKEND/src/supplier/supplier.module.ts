@@ -6,10 +6,15 @@ import { SupplierService } from './supplier.service';
 import { ProductModule } from 'src/product/product.module';
 import { ProductEntity } from 'src/shared/entities/product/product.entity';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ProductSupplierEntity } from 'src/shared/entities/product-supplier/product-supplier.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([SupplierEntity, ProductEntity]),
+    TypeOrmModule.forFeature([
+      SupplierEntity,
+      ProductEntity,
+      ProductSupplierEntity,
+    ]),
     // forwardRef(() => ProductModule),
     ProductModule,
   ],

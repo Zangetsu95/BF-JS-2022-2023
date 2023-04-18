@@ -11,6 +11,7 @@ import { SupplierService } from 'src/supplier/supplier.service';
 import { SupplierModule } from 'src/supplier/supplier.module';
 import { StockEntity } from 'src/shared/entities/stock/stock.entity';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ProductSupplierEntity } from 'src/shared/entities/product-supplier/product-supplier.entity';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
       CategoryEntity,
       SupplierEntity,
       StockEntity,
+      ProductSupplierEntity,
     ]),
     // CategoryModule,
     // forwardRef(() => SupplierModule),
