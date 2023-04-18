@@ -11,7 +11,6 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
-import { Link, Outlet } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useState } from "react"
@@ -37,19 +36,25 @@ function ProductIndexPage() {
   const handleManageStock = (product) => {
     navigate(`/product/${product.id}`, { state: { product } })
   }
-
-  const options = {
-    method: "GET",
-    url: `http://localhost:5000/api/product?offset=${
-      (currentPage - 1) * 12
-    }&limit=12`,
-  }
-
+  console.log("hello")
   useEffect(() => {
+    const options = {
+      method: "GET",
+      url: `http://127.0.0.1:5000/api/product?offset=${
+        (currentPage - 1) * 12
+      }&limit=12`,
+    }
+    fetch(options.url).then((res) => {
+      res.json().then((data) => {
+        console.log(data)
+      })
+    })
+    console.log("hello")
     axios
       .request(options)
       .then(function (response) {
         const res = response.data
+        console.log(response.data)
         console.log("res.items :>> ", res.items)
         setData(res.items)
         if (res) {
@@ -60,7 +65,7 @@ function ProductIndexPage() {
       .catch(function (error) {
         console.error(error)
       })
-  }, [currentPage])
+  }, [])
 
   return (
     <ProductPageWrapper>

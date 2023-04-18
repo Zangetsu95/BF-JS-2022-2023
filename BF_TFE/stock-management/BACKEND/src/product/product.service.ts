@@ -50,6 +50,8 @@ export class ProductService {
     offset: number = 0,
     limit: number = 12,
   ): Promise<{ items: ProductEntity[]; totalItems: number }> {
+    offset = Number(offset);
+    limit = Number(limit);
     try {
       const query = this.productRepo
         .createQueryBuilder('product')
