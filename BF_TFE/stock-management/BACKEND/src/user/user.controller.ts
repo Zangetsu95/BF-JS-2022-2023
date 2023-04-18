@@ -77,9 +77,9 @@ export class UserController {
     return user;
   }
 
-  @UseGuards(AuthGuard, RoleGuard)
-  @ApiBearerAuth('access_token')
-  @Roles('admin')
+  // @UseGuards(AuthGuard, RoleGuard)
+  // @ApiBearerAuth('access_token')
+  // @Roles('admin')
   @ApiOperation({ summary: "Création d'un user" })
   @ApiBody({ type: UserCreateDTO })
   @ApiResponse({ type: UserDTO })

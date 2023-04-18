@@ -11,6 +11,17 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 isAuthenticated: false,
             };
+        case "ADD_USER":
+            return {
+                ...state,
+                user: action.payload,
+                isAuthenticated: true
+            }
+        case "SET_USER_ROLE":
+            return {
+                ...state,
+                role: action.payload,
+            };
         default:
             return state
     }

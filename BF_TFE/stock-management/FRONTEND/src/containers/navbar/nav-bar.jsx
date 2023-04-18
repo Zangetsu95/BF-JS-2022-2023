@@ -36,15 +36,8 @@ const CustomLink = ({ to, name }) => (
 
 function ResponsiveAppBar() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
-  const pagesConnected = ["Connecte", "Product", "Logout", "Home"]
-  const settingsNotConnected = [
-    "pas connecte",
-    "Product",
-    "Account",
-    "Dashboard",
-    "Login",
-    "Home",
-  ]
+  const pagesConnected = ["Product", "Logout", "Home"]
+  const settingsNotConnected = ["Login", "Home"]
   const settingsConnected = ["Profile", "Logout", "Home"]
   const pagesToDisplay = isAuthenticated ? pagesConnected : settingsNotConnected
 
