@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 export const login = (email, password) => {
     return (dispatch) => {
@@ -8,10 +9,10 @@ export const login = (email, password) => {
             .post("http://127.0.0.1:5000/auth/login", { email, password })
             .then((response) => {
                 const res = response.data;
-                const role = response.data.role
                 localStorage.setItem("jwt", JSON.stringify(res.jwt));
+                console.log(res)
                 dispatch({ type: "SET_AUTHENTICATED", payload: true });
-                dispatch({ type: "SET_USER_ROLE", payload: role });
+                dispatch({ type: "SET_USER_ROLE", payload: res.role });
             })
             .catch((error) => {
                 console.log("user pas en db");

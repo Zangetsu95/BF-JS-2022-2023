@@ -1,9 +1,14 @@
 import AdminDashboard from "../components/admin/dashboard/Dashboard"
+import AdminRoute from "../components/protected-route/adminRoute.component"
 
 const adminRoute = [
   {
     path: "/admin",
-    element: <AdminDashboard />,
+    element: (
+      <AdminRoute>
+        <AdminDashboard />
+      </AdminRoute>
+    ),
   },
 ]
 

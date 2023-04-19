@@ -65,7 +65,7 @@ function ProductIndexPage() {
       .catch(function (error) {
         console.error(error)
       })
-  }, [])
+  }, [currentPage])
 
   return (
     <ProductPageWrapper>

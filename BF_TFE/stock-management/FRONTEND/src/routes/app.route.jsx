@@ -6,6 +6,7 @@ import ProductIndexPage from "../pages/products/pages/product-list.page"
 import ProductDetailsPage from "../pages/products/pages/product.detail.page"
 import ProductPage from "../pages/products/products.page"
 import adminRoute from "./admin.route"
+import ProtectedRoute from "../components/protected-route/protectedRoute.component"
 
 const appRoute = [
   {
@@ -14,15 +15,27 @@ const appRoute = [
   },
   {
     path: "/product",
-    element: <ProductPage />,
+    element: (
+      <ProtectedRoute>
+        <ProductPage />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
-        element: <ProductIndexPage />,
+        element: (
+          <ProtectedRoute>
+            <ProductIndexPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: ":productId",
-        element: <ProductDetailsPage />,
+        element: (
+          <ProtectedRoute>
+            <ProductDetailsPage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
