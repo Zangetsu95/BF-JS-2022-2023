@@ -1,5 +1,6 @@
 const initialState = {
-    isAuthenticated: false
+    isAuthenticated: localStorage.getItem("jwt") ? true : false,
+    userRole: localStorage.getItem("userRole") || null,
 }
 
 const authReducer = (state = initialState, action) => {
@@ -18,9 +19,11 @@ const authReducer = (state = initialState, action) => {
                 isAuthenticated: true
             }
         case "SET_USER_ROLE":
+            localStorage.setItem("userRole", action.payload);
+
             return {
                 ...state,
-                role: action.payload,
+                userRole: action.payload,
             };
         default:
             return state

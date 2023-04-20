@@ -65,7 +65,6 @@ export default function SignIn() {
 
 
 
-
     return (
         <ThemeProvider theme={theme}>
             {isAuthenticated && <ResponsiveAppBar />}

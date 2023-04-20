@@ -1,14 +1,23 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import React from "react";
+// import { Route, Redirect, Navigate } from "react-router-dom";
+// import { useSelector } from "react-redux";
 
-export default function AdminRoute() {
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    const userRole = useSelector((state) => state.auth.role);
-    const location = useLocation();
+// const AdminRoute = ({ component: Component, ...rest }) => {
+//     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+//     const userRole = useSelector((state) => state.auth.userRole);
 
-    return isAuthenticated && userRole === "Admin" ? (
-        <Outlet />
-    ) : (
-        <Navigate to="/" state={{ from: location }} />
-    );
-}
+//     return (
+//         <Route
+//             {...rest}
+//             render={(props) =>
+//                 isAuthenticated && userRole === "admin" ? (
+//                     <Component {...props} />
+//                 ) : (
+//                     <Navigate to="/login" />
+//                 )
+//             }
+//         />
+//     );
+// };
+
+// export default AdminRoute;

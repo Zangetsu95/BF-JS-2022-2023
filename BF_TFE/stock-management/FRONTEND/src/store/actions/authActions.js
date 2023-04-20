@@ -11,10 +11,16 @@ export const login = (email, password) => {
                 const res = response.data;
                 localStorage.setItem("jwt", JSON.stringify(res.jwt));
                 console.log(res)
+
+                const decodedJWT = jwt_decode(res.access_token);
+                const userRole = decodedJWT.role;
+                console.log(userRole)
+
                 dispatch({ type: "SET_AUTHENTICATED", payload: true });
-                dispatch({ type: "SET_USER_ROLE", payload: res.role });
+                dispatch({ type: "SET_USER_ROLE", payload: userRole });
             })
             .catch((error) => {
+                console.log(error)
                 console.log("user pas en db");
             });
     };
@@ -37,6 +43,7 @@ export const logout = () => {
     return (dispatch) => {
         localStorage.removeItem("jwt");
         dispatch({ type: "SET_UNAUTHENTICATED" });
+        localStorage.removeItem("userRole");
     };
 };
 

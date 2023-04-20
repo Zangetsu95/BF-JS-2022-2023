@@ -7,6 +7,9 @@ import ProductDetailsPage from "../pages/products/pages/product.detail.page"
 import ProductPage from "../pages/products/products.page"
 import adminRoute from "./admin.route"
 import ProtectedRoute from "../components/protected-route/protectedRoute.component"
+import AdminDashboard from "../components/admin/dashboard/Dashboard"
+import { Route, Routes } from "react-router-dom"
+import React from "react"
 
 const appRoute = [
   {
@@ -14,48 +17,39 @@ const appRoute = [
     element: <HomePage />,
   },
   {
-    path: "/product",
+    path: "/product/*",
     element: (
-      <ProtectedRoute>
-        <ProductPage />
-      </ProtectedRoute>
+      <Routes>
+        <Route path="/" element={<ProductIndexPage />} />
+        <Route path=":productId" element={<ProductDetailsPage />} />
+        <Route path="*" element={<ProductPage />} />
+      </Routes>
     ),
-    children: [
-      {
-        index: true,
-        element: (
-          <ProtectedRoute>
-            <ProductIndexPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: ":productId",
-        element: (
-          <ProtectedRoute>
-            <ProductDetailsPage />
-          </ProtectedRoute>
-        ),
-      },
-    ],
   },
   {
-    path: "/login",
-    element: <SignIn />,
+    path: "/login/*",
+    element: (
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+      </Routes>
+    ),
   },
   {
     path: "/register",
     element: <SignUp />,
   },
-
   {
     path: "*",
     element: <NotFound />,
   },
-  ...adminRoute,
+  {
+    path: "/admin/*",
+    element: <AdminDashboard />,
+  },
 ]
 
 export default appRoute
+
 {
   /* <div className="App">
 <NavBar />
