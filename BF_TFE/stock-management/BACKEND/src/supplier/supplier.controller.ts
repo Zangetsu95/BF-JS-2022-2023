@@ -127,7 +127,7 @@ export class SupplierController {
   @ApiBody({ type: UpdateSupplierDTO })
   @ApiResponse({ type: SupplierDTO })
   @ApiParam({ required: true, name: 'supplierID', example: '5' })
-  @Put('id')
+  @Put(':id')
   /**
    * This is an async function that updates a supplier entity with the given ID and returns a success
    * message along with the updated data.

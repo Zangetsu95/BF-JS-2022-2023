@@ -25,7 +25,7 @@ export class UpdateSupplierDTO {
   /*-------------------------------------------------------- */
   @IsOptional()
   @IsString()
-  @MaxLength(15)
+  @MaxLength(25)
   @MinLength(2)
   @ApiProperty()
   phone_number: string;

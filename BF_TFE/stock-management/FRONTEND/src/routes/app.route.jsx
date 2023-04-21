@@ -12,6 +12,8 @@ import { Route, Routes } from "react-router-dom"
 import React from "react"
 import ProductDetailAdmin from "../components/admin/admin-components/product/product-detail.component"
 import ProductCreateAdmin from "../components/admin/admin-components/product/product-create.component"
+import SupplierDetailAdmin from "../components/admin/admin-components/supplier/supplier-detail.component"
+import SupplierCreateAdmin from "../components/admin/admin-components/supplier/supplier-create.component"
 
 const appRoute = [
   {
@@ -55,6 +57,14 @@ const appRoute = [
   {
     path: "/admin/create-product",
     element: <ProductCreateAdmin />,
+  },
+  {
+    path: "/admin/supplier/:id",
+    element: <SupplierDetailAdmin />,
+  },
+  {
+    path: "/admin/create-supplier",
+    element: <SupplierCreateAdmin />,
   },
 ]
 
