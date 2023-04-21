@@ -9,10 +9,9 @@ import Container from '@mui/material/Container';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Paper from '@mui/material/Paper';
-// import TabPanel from './TabPanel';
-// import ProductList from './ProductList';
-// import SupplierList from './SupplierList';
-// import StockList from './StockList';
+import ProductList from "../admin-components/product/product-list.component.jsx";
+import SupplierList from "../admin-components/supplier/supplier-list.component.jsx"
+
 
 export default function AdminDashboard() {
     const [value, setValue] = React.useState(0);
@@ -51,15 +50,10 @@ export default function AdminDashboard() {
                         <Tab label="Suppliers" />
                         <Tab label="Stocks" />
                     </Tabs>
-                    {/* <TabPanel value={value} index={0}>
-                        <ProductList />
-                    </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        <SupplierList />
-                    </TabPanel>
-                    <TabPanel value={value} index={2}>
-                        <StockList />
-                    </TabPanel> */}
+                    {value === 0 && <ProductList />}
+                    {value === 1 && <SupplierList />}
+                    {value === 2 && <div>Stocks Content</div>}
+
                 </Paper>
             </Container>
         </Box>

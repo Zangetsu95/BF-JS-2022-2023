@@ -9,8 +9,8 @@ export const login = (email, password) => {
             .post("http://127.0.0.1:5000/auth/login", { email, password })
             .then((response) => {
                 const res = response.data;
-                localStorage.setItem("jwt", JSON.stringify(res.jwt));
-                console.log(res)
+                localStorage.setItem("jwt", JSON.stringify(res.access_token));
+                console.log(res.access_token)
 
                 const decodedJWT = jwt_decode(res.access_token);
                 const userRole = decodedJWT.role;

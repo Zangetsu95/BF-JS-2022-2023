@@ -6,8 +6,7 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import store from "./store/store";
 import { checkAuth } from "./store/actions/authActions";
 import { useEffect } from "react";
-import AdminDashboard from "./components/admin/dashboard/Dashboard";
-import AdminRoute from "./components/admin/admin-components/adminRoute";
+
 
 function Content() {
   const routes = useRoutes(appRoute);

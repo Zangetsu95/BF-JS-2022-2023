@@ -10,7 +10,9 @@ export class ProductSupplierEntity {
   //   {
   //     onDelete: 'CASCADE',
   //   }
-  @ManyToOne(() => ProductEntity, (product) => product.id)
+  @ManyToOne(() => ProductEntity, (product) => product.id, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'product_id' })
   product: ProductEntity;
 

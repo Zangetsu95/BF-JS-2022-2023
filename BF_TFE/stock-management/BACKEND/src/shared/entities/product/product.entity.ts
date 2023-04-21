@@ -51,7 +51,9 @@ export class ProductEntity {
   )
   supplyProduct: ProductSupplierEntity[];
 
-  @OneToMany(() => StockEntity, (stock) => stock.product)
+  @OneToMany(() => StockEntity, (stock) => stock.product, {
+    onDelete: 'CASCADE',
+  })
   stocks: StockEntity[];
 
   @OneToMany(() => TransactionEntity, (transaction) => transaction.product)

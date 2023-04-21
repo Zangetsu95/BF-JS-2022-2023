@@ -31,14 +31,14 @@ export class UpdateProductDTO {
   @ApiProperty()
   price?: number;
 
-  @IsOptional()
-  @IsNumber(
-    { allowNaN: false, allowInfinity: false },
-    { message: 'La quantité doit être un nombre.' },
-  )
-  @IsPositive({ message: 'La quantité doit être positive.' })
-  @ApiProperty()
-  quantity?: number;
+  // @IsOptional()
+  // @IsNumber(
+  //   { allowNaN: false, allowInfinity: false },
+  //   { message: 'La quantité doit être un nombre.' },
+  // )
+  // @IsPositive({ message: 'La quantité doit être positive.' })
+  // @ApiProperty()
+  // quantity?: number;
 
   @IsOptional()
   @IsNumber({}, { message: "L'ID de la catégorie doit être un nombre." })

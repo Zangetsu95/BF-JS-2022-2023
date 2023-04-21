@@ -222,7 +222,8 @@ export class ProductService {
         category_id: productToUpdate.category.id,
       };
 
-      return this.productRepo.save(productDto);
+      await this.productRepo.save(productToUpdate);
+      return productDto;
     } catch (error) {
       throw new HttpException(
         'Impossible de mettre a jour le produit',

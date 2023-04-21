@@ -10,6 +10,8 @@ import ProtectedRoute from "../components/protected-route/protectedRoute.compone
 import AdminDashboard from "../components/admin/dashboard/Dashboard"
 import { Route, Routes } from "react-router-dom"
 import React from "react"
+import ProductDetailAdmin from "../components/admin/admin-components/product/product-detail.component"
+import ProductCreateAdmin from "../components/admin/admin-components/product/product-create.component"
 
 const appRoute = [
   {
@@ -45,6 +47,14 @@ const appRoute = [
   {
     path: "/admin/*",
     element: <AdminDashboard />,
+  },
+  {
+    path: "/admin/product/:id",
+    element: <ProductDetailAdmin />,
+  },
+  {
+    path: "/admin/create-product",
+    element: <ProductCreateAdmin />,
   },
 ]
 
