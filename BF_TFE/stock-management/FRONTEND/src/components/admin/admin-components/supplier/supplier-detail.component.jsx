@@ -21,6 +21,7 @@ const SupplierDetailAdmin = () => {
   const location = useLocation() || {}
   const [supplier, setSupplier] = useState(null)
   const navigate = useNavigate()
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
 
   const [supplierId, setSupplierId] = useState(
     location.state?.supplier?.id || ""
@@ -46,6 +47,11 @@ const SupplierDetailAdmin = () => {
     fetchSupplier()
   }, [])
 
+  const handleAlertClose = () => {
+    setIsAlertOpen(false)
+    navigate("/admin")
+  }
+
   const handleUpdate = async (event) => {
     event.preventDefault()
 
@@ -63,8 +69,10 @@ const SupplierDetailAdmin = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       )
+      if (response) {
+        setIsAlertOpen(true)
+      }
       console.log(response)
-      navigate("/admin")
     } catch (error) {
       console.error(error)
     }
@@ -154,6 +162,26 @@ const SupplierDetailAdmin = () => {
                   Modifier le fournisseur
                 </Button>
               </form>
+              <Dialog
+                open={isAlertOpen}
+                onClose={handleAlertClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  Produit modifié
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Le fournisseur a été modifié avec succès.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleAlertClose} color="primary" autoFocus>
+                    Ok
+                  </Button>
+                </DialogActions>
+              </Dialog>
               <Button
                 variant="contained"
                 color="error"

@@ -12,8 +12,10 @@ import { UpdateProductDTO } from 'src/shared/DTO/product/UpdatedProduct.dto';
 import { StockDTO } from 'src/shared/DTO/stock/Stock.dto';
 import { UpdateStockDTO } from 'src/shared/DTO/stock/UpdatedStock.dto';
 import { CategoryEntity } from 'src/shared/entities/category/category.entity';
+import { ProductSupplierEntity } from 'src/shared/entities/product-supplier/product-supplier.entity';
 import { ProductEntity } from 'src/shared/entities/product/product.entity';
 import { StockEntity } from 'src/shared/entities/stock/stock.entity';
+import { SupplierEntity } from 'src/shared/entities/supplier/supplier.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -25,6 +27,10 @@ export class ProductService {
     private categoryRepository: Repository<CategoryEntity>,
     @InjectRepository(StockEntity)
     private stockRepo: Repository<StockEntity>,
+    @InjectRepository(SupplierEntity)
+    private supplierRepo: Repository<SupplierEntity>,
+    @InjectRepository(ProductSupplierEntity)
+    private productSupplierRepo: Repository<ProductSupplierEntity>,
   ) {}
 
   /**
@@ -132,6 +138,7 @@ export class ProductService {
   async create(product: ProductCreateDTO): Promise<ProductDTO> {
     const newProduct = new ProductEntity();
     const newStock = new StockEntity();
+    const newProductSupplier = new ProductSupplierEntity(); // nouvelle instance de ProductSupplierEntity
 
     newProduct.description = product.description;
     newProduct.name = product.name;
@@ -145,6 +152,10 @@ export class ProductService {
     });
     newProduct.category = categoryId;
 
+    const supplier_id = await this.supplierRepo.findOne({
+      where: { id: product.supplier_id },
+    });
+
     try {
       const savedProduct = await this.productRepo.save(newProduct);
       newStock.product = savedProduct;
@@ -152,6 +163,10 @@ export class ProductService {
 
       const productDTO = instanceToPlain(savedProduct) as ProductDTO;
       productDTO.category_id = savedProduct.category.id; // Ajouter la propriété manquante
+
+      newProductSupplier.product = savedProduct; // Ajoutez l'ID du produit dans ProductSupplierEntity
+      newProductSupplier.supplier = supplier_id; // Ajoutez l'ID du fournisseur dans ProductSupplierEntity
+      await this.productSupplierRepo.save(newProductSupplier); // Enregistrez la nouvelle instance de ProductSupplierEntity
 
       return productDTO;
     } catch (error) {

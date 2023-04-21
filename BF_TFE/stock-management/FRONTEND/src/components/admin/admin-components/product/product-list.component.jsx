@@ -95,10 +95,10 @@ const ProductList = () => {
                       <TableCell>Prix:</TableCell>
                       <TableCell>{product.price} €</TableCell>
                     </TableRow>
-                    <TableRow>
+                    {/* <TableRow>
                       <TableCell>Fournisseur:</TableCell>
                       <TableCell>{product.supplier}</TableCell>
-                    </TableRow>
+                    </TableRow> */}
                     <TableRow>
                       <TableCell>Quantité disponible:</TableCell>
                       <TableCell>{product.quantity}</TableCell>

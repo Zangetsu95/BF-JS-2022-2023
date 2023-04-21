@@ -7,10 +7,18 @@ import { ProductEntity } from 'src/shared/entities/product/product.entity';
 import { ProductService } from 'src/product/product.service';
 import { CategoryEntity } from 'src/shared/entities/category/category.entity';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { SupplierEntity } from 'src/shared/entities/supplier/supplier.entity';
+import { ProductSupplierEntity } from 'src/shared/entities/product-supplier/product-supplier.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([StockEntity, ProductEntity, CategoryEntity]),
+    TypeOrmModule.forFeature([
+      StockEntity,
+      ProductEntity,
+      CategoryEntity,
+      SupplierEntity,
+      ProductSupplierEntity,
+    ]),
   ],
   controllers: [StockController],
   providers: [StockService, ProductService, AuthGuard],

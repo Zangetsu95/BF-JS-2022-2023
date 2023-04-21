@@ -69,6 +69,20 @@ export class StockService {
     const product_id = await this.productRepo.findOne({
       where: { id: stock.product_id },
     });
+
+    // Vérifiez si une entrée de stock existe déjà pour ce produit
+    const existingStock = await this.stockRepo.findOne({
+      where: { product: product_id },
+    });
+
+    // S'il existe déjà une entrée de stock, lancez une exception
+    if (existingStock) {
+      throw new HttpException(
+        'Une entrée de stock existe déjà pour ce produit',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     newStock.product = product_id;
 
     try {

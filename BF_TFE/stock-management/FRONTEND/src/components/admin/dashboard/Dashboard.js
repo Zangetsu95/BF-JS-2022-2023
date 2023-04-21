@@ -11,6 +11,7 @@ import Tabs from '@mui/material/Tabs';
 import Paper from '@mui/material/Paper';
 import ProductList from "../admin-components/product/product-list.component.jsx";
 import SupplierList from "../admin-components/supplier/supplier-list.component.jsx"
+import StocksList from '../admin-components/stocks/stock-list.component.jsx';
 
 
 export default function AdminDashboard() {
@@ -52,7 +53,7 @@ export default function AdminDashboard() {
                     </Tabs>
                     {value === 0 && <ProductList />}
                     {value === 1 && <SupplierList />}
-                    {value === 2 && <div>Stocks Content</div>}
+                    {value === 2 && <StocksList />}
 
                 </Paper>
             </Container>

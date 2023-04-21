@@ -26,6 +26,7 @@ const ProductDetailAdmin = () => {
   const location = useLocation() || {}
   const [product, setProduct] = useState(null)
   const navigate = useNavigate()
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
 
   const [productId, setProductId] = useState(location.state?.product?.id || "")
 
@@ -88,6 +89,11 @@ const ProductDetailAdmin = () => {
     }
   }
 
+  const handleAlertClose = () => {
+    setIsAlertOpen(false)
+    navigate("/admin")
+  }
+
   const handleUpdate = async (event) => {
     event.preventDefault()
 
@@ -104,6 +110,10 @@ const ProductDetailAdmin = () => {
     console.log("category_id:", parseInt(category))
 
     const updatedProduct = await updateProduct(productId, productData)
+
+    if (updatedProduct) {
+      setIsAlertOpen(true)
+    }
 
     console.log("Produit mis à jour:", updatedProduct)
   }
@@ -135,6 +145,9 @@ const ProductDetailAdmin = () => {
       newQuantity
     )
     setProduct(updatedProduct)
+    if (updatedProduct) {
+      setIsAlertOpen(true)
+    }
   }
 
   const deleteProduct = async (id) => {
@@ -283,6 +296,24 @@ const ProductDetailAdmin = () => {
               Modifier la quantité
             </Button>
           </Box>
+          <Dialog
+            open={isAlertOpen}
+            onClose={handleAlertClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">Produit modifié</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Le produit a été modifié avec succès.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleAlertClose} color="primary" autoFocus>
+                Ok
+              </Button>
+            </DialogActions>
+          </Dialog>
           <Button
             variant="contained"
             color="error"

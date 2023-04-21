@@ -11,6 +11,7 @@ import { StockModule } from './stock/stock.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { AuthModule } from './auth/auth.module';
 import { config } from 'dotenv';
+import { ProductSupplierModule } from './product-supplier/product-supplier.module';
 config();
 
 @Module({
@@ -39,6 +40,7 @@ config();
     StockModule,
     TransactionModule,
     AuthModule,
+    ProductSupplierModule,
   ],
   controllers: [AppController],
   providers: [AppService],

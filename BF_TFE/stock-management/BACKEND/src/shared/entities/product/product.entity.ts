@@ -41,7 +41,9 @@ export class ProductEntity {
   @IsPositive()
   quantity: number;
 
-  @ManyToOne((type) => CategoryEntity, (category) => category.products)
+  @ManyToOne((type) => CategoryEntity, (category) => category.products, {
+    cascade: true,
+  })
   @JoinColumn({ name: 'category_id' })
   category: CategoryEntity;
 

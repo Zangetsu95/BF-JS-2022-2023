@@ -18,4 +18,7 @@ export class ProductCreateDTO extends OmitType(ProductDTO, ['id']) {
 
   @ApiProperty()
   category_id: number;
+
+  @ApiProperty()
+  supplier_id: number;
 }

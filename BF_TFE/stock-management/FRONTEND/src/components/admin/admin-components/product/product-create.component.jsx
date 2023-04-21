@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom"
 
 const ProductCreateAdmin = () => {
   const navigate = useNavigate()
+  const [submitting, setSubmitting] = useState(false)
 
   const [categories, setCategories] = useState([])
   const [formData, setFormData] = useState({
@@ -21,7 +22,22 @@ const ProductCreateAdmin = () => {
     price: "",
     quantity: "",
     category_id: "",
+    supplier_id: "",
   })
+  const [suppliers, setSuppliers] = useState([])
+
+  const fetchSuppliers = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:5000/api/supplier")
+      setSuppliers(response.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchSuppliers()
+  }, [])
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -53,13 +69,43 @@ const ProductCreateAdmin = () => {
 
       const price = parseFloat(formData.price)
       const quantity = parseFloat(formData.quantity)
+      const category_id = parseInt(formData.category_id, 10)
+      const supplier_id = parseInt(formData.supplier_id, 10)
 
-      const response = await axios.post(
+      const productData = {
+        name: formData.name,
+        description: formData.description,
+        price,
+        quantity,
+        category_id,
+      }
+
+      // Créer le produit
+      const productResponse = await axios.post(
         "http://127.0.0.1:5000/api/product",
-        { ...formData, price, quantity },
+        productData,
         config
       )
-      console.log(response)
+      console.log("Product Response:", productResponse.data)
+
+      // Récupérer l'ID du produit créé
+      const createdProductId = productResponse.data.data.id
+
+      // Créer l'association entre le produit et le fournisseur
+      const productSupplierData = {
+        productId: parseInt(createdProductId, 10),
+        supplierId: supplier_id,
+      }
+
+      await axios.post(
+        "http://127.0.0.1:5000/api/product-supplier",
+        productSupplierData,
+        config
+      )
+
+      // Rediriger vers la page d'accueil des produits
+      navigate("/admin")
+      setSubmitting(false)
     } catch (error) {
       console.error(error)
     }
@@ -127,7 +173,29 @@ const ProductCreateAdmin = () => {
             ))}
           </Select>
         </FormControl>
-        <Button type="submit" variant="contained" color="primary">
+
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="supplier-label">Fournisseur</InputLabel>
+          <Select
+            labelId="supplier-label"
+            name="supplier_id"
+            value={formData.supplier_id}
+            onChange={handleChange}
+          >
+            {suppliers.map((supplier) => (
+              <MenuItem key={supplier.id} value={supplier.id}>
+                {supplier.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={submitting}
+        >
           Créer
         </Button>
         <Button onClick={() => navigate(-1)}>Retour</Button>
