@@ -36,10 +36,16 @@ const CustomLink = ({ to, name }) => (
 
 function ResponsiveAppBar() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
-  const pagesConnected = ["Product", "Logout", "Home"]
-  const settingsNotConnected = ["Login", "Home"]
-  const settingsConnected = ["Profile", "Logout", "Home"]
-  const pagesToDisplay = isAuthenticated ? pagesConnected : settingsNotConnected
+  const isAdmin = useSelector((state) => state.auth.userRole === "admin")
+  const pagesAdmin = ["Admin", "Home"]
+  const pagesRegularUser = ["Product", "Logout", "Home"]
+  const pagesNotAuthenticated = ["Login", "Home"]
+  // const settingsConnected = ["Profile", "Logout", "Home"]
+  const pagesToDisplay = isAuthenticated
+    ? isAdmin
+      ? pagesAdmin
+      : pagesRegularUser
+    : pagesNotAuthenticated
 
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
@@ -191,7 +197,7 @@ function ResponsiveAppBar() {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            {settingsConnected.map((setting) => (
+            {pagesToDisplay.map((setting) => (
               <MenuItem key={setting}>
                 <Typography>{setting}</Typography>
               </MenuItem>

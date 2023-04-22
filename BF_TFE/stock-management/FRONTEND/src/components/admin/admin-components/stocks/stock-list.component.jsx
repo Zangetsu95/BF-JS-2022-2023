@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 const StocksList = () => {
   const [data, setData] = useState([])
@@ -19,6 +20,13 @@ const StocksList = () => {
   const [filteredData, setFilteredData] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(15)
+  const navigate = useNavigate()
+
+  const handleManageStock = (product, supplier) => {
+    navigate(`/admin/stocks/${product.id}`, {
+      state: { product: product, supplier: supplier },
+    })
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -116,6 +124,7 @@ const StocksList = () => {
                   <Button
                     variant="contained"
                     style={{ backgroundColor: "orange", color: "white" }}
+                    onClick={() => handleManageStock(product, supplier)}
                   >
                     Gérer le stock
                   </Button>

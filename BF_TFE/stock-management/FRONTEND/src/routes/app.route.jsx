@@ -14,6 +14,7 @@ import ProductDetailAdmin from "../components/admin/admin-components/product/pro
 import ProductCreateAdmin from "../components/admin/admin-components/product/product-create.component"
 import SupplierDetailAdmin from "../components/admin/admin-components/supplier/supplier-detail.component"
 import SupplierCreateAdmin from "../components/admin/admin-components/supplier/supplier-create.component"
+import StockDetailAdmin from "../components/admin/admin-components/stocks/stocks-detail.component"
 
 const appRoute = [
   {
@@ -65,6 +66,10 @@ const appRoute = [
   {
     path: "/admin/create-supplier",
     element: <SupplierCreateAdmin />,
+  },
+  {
+    path: "/admin/stocks/:id",
+    element: <StockDetailAdmin />,
   },
 ]
 

@@ -29,7 +29,7 @@ export class TransactionDTO {
 
   @IsDefined({ message: 'La date de tranasction ne peut pas être vide.' })
   @IsDateString()
-  @MaxLength(10)
+  @MaxLength(30)
   @ApiProperty()
   date: Date[];
 
