@@ -68,10 +68,10 @@ const StockDetailAdmin = () => {
       return
     }
 
-    if (quantity > product.quantity) {
-      alert("La quantité demandée n'est pas disponible en stock.")
-      return
-    }
+    // if (quantity > product.quantity) {
+    //   alert("La quantité demandée n'est pas disponible en stock.")
+    //   return
+    // }
 
     try {
       const token = JSON.parse(localStorage.getItem("jwt"))
@@ -86,7 +86,7 @@ const StockDetailAdmin = () => {
       const price = product.price * quantity // Calculer le prix total
       const transactionData = {
         date,
-        type: "sale",
+        type: "purchasse",
         quantity,
         price,
         product_id: product.id,

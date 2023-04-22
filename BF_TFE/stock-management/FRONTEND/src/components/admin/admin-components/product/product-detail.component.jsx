@@ -18,15 +18,15 @@ import {
 import { useLocation, useNavigate } from "react-router-dom"
 import axios from "axios"
 
-const API_BASE_URL = "http://localhost:5000/api/product"
-const token = JSON.parse(localStorage.getItem("jwt"))
-console.log(token)
-
 const ProductDetailAdmin = () => {
   const location = useLocation() || {}
   const [product, setProduct] = useState(null)
   const navigate = useNavigate()
   const [isAlertOpen, setIsAlertOpen] = useState(false)
+
+  const API_BASE_URL = "http://localhost:5000/api/product"
+  const token = JSON.parse(localStorage.getItem("jwt"))
+  console.log(token)
 
   const [productId, setProductId] = useState(location.state?.product?.id || "")
 
@@ -54,6 +54,12 @@ const ProductDetailAdmin = () => {
 
   const [open, setOpen] = useState(false)
   const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    if (location.state?.product?.category_id && categories.length > 0) {
+      setCategory(location.state.product.category_id)
+    }
+  }, [location.state, categories])
 
   useEffect(() => {
     const fetchCategories = async () => {

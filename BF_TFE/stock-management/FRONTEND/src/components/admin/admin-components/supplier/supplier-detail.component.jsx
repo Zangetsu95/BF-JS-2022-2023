@@ -14,10 +14,9 @@ import {
 import { useLocation, useNavigate } from "react-router-dom"
 import axios from "axios"
 
-const API_BASE_URL = "http://localhost:5000/api/supplier"
-const token = JSON.parse(localStorage.getItem("jwt"))
-
 const SupplierDetailAdmin = () => {
+  const API_BASE_URL = "http://localhost:5000/api/supplier"
+  const token = JSON.parse(localStorage.getItem("jwt"))
   const location = useLocation() || {}
   const [supplier, setSupplier] = useState(null)
   const navigate = useNavigate()
