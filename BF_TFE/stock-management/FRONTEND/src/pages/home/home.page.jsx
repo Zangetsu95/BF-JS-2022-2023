@@ -1,5 +1,6 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material"
 import { ThemeProvider, createTheme } from "@mui/material/styles"
+import { Link } from "react-router-dom"
 
 const theme = createTheme({
   palette: {
@@ -76,7 +77,12 @@ function HomePage() {
                 <Box
                   sx={{ display: "flex", justifyContent: "flex-start", pt: 4 }}
                 >
-                  <Button variant="contained" href="/product" sx={{ mr: 2 }}>
+                  <Button
+                    variant="contained"
+                    component={Link}
+                    to="/product"
+                    sx={{ mr: 2 }}
+                  >
                     Voir nos produits
                   </Button>
                   <Button variant="outlined" href="/contact">

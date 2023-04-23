@@ -38,4 +38,13 @@ export class TransactionEntity {
   @Column()
   @IsNumber()
   price: number;
+
+  //TODO rajouter adresse et transaction number + service + autre dto + controller
+  // @Column()
+  // @IsString()
+  // address: string;
+
+  // @Column()
+  // @IsString()
+  // transactionNumber: string;
 }

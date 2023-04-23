@@ -10,7 +10,6 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-
 export class TransactionDTO {
   @IsInt({ message: "l'identifiant doit être un nombre entier" })
   @IsDefined({ message: "l'identifiant ne peut pas être vide" })

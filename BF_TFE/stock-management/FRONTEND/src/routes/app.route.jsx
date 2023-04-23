@@ -15,8 +15,10 @@ import ProductCreateAdmin from "../components/admin/admin-components/product/pro
 import SupplierDetailAdmin from "../components/admin/admin-components/supplier/supplier-detail.component"
 import SupplierCreateAdmin from "../components/admin/admin-components/supplier/supplier-create.component"
 import StockDetailAdmin from "../components/admin/admin-components/stocks/stocks-detail.component"
+import CartConfirmation from "../pages/cart-confirmation/cartConfirmation.component"
 
 const appRoute = [
+  //USER ROUTE
   {
     path: "",
     element: <HomePage />,
@@ -44,9 +46,15 @@ const appRoute = [
     element: <SignUp />,
   },
   {
+    path: "/cart",
+    element: <CartConfirmation />,
+  },
+  //404 NOT FOUND
+  {
     path: "*",
     element: <NotFound />,
   },
+  //ADMIN PAGE
   {
     path: "/admin/*",
     element: <AdminDashboard />,

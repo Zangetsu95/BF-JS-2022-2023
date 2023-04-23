@@ -3,6 +3,20 @@ const initialState = {
     userRole: localStorage.getItem("userRole") || null,
 }
 
+/**
+ * This is a reducer function that handles authentication-related actions and updates the state
+ * accordingly.
+ * @param [state] - The current state of the authentication reducer. If no state is provided, it will
+ * default to the initialState object.
+ * @param action - The `action` parameter is an object that contains information about the action being
+ * dispatched, including the type of the action and any additional data (payload) that needs to be
+ * passed to the reducer. The reducer uses this information to determine how to update the state.
+ * @returns The authReducer function is returning a new state object based on the action type received.
+ * If the action type is "SET_AUTHENTICATED", it returns a new state object with the isAuthenticated
+ * property set to the value of the action payload. If the action type is "SET_UNAUTHENTICATED", it
+ * returns a new state object with the isAuthenticated property set to false. If the action type is
+ * "ADD
+ */
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case "SET_AUTHENTICATED":

@@ -17,6 +17,21 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { checkAuth, logout } from "../../store/actions/authActions.js"
 import { useEffect } from "react"
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
+import Badge from "@mui/material/Badge"
+import { addToCart, removeFromCart } from "../../store/actions/cartActions.js"
+import { styled } from "@mui/material/styles"
+import CartModal from "../../components/cart/cart-modal.component.jsx"
+import { useState } from "react"
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}))
 
 const CustomLink = ({ to, name }) => (
   <Button
@@ -37,8 +52,19 @@ const CustomLink = ({ to, name }) => (
 function ResponsiveAppBar() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   const isAdmin = useSelector((state) => state.auth.userRole === "admin")
+  const showCart = useSelector((state) => state.auth.userRole === "user")
+  const [openCartModal, setOpenCartModal] = useState(false)
+
+  const handleCartModalOpen = () => {
+    setOpenCartModal(true)
+  }
+
+  const handleCartModalClose = () => {
+    setOpenCartModal(false)
+  }
+
   const pagesAdmin = ["Admin", "Home"]
-  const pagesRegularUser = ["Product", "Logout", "Home"]
+  const pagesRegularUser = ["Product", "Home", "Cart"]
   const pagesNotAuthenticated = ["Login", "Home"]
   // const settingsConnected = ["Profile", "Logout", "Home"]
   const pagesToDisplay = isAuthenticated
@@ -47,8 +73,8 @@ function ResponsiveAppBar() {
       : pagesRegularUser
     : pagesNotAuthenticated
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null)
-  const [anchorElUser, setAnchorElUser] = React.useState(null)
+  const [anchorElNav, setAnchorElNav] = useState(null)
+  const [anchorElUser, setAnchorElUser] = useState(null)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -77,6 +103,12 @@ function ResponsiveAppBar() {
   useEffect(() => {
     dispatch(checkAuth())
   }, [dispatch, isAuthenticated])
+
+  const cartItems = useSelector((state) => state.cart.cartItems)
+
+  const totalItemsInCart = useSelector((state) =>
+    state.cart.cartItems.reduce((count, item) => count + 1, 0)
+  )
 
   return (
     <AppBar position="static">
@@ -139,6 +171,19 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
+          {showCart && (
+            <IconButton aria-label="cart" onClick={handleCartModalOpen}>
+              <StyledBadge badgeContent={totalItemsInCart} color="secondary">
+                <ShoppingCartIcon />
+              </StyledBadge>
+            </IconButton>
+          )}
+          <CartModal
+            open={openCartModal}
+            onClose={handleCartModalClose}
+            cartItems={cartItems}
+          />
+
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
