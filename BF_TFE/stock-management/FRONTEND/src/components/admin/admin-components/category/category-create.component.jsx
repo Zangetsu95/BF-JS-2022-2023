@@ -3,6 +3,11 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   InputLabel,
   MenuItem,
@@ -13,6 +18,7 @@ import {
 
 const CategoryCreateAdmin = () => {
   const navigate = useNavigate()
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
 
   const [formData, setFormData] = useState({
     name: "",
@@ -21,6 +27,11 @@ const CategoryCreateAdmin = () => {
   const handleChange = (event) => {
     const { name, value } = event.target
     setFormData({ ...formData, [name]: value })
+  }
+
+  const handleAlertClose = () => {
+    setIsAlertOpen(false)
+    navigate("/admin")
   }
 
   const handleSubmit = async (event) => {
@@ -43,6 +54,7 @@ const CategoryCreateAdmin = () => {
         categoryData,
         config
       )
+      setIsAlertOpen(true)
     } catch (error) {
       console.log(error)
     }
@@ -50,7 +62,7 @@ const CategoryCreateAdmin = () => {
 
   return (
     <div>
-      <Typography variant="h4">Créer un produit</Typography>
+      <Typography variant="h4">Créer une Category</Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           label="Nom"
@@ -64,6 +76,24 @@ const CategoryCreateAdmin = () => {
         <Button type="submit" variant="contained" color="primary">
           Créer
         </Button>
+        <Dialog
+          open={isAlertOpen}
+          onClose={handleAlertClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Category crée</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              La catégory a été crée !.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleAlertClose} color="primary" autoFocus>
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog>
         <Button onClick={() => navigate(-1)}>Retour</Button>
       </form>
     </div>

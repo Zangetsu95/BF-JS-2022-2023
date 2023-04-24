@@ -25,6 +25,8 @@ const CategoryDetailAdmin = () => {
   const navigate = useNavigate()
   const [isAlertOpen, setIsAlertOpen] = useState(false)
   const [open, setOpen] = useState(false)
+  const [isDeleteSuccessDialogOpen, setIsDeleteSuccessDialogOpen] =
+    useState(false)
 
   const API_BASE_URL = "http://localhost:5000/api/category"
   const token = JSON.parse(localStorage.getItem("jwt"))
@@ -88,6 +90,11 @@ const CategoryDetailAdmin = () => {
   const handleDeleteConfirmation = async () => {
     await deletedCategory(categoryId)
     setOpen(false)
+    setIsDeleteSuccessDialogOpen(true)
+  }
+
+  const handleDeleteSuccessDialogClose = () => {
+    setIsDeleteSuccessDialogOpen(false)
     navigate("/admin")
   }
 
@@ -186,6 +193,28 @@ const CategoryDetailAdmin = () => {
                 autoFocus
               >
                 Supprimer
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+            open={isDeleteSuccessDialogOpen}
+            onClose={handleDeleteSuccessDialogClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">Category supprimé</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                La category a bien été supprimé!.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handleDeleteSuccessDialogClose}
+                color="primary"
+                autoFocus
+              >
+                Ok
               </Button>
             </DialogActions>
           </Dialog>

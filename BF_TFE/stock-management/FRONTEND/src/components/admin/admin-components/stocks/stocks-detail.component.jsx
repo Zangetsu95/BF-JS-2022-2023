@@ -1,14 +1,28 @@
 import React, { useEffect, useState } from "react"
-import { Box, Button, Container, TextField, Typography } from "@mui/material"
-import { useLocation } from "react-router-dom"
+import {
+  Box,
+  Button,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  Typography,
+} from "@mui/material"
+import { useLocation, useNavigate } from "react-router-dom"
 import axios from "axios"
 import jwt_decode from "jwt-decode"
 
 const StockDetailAdmin = () => {
+  const navigate = useNavigate()
+
   const location = useLocation()
   const product = location.state.product
   const supplier = location.state.supplier
   const [totalCost, setTotalCost] = useState(0)
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
 
   const [quantity, setQuantity] = useState(1)
   const [userID, setUserID] = useState(null)
@@ -62,6 +76,11 @@ const StockDetailAdmin = () => {
     }
   }, [product, quantity])
 
+  const handleAlertClose = () => {
+    setIsAlertOpen(false)
+    navigate("/admin")
+  }
+
   const handleSubmit = async () => {
     if (!userID) {
       console.error("L'ID de l'utilisateur n'est pas disponible.")
@@ -99,7 +118,7 @@ const StockDetailAdmin = () => {
         transactionData,
         config
       )
-
+      setIsAlertOpen(true)
       console.log("Transaction créée:", response.data)
     } catch (error) {
       console.error(error)
@@ -151,6 +170,26 @@ const StockDetailAdmin = () => {
             >
               Retour
             </Button>
+            <Dialog
+              open={isAlertOpen}
+              onClose={handleAlertClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                Commande réussit
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  La commande à été effectué !.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleAlertClose} color="primary" autoFocus>
+                  Ok
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Box>
         </Box>
       </Box>

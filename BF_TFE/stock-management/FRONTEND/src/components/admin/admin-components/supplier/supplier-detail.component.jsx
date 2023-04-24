@@ -20,7 +20,10 @@ const SupplierDetailAdmin = () => {
   const location = useLocation() || {}
   const [supplier, setSupplier] = useState(null)
   const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
   const [isAlertOpen, setIsAlertOpen] = useState(false)
+  const [isDeleteSuccessDialogOpen, setIsDeleteSuccessDialogOpen] =
+    useState(false)
 
   const [supplierId, setSupplierId] = useState(
     location.state?.supplier?.id || ""
@@ -83,10 +86,19 @@ const SupplierDetailAdmin = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       console.log(response)
-      navigate("/admin/supplier")
     } catch (error) {
       console.error(error)
     }
+  }
+  const handleDeleteConfirmation = async () => {
+    await deleteSupplier(supplierId)
+    setOpen(false)
+    setIsDeleteSuccessDialogOpen(true)
+  }
+
+  const handleDeleteSuccessDialogClose = () => {
+    setIsDeleteSuccessDialogOpen(false)
+    navigate("/admin/supplier")
   }
 
   const handleClickOpen = () => {
@@ -96,13 +108,6 @@ const SupplierDetailAdmin = () => {
   const handleClose = () => {
     setOpen(false)
   }
-
-  const handleDeleteConfirmation = async () => {
-    await deleteSupplier(supplierId)
-    setOpen(false)
-  }
-
-  const [open, setOpen] = useState(false)
 
   return (
     <>
@@ -168,7 +173,7 @@ const SupplierDetailAdmin = () => {
                 aria-describedby="alert-dialog-description"
               >
                 <DialogTitle id="alert-dialog-title">
-                  Produit modifié
+                  Fournisseur modifié
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
@@ -177,6 +182,30 @@ const SupplierDetailAdmin = () => {
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={handleAlertClose} color="primary" autoFocus>
+                    Ok
+                  </Button>
+                </DialogActions>
+              </Dialog>
+              <Dialog
+                open={isDeleteSuccessDialogOpen}
+                onClose={handleDeleteSuccessDialogClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  Fournisseur supprimé
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Le fournisseur a bien été supprimé!.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    onClick={handleDeleteSuccessDialogClose}
+                    color="primary"
+                    autoFocus
+                  >
                     Ok
                   </Button>
                 </DialogActions>

@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   InputLabel,
   MenuItem,
@@ -14,6 +19,7 @@ import { useNavigate } from "react-router-dom"
 const ProductCreateAdmin = () => {
   const navigate = useNavigate()
   const [submitting, setSubmitting] = useState(false)
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
 
   const [categories, setCategories] = useState([])
   const [formData, setFormData] = useState({
@@ -56,6 +62,11 @@ const ProductCreateAdmin = () => {
     setFormData({ ...formData, [event.target.name]: event.target.value })
   }
 
+  const handleAlertClose = () => {
+    setIsAlertOpen(false)
+    navigate("/admin")
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     setSubmitting(true)
@@ -86,6 +97,7 @@ const ProductCreateAdmin = () => {
         productData,
         config
       )
+
       console.log("Product Response:", productResponse.data)
 
       // Récupérer l'ID du produit créé
@@ -105,7 +117,8 @@ const ProductCreateAdmin = () => {
       )
       console.log("Association produit-fournisseur créée.")
       // Rediriger vers la page d'accueil des produits
-      navigate("/admin")
+
+      setIsAlertOpen(true)
       setSubmitting(false)
     } catch (error) {
       console.error(error)
@@ -200,6 +213,25 @@ const ProductCreateAdmin = () => {
         >
           Créer
         </Button>
+        <Dialog
+          open={isAlertOpen}
+          onClose={handleAlertClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Produit modifié</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Le produit a été crée !.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleAlertClose} color="primary" autoFocus>
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog>
+
         <Button onClick={() => navigate(-1)}>Retour</Button>
       </form>
     </div>

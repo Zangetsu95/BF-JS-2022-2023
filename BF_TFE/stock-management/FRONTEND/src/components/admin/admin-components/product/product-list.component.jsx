@@ -2,14 +2,19 @@ import * as React from "react"
 import { styled } from "@mui/material/styles"
 import {
   Button,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
 } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
@@ -20,6 +25,10 @@ const ProductList = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [products, setProducts] = useState([])
+  const [searchProduct, setSearchProduct] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("")
+  const [categories, setCategories] = useState([])
+  const [formSubmitted, setFormSubmitted] = useState(false)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -27,7 +36,9 @@ const ProductList = () => {
         const response = await axios.get(
           `http://127.0.0.1:5000/api/product?offset=${
             (currentPage - 1) * 10
-          }&limit=10`
+          }&limit=10${
+            selectedCategory ? `&category_id=${selectedCategory}` : ""
+          }${searchProduct ? `&search=${searchProduct}` : ""}`
         )
         setProducts(response.data.items)
         console.log("response.data :>> ", response.data)
@@ -40,6 +51,18 @@ const ProductList = () => {
 
     fetchProducts()
   }, [currentPage])
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:5000/api/category")
+        setCategories(response.data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchCategories()
+  }, [currentPage, searchProduct, selectedCategory])
 
   const handleManageStock = (product) => {
     navigate(`/admin/product/${product.id}`, {
@@ -61,6 +84,34 @@ const ProductList = () => {
 
   return (
     <>
+      {/* <Grid container spacing={2} justifyContent="space-between">
+        <Grid item xs={12} sm={5}>
+          <TextField
+            fullWidth
+            label="Rechercher un produit"
+            variant="outlined"
+            value={searchProduct}
+            onChange={(e) => setSearchProduct(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={5}>
+          <FormControl fullWidth variant="outlined">
+            <InputLabel>Filtrer par catégorie</InputLabel>
+            <Select
+              label="Filtrer par catégorie"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <MenuItem value="">Toutes les catégories</MenuItem>
+              {categories.map((category) => (
+                <MenuItem key={category.id} value={category.id}>
+                  {category.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid> */}
       <Button
         variant="contained"
         color="primary"

@@ -1,10 +1,20 @@
 import React, { useState } from "react"
 import axios from "axios"
-import { Button, TextField, Typography } from "@mui/material"
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+  Typography,
+} from "@mui/material"
 import { useNavigate } from "react-router-dom"
 
 const SupplierCreateAdmin = () => {
   const navigate = useNavigate()
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
 
   const [formData, setFormData] = useState({
     name: "",
@@ -14,6 +24,11 @@ const SupplierCreateAdmin = () => {
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value })
+  }
+
+  const handleAlertClose = () => {
+    setIsAlertOpen(false)
+    navigate("/admin")
   }
 
   const handleSubmit = async (event) => {
@@ -32,6 +47,7 @@ const SupplierCreateAdmin = () => {
         formData,
         config
       )
+      setIsAlertOpen(true)
       console.log(response)
     } catch (error) {
       console.error(error)
@@ -72,6 +88,24 @@ const SupplierCreateAdmin = () => {
         <Button type="submit" variant="contained" color="primary">
           Créer
         </Button>
+        <Dialog
+          open={isAlertOpen}
+          onClose={handleAlertClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Produit modifié</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Le fournisseur a été crée !.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleAlertClose} color="primary" autoFocus>
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog>
         <Button onClick={() => navigate(-1)}>Retour</Button>
       </form>
     </div>

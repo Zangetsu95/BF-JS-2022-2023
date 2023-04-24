@@ -23,6 +23,8 @@ const ProductDetailAdmin = () => {
   const [product, setProduct] = useState(null)
   const navigate = useNavigate()
   const [isAlertOpen, setIsAlertOpen] = useState(false)
+  const [isDeleteSuccessDialogOpen, setIsDeleteSuccessDialogOpen] =
+    useState(false)
 
   const API_BASE_URL = "http://localhost:5000/api/product"
   const token = JSON.parse(localStorage.getItem("jwt"))
@@ -181,6 +183,11 @@ const ProductDetailAdmin = () => {
     // Faites l'appel API pour supprimer le produit ici
     await deleteProduct(productId)
     setOpen(false) // Fermer la boîte de dialogue
+    setIsDeleteSuccessDialogOpen(true)
+  }
+
+  const handleDeleteSuccessDialogClose = () => {
+    setIsDeleteSuccessDialogOpen(false)
     navigate("/admin")
   }
 
@@ -353,6 +360,28 @@ const ProductDetailAdmin = () => {
                 autoFocus
               >
                 Supprimer
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Dialog
+            open={isDeleteSuccessDialogOpen}
+            onClose={handleDeleteSuccessDialogClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">Produit supprimé</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Le produit a bien été supprimé!.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handleDeleteSuccessDialogClose}
+                color="primary"
+                autoFocus
+              >
+                Ok
               </Button>
             </DialogActions>
           </Dialog>

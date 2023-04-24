@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { clearCart } from "./cartActions";
 
 export const login = (email, password) => {
     return (dispatch) => {
@@ -44,6 +45,7 @@ export const logout = () => {
         localStorage.removeItem("jwt");
         dispatch({ type: "SET_UNAUTHENTICATED" });
         localStorage.removeItem("userRole");
+        dispatch(clearCart())
     };
 };
 

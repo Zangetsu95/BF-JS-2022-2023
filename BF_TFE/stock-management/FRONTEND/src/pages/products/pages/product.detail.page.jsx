@@ -1,20 +1,42 @@
-import { Typography, Button, Grid, Box, TextField } from "@mui/material"
-import { useLocation } from "react-router-dom"
+import {
+  Typography,
+  Button,
+  Grid,
+  Box,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@mui/material"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { addToCart } from "../../../store/actions/cartActions"
 
 function ProductDetailsPage(props) {
   const location = useLocation()
+  const navigate = useNavigate()
   const { id, name, description, imageUrl, price, supplier, quantity } =
     location.state.product
 
   const [selectedQuantity, setSelectedQuantity] = useState(1)
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
 
   const dispatch = useDispatch()
+  const handleAlertClose = () => {
+    setTimeout(() => {
+      setIsAlertOpen(false)
+    }, 2000)
+  }
 
   const handleAddToCart = () => {
     dispatch(addToCart(id, name, price, parseInt(selectedQuantity)))
+    setIsAlertOpen(true)
+    setTimeout(() => {
+      setIsAlertOpen(false)
+    }, 2000)
   }
 
   return (
@@ -77,6 +99,24 @@ function ProductDetailsPage(props) {
             >
               Retour
             </Button>
+            <Dialog
+              open={isAlertOpen}
+              onClose={handleAlertClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">Produit modifié</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  Le produit a été crée !.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleAlertClose} color="primary" autoFocus>
+                  Ok
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Box>
         </Grid>
       </Grid>
