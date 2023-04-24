@@ -87,7 +87,7 @@ export class TransactionService {
     newTransaction.user = userId;
 
     const stock = await this.stockRepo.findOne({
-      where: { id: transaction.product_id },
+      where: { product: { id: transaction.product_id } },
       relations: ['product'],
     });
 

@@ -58,7 +58,7 @@ const ProductCreateAdmin = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-
+    setSubmitting(true)
     try {
       const token = JSON.parse(localStorage.getItem("jwt"))
       const config = {
@@ -97,17 +97,19 @@ const ProductCreateAdmin = () => {
         supplierId: supplier_id,
       }
 
+      console.log("Création de l'association produit-fournisseur...")
       await axios.post(
         "http://127.0.0.1:5000/api/product-supplier",
         productSupplierData,
         config
       )
-
+      console.log("Association produit-fournisseur créée.")
       // Rediriger vers la page d'accueil des produits
       navigate("/admin")
       setSubmitting(false)
     } catch (error) {
       console.error(error)
+      setSubmitting(false)
     }
   }
 

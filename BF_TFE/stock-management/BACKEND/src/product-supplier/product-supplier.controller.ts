@@ -26,6 +26,7 @@ export class ProductSupplierController {
   async create(
     @Body(ValidationPipe) productSupplierDto: ProductSupplierDto,
   ): Promise<{ createdProductId: number }> {
+    console.log('Creating product-supplier association');
     const productSupplier = await this.productSupplierService.create(
       productSupplierDto,
     );

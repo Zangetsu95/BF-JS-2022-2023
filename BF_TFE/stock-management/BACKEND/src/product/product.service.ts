@@ -166,7 +166,7 @@ export class ProductService {
 
       newProductSupplier.product = savedProduct; // Ajoutez l'ID du produit dans ProductSupplierEntity
       newProductSupplier.supplier = supplier_id; // Ajoutez l'ID du fournisseur dans ProductSupplierEntity
-      await this.productSupplierRepo.save(newProductSupplier); // Enregistrez la nouvelle instance de ProductSupplierEntity
+      // await this.productSupplierRepo.save(newProductSupplier); // Enregistrez la nouvelle instance de ProductSupplierEntity
 
       return productDTO;
     } catch (error) {

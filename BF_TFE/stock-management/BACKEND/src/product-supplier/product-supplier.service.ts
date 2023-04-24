@@ -1,4 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+/* The ProductSupplierService class is responsible for handling the creation and retrieval of
+product-supplier associations in a NestJS application. */
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductSupplierEntity } from 'src/shared/entities/product-supplier/product-supplier.entity';
@@ -30,6 +36,7 @@ export class ProductSupplierService {
     ProductSupplierEntity & { createdProductId: number }
   > {
     console.log('productId:', productId, 'supplierId:', supplierId);
+    console.log('Creating product-supplier association in service');
 
     const product = await this.productRepo.findOne({
       where: { id: productId },
@@ -41,6 +48,17 @@ export class ProductSupplierService {
     if (!product || !supplier) {
       throw new NotFoundException('Produit ou fournisseur introuvable');
     }
+
+    // const existingProductSupplier =
+    //   await this.productSupplierRepository.findOne({
+    //     where: { product, supplier },
+    //   });
+
+    // if (existingProductSupplier) {
+    //   throw new ConflictException(
+    //     'Cette association produit-fournisseur existe déjà',
+    //   );
+    // }
 
     const newProductSupplier = new ProductSupplierEntity();
     newProductSupplier.product = product;
