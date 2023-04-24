@@ -13,6 +13,7 @@ import ProductList from "../admin-components/product/product-list.component.jsx"
 import SupplierList from "../admin-components/supplier/supplier-list.component.jsx"
 import StocksList from '../admin-components/stocks/stock-list.component.jsx';
 import TransactionList from '../admin-components/transactions/transactions-list.component.jsx';
+import CategoryList from '../admin-components/category/category-list.component.jsx';
 
 
 export default function AdminDashboard() {
@@ -51,12 +52,14 @@ export default function AdminDashboard() {
                         <Tab label="Products" />
                         <Tab label="Suppliers" />
                         <Tab label="Stocks" />
+                        <Tab label="Category" />
                         <Tab label="Transactions" />
                     </Tabs>
                     {value === 0 && <ProductList />}
                     {value === 1 && <SupplierList />}
                     {value === 2 && <StocksList />}
-                    {value === 3 && <TransactionList />}
+                    {value === 3 && <CategoryList />}
+                    {value === 4 && <TransactionList />}
 
                 </Paper>
             </Container>

@@ -16,6 +16,8 @@ import SupplierDetailAdmin from "../components/admin/admin-components/supplier/s
 import SupplierCreateAdmin from "../components/admin/admin-components/supplier/supplier-create.component"
 import StockDetailAdmin from "../components/admin/admin-components/stocks/stocks-detail.component"
 import CartConfirmation from "../pages/cart-confirmation/cartConfirmation.component"
+import CategoryDetailAdmin from "../components/admin/admin-components/category/category-detail.component"
+import CategoryCreateAdmin from "../components/admin/admin-components/category/category-create.component"
 
 const appRoute = [
   //USER ROUTE
@@ -78,6 +80,14 @@ const appRoute = [
   {
     path: "/admin/stocks/:id",
     element: <StockDetailAdmin />,
+  },
+  {
+    path: "/admin/category/:id",
+    element: <CategoryDetailAdmin />,
+  },
+  {
+    path: "/admin/create-category",
+    element: <CategoryCreateAdmin />,
   },
 ]
 
