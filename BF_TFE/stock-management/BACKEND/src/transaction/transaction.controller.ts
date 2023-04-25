@@ -38,9 +38,9 @@ export class TransactionController {
     private readonly userService: UserService,
   ) {}
 
-  @UseGuards(AuthGuard, RoleGuard)
-  @ApiBearerAuth('access_token')
-  @Roles('admin')
+  // @UseGuards(AuthGuard, RoleGuard)
+  // @ApiBearerAuth('access_token')
+  // @Roles('admin')
   @ApiOperation({ summary: 'Get all transaction' })
   @ApiResponse({ type: TransactionDTO })
   @Get()

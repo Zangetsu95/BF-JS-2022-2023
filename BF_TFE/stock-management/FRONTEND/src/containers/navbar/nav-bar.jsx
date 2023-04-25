@@ -64,7 +64,7 @@ function ResponsiveAppBar() {
   }
 
   const pagesAdmin = ["Admin", "Home"]
-  const pagesRegularUser = ["Product", "Home", "Cart"]
+  const pagesRegularUser = ["Home", "Product", "Cart", "Profile"]
   const pagesNotAuthenticated = ["Login", "Home"]
   // const settingsConnected = ["Profile", "Logout", "Home"]
   const pagesToDisplay = isAuthenticated

@@ -52,9 +52,9 @@ export class UserController {
     return users;
   }
 
-  @UseGuards(AuthGuard, RoleGuard)
-  @ApiBearerAuth('access_token')
-  @Roles('admin')
+  // @UseGuards(AuthGuard, RoleGuard)
+  // @ApiBearerAuth('access_token')
+  // @Roles('admin')
   @ApiOperation({ summary: 'Get one user avec son ID' })
   @ApiParam({ required: true, name: 'userID', example: '1' })
   @ApiResponse({ type: UserDTO })

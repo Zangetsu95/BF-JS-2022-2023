@@ -40,6 +40,7 @@ function Content() {
     };
 
     const protectedRoutes = [
+      //USER ROUTE
       {
         path: "/product",
         roleRequired: "user",
@@ -49,8 +50,49 @@ function Content() {
         roleRequired: "user",
       },
       {
+        path: "/cart",
+        roleRequired: "user"
+      },
+      {
+        path: "/cart/paying",
+        roleRequired: "user"
+      },
+      {
+        path: "profile",
+        roleRequired: "user"
+      },
+      //ADMIN ROUTE
+      {
         path: "/admin",
         roleRequired: "admin",
+      },
+      {
+        path: "/admin/product/:id",
+        roleRequired: "admin"
+      },
+      {
+        path: "/admin/create-product",
+        roleRequired: "admin"
+      },
+      {
+        path: "/admin/supplier/:id",
+        roleRequired: "admin"
+      },
+      {
+        path: "/admin/create-supplier",
+        roleRequired: "admin"
+      },
+      {
+        path: "/admin/stocks/:id",
+        roleRequired: "admin"
+      },
+      {
+        path: "/admin/category/:id",
+        roleRequired: "admin"
+      },
+      {
+        path: "/admin/create-category",
+        roleRequired: "admin"
       },
     ];
 

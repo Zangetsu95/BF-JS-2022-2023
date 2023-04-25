@@ -21,6 +21,13 @@ const PaymentForm = ({ onSuccess, cartItems, userId }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  const getTotalAmount = () => {
+    return cartItems.reduce(
+      (accumulator, item) => accumulator + item.quantity * item.price * 100,
+      0
+    )
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -31,27 +38,38 @@ const PaymentForm = ({ onSuccess, cartItems, userId }) => {
 
     if (error) {
       setError(error.message)
+      console.log("error :>> ", error)
       return
     }
 
     try {
-      // Create a transaction for each item in the cart
-      for (let item of cartItems) {
-        const transactionData = {
-          type: "sale",
-          product_id: item.id,
-          quantity: item.quantity,
-          price: item.price,
-          user_id: userId,
-          date: new Date().toISOString(),
+      const paymentResponse = await axios.post(
+        "http://127.0.0.1:5000/api/stripe",
+        {
+          paymentMethodId: paymentMethod.id,
+          amount: getTotalAmount(),
         }
-        const transactionResponse = await axios.post(
-          "http://127.0.0.1:5000/api/transaction",
-          transactionData
-        )
-        if (transactionResponse.status !== 201) {
-          setError("Erreur lors de l'enregistrement de la transaction.")
-          return
+      )
+
+      if (paymentResponse.data.response) {
+        // Create a transaction for each item in the cart
+        for (let item of cartItems) {
+          const transactionData = {
+            type: "sale",
+            product_id: item.id,
+            quantity: item.quantity,
+            price: item.price,
+            user_id: userId,
+            date: new Date().toISOString(),
+          }
+          const transactionResponse = await axios.post(
+            "http://127.0.0.1:5000/api/transaction",
+            transactionData
+          )
+          if (transactionResponse.status !== 201) {
+            setError("Erreur lors de l'enregistrement de la transaction.")
+            return
+          }
         }
       }
       dispatch(clearCart())

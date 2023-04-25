@@ -19,6 +19,7 @@ import CartConfirmation from "../pages/cart-confirmation/cartConfirmation.compon
 import CategoryDetailAdmin from "../components/admin/admin-components/category/category-detail.component"
 import CategoryCreateAdmin from "../components/admin/admin-components/category/category-create.component"
 import CartPaying from "../pages/cart-paying/CartPaying.component"
+import UserDashboard from "../pages/profile/profile.page"
 
 const appRoute = [
   //USER ROUTE
@@ -55,6 +56,10 @@ const appRoute = [
   {
     path: "/cart/paying",
     element: <CartPaying />,
+  },
+  {
+    path: "/profile",
+    element: <UserDashboard />,
   },
   //404 NOT FOUND
   {

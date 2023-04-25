@@ -6,7 +6,10 @@ export class StripeController {
   constructor(private readonly stripeService: StripeService) {}
 
   @Post()
-  async processPayment(@Body('paymentMethodId') paymentMethodId: string) {
-    return await this.stripeService.processPayment(paymentMethodId);
+  async processPayment(
+    @Body('paymentMethodId') paymentMethodId: string,
+    @Body('amount') amount: number,
+  ) {
+    return await this.stripeService.processPayment(paymentMethodId, amount);
   }
 }
