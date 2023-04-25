@@ -13,10 +13,12 @@ import {
   Typography,
 } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
+import { useNavigate } from "react-router-dom"
 
 const CartConfirmation = () => {
   const dispatch = useDispatch()
   const cartItems = useSelector((state) => state.cart.cartItems)
+  const navigate = useNavigate()
 
   const handleRemoveFromCart = (itemId) => {
     dispatch(removeFromCart(itemId))
@@ -31,6 +33,10 @@ const CartConfirmation = () => {
       (total, item) => total + item.price * item.quantity,
       0
     )
+  }
+
+  const handleNavigateCart = () => {
+    navigate("/cart/paying")
   }
 
   return (
@@ -85,7 +91,7 @@ const CartConfirmation = () => {
             variant="contained"
             color="primary"
             onClick={() => {
-              // Ajoutez ici la logique pour naviguer vers la page de paiement
+              handleNavigateCart()
             }}
           >
             Procéder au paiement

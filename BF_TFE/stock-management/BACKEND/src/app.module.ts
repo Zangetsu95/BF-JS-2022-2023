@@ -12,6 +12,7 @@ import { TransactionModule } from './transaction/transaction.module';
 import { AuthModule } from './auth/auth.module';
 import { config } from 'dotenv';
 import { ProductSupplierModule } from './product-supplier/product-supplier.module';
+import { StripeModule } from './stripe/stripe.module';
 config();
 
 @Module({
@@ -41,6 +42,7 @@ config();
     TransactionModule,
     AuthModule,
     ProductSupplierModule,
+    StripeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -110,9 +110,9 @@ export class TransactionController {
     return transactionDto;
   }
 
-  @UseGuards(AuthGuard, RoleGuard)
-  @ApiBearerAuth('access_token')
-  @Roles('admin')
+  // @UseGuards(AuthGuard, RoleGuard)
+  // @ApiBearerAuth('access_token')
+  // @Roles('admin')
   @ApiOperation({ summary: "Création d'une transaction" })
   @ApiBody({ type: TransactionCreateDTO })
   @ApiResponse({ type: TransactionDTO })

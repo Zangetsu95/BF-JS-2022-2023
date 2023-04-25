@@ -18,6 +18,7 @@ import StockDetailAdmin from "../components/admin/admin-components/stocks/stocks
 import CartConfirmation from "../pages/cart-confirmation/cartConfirmation.component"
 import CategoryDetailAdmin from "../components/admin/admin-components/category/category-detail.component"
 import CategoryCreateAdmin from "../components/admin/admin-components/category/category-create.component"
+import CartPaying from "../pages/cart-paying/CartPaying.component"
 
 const appRoute = [
   //USER ROUTE
@@ -50,6 +51,10 @@ const appRoute = [
   {
     path: "/cart",
     element: <CartConfirmation />,
+  },
+  {
+    path: "/cart/paying",
+    element: <CartPaying />,
   },
   //404 NOT FOUND
   {

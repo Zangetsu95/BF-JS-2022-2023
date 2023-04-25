@@ -15,10 +15,12 @@ export const login = (email, password) => {
 
                 const decodedJWT = jwt_decode(res.access_token);
                 const userRole = decodedJWT.role;
+                const userId = decodedJWT.user_id
                 console.log(userRole)
 
                 dispatch({ type: "SET_AUTHENTICATED", payload: true });
                 dispatch({ type: "SET_USER_ROLE", payload: userRole });
+                dispatch({ type: "SET_USER_ID", payload: userId });
             })
             .catch((error) => {
                 console.log(error)
@@ -45,6 +47,7 @@ export const logout = () => {
         localStorage.removeItem("jwt");
         dispatch({ type: "SET_UNAUTHENTICATED" });
         localStorage.removeItem("userRole");
+        localStorage.removeItem("userId")
         dispatch(clearCart())
     };
 };
