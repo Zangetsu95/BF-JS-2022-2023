@@ -70,6 +70,7 @@ export class TransactionController {
       type: transaction.type,
       quantity: transaction.quantity,
       price: transaction.price,
+      transaction_number: transaction.transaction_number,
     }));
   }
   @UseGuards(AuthGuard, RoleGuard)
@@ -105,6 +106,7 @@ export class TransactionController {
       quantity: transaction.quantity,
       type: transaction.type,
       user_id: transaction.user.id,
+      transaction_number: transaction.transaction_number,
     };
 
     return transactionDto;

@@ -21,12 +21,17 @@ const PaymentForm = ({ onSuccess, cartItems, userId }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const getTotalAmount = () => {
+  const getTotalAmount = (cartItems) => {
+    if (!cartItems) {
+      return 0
+    }
     return cartItems.reduce(
       (accumulator, item) => accumulator + item.quantity * item.price * 100,
       0
     )
   }
+
+  const isCartEmpty = cartItems.length === 0
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -38,7 +43,6 @@ const PaymentForm = ({ onSuccess, cartItems, userId }) => {
 
     if (error) {
       setError(error.message)
-      console.log("error :>> ", error)
       return
     }
 
@@ -47,29 +51,31 @@ const PaymentForm = ({ onSuccess, cartItems, userId }) => {
         "http://127.0.0.1:5000/api/stripe",
         {
           paymentMethodId: paymentMethod.id,
-          amount: getTotalAmount(),
+          amount: getTotalAmount(cartItems),
         }
       )
+      console.log("paymentResponse :>> ", paymentResponse)
+      const stripeTransactionId = paymentResponse.data.stripeTransactionId
 
-      if (paymentResponse.data.response) {
-        // Create a transaction for each item in the cart
-        for (let item of cartItems) {
-          const transactionData = {
-            type: "sale",
-            product_id: item.id,
-            quantity: item.quantity,
-            price: item.price,
-            user_id: userId,
-            date: new Date().toISOString(),
-          }
-          const transactionResponse = await axios.post(
-            "http://127.0.0.1:5000/api/transaction",
-            transactionData
-          )
-          if (transactionResponse.status !== 201) {
-            setError("Erreur lors de l'enregistrement de la transaction.")
-            return
-          }
+      console.log("stripeTransactionId :>> ", stripeTransactionId)
+      // Create a transaction for each item in the cart
+      for (let item of cartItems) {
+        const transactionData = {
+          type: "sale",
+          product_id: item.id,
+          quantity: item.quantity,
+          price: item.price,
+          user_id: userId,
+          date: new Date().toISOString(),
+          transaction_number: stripeTransactionId.toString(),
+        }
+        const transactionResponse = await axios.post(
+          "http://127.0.0.1:5000/api/transaction",
+          transactionData
+        )
+        if (transactionResponse.status !== 201) {
+          setError("Erreur lors de l'enregistrement de la transaction.")
+          return
         }
       }
       dispatch(clearCart())
@@ -112,7 +118,11 @@ const PaymentForm = ({ onSuccess, cartItems, userId }) => {
     <>
       <form onSubmit={handleSubmit}>
         <CardElement options={cardElementOptions} />
-        <button type="submit" disabled={!stripe}>
+        <button
+          type="submit"
+          disabled={!stripe || isCartEmpty}
+          style={{ opacity: isCartEmpty ? 0.5 : 1 }}
+        >
           Procéder au paiement
         </button>
         {error && <div>{error}</div>}

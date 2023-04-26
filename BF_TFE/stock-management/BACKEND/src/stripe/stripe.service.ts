@@ -63,8 +63,7 @@ export class StripeService {
           'Nouvelle transaction',
           'Merci pour votre achat !',
         );
-
-        return { success: true };
+        return { success: true, stripeTransactionId: paymentIntent.id };
       } else {
         return { success: false };
       }

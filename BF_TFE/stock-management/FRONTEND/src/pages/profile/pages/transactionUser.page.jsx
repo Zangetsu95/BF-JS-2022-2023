@@ -115,6 +115,10 @@ const TransactionUserList = ({ userId }) => {
                 { text: "User Email:", style: "tableHeader" },
                 { text: transaction.user_email },
               ],
+              [
+                { text: "Transaction Number:", style: "tableHeader" },
+                { text: transaction.transaction_number },
+              ],
             ],
           },
           layout: "lightHorizontalLines",

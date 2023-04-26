@@ -14,11 +14,21 @@ import {
 } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
 
 const CartConfirmation = () => {
   const dispatch = useDispatch()
   const cartItems = useSelector((state) => state.cart.cartItems)
   const navigate = useNavigate()
+  const [cartIsEmpty, setCartIsEmpty] = useState(true)
+
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      setCartIsEmpty(false)
+    } else {
+      setCartIsEmpty(true)
+    }
+  }, [cartItems])
 
   const handleRemoveFromCart = (itemId) => {
     dispatch(removeFromCart(itemId))
@@ -89,10 +99,12 @@ const CartConfirmation = () => {
         <Grid item xs={12}>
           <Button
             variant="contained"
-            color="primary"
+            color={cartIsEmpty ? "primary" : "error"}
+            disabled={cartIsEmpty}
             onClick={() => {
               handleNavigateCart()
             }}
+            sx={{ mr: 2, opacity: cartIsEmpty ? 0.5 : 1 }}
           >
             Procéder au paiement
           </Button>

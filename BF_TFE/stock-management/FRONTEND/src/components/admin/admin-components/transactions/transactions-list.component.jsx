@@ -118,31 +118,52 @@ const TransactionList = () => {
                 { text: `${transaction.price} €` },
               ],
               [
-                { text: "Product:", style: "tableHeader" },
+                { text: "Total:", style: "tableHeader" },
+                { text: `${transaction.price * transaction.quantity} €` },
+              ],
+              [
+                { text: "Product Name:", style: "tableHeader" },
                 { text: transaction.product_name },
               ],
               [
                 { text: "User Email:", style: "tableHeader" },
                 { text: transaction.user_email },
               ],
+              [
+                { text: "Transaction Number:", style: "tableHeader" },
+                { text: transaction.transaction_number },
+              ],
             ],
           },
+          layout: "lightHorizontalLines",
+        },
+        {
+          text: "Merci de nous avoir fait confiance pour vos produits !",
+          style: "thanks",
         },
       ],
       styles: {
         header: {
           fontSize: 18,
           bold: true,
-          margin: [0, 0, 0, 10],
+          margin: [0, 0, 0, 20],
         },
         tableHeader: {
+          fontSize: 12,
           bold: true,
-          fillColor: theme.palette.primary.main,
-          color: "white",
+          margin: [0, 10, 0, 5],
+        },
+        thanks: {
+          fontSize: 14,
+          italic: true,
+          margin: [0, 20, 0, 0],
+          alignment: "center",
         },
       },
     }
-    pdfMake.createPdf(docDefinition).open()
+    pdfMake
+      .createPdf(docDefinition)
+      .download(`Transaction_${transaction.id}.pdf`)
   }
 
   return (

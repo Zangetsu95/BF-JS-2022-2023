@@ -44,7 +44,7 @@ export class TransactionEntity {
   // @IsString()
   // address: string;
 
-  // @Column()
-  // @IsString()
-  // transactionNumber: string;
+  @Column()
+  @IsString()
+  transaction_number: string;
 }

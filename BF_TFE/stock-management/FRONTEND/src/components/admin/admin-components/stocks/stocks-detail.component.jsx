@@ -81,6 +81,12 @@ const StockDetailAdmin = () => {
     navigate("/admin")
   }
 
+  const generateTransactionNumber = () => {
+    const randomNum = Math.floor(Math.random() * 1000000000) // génère un nombre aléatoire entre 0 et 999999999
+    const transactionNumber = `pi_${randomNum.toString()}`
+    return transactionNumber
+  }
+
   const handleSubmit = async () => {
     if (!userID) {
       console.error("L'ID de l'utilisateur n'est pas disponible.")
@@ -110,6 +116,7 @@ const StockDetailAdmin = () => {
         price,
         product_id: product.id,
         user_id: userID,
+        transaction_number: generateTransactionNumber().toString(),
       }
 
       // Envoyer la requête POST à l'API

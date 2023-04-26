@@ -74,6 +74,7 @@ export class TransactionService {
     newTransaction.price = transaction.price;
     newTransaction.quantity = transaction.quantity;
     newTransaction.type = transaction.type;
+    newTransaction.transaction_number = transaction.transaction_number;
 
     const productId = await this.productRepo.findOne({
       where: { id: transaction.product_id },
