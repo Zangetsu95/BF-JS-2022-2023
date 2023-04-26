@@ -23,6 +23,7 @@ import { addToCart, removeFromCart } from "../../store/actions/cartActions.js"
 import { styled } from "@mui/material/styles"
 import CartModal from "../../components/cart/cart-modal.component.jsx"
 import { useState } from "react"
+import logo from "../../utils/image/logo-tfe.png"
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -114,7 +115,8 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
+          <Avatar src={logo} sx={{ mr: 1, width: 80, height: 80 }} />
           <Typography
             variant="h6"
             noWrap
@@ -184,7 +186,8 @@ function ResponsiveAppBar() {
             cartItems={cartItems}
           />
 
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} /> */}
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {pagesToDisplay.map((page) => (

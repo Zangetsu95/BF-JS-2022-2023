@@ -14,6 +14,8 @@ import SupplierList from "../admin-components/supplier/supplier-list.component.j
 import StocksList from '../admin-components/stocks/stock-list.component.jsx';
 import TransactionList from '../admin-components/transactions/transactions-list.component.jsx';
 import CategoryList from '../admin-components/category/category-list.component.jsx';
+import { ThemeProvider } from '@emotion/react';
+import theme from "../../../containers/theme/theme.jsx"
 
 
 export default function AdminDashboard() {
@@ -24,45 +26,48 @@ export default function AdminDashboard() {
     };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Admin Dashboard
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                <Paper sx={{ p: 2 }}>
-                    <Tabs
-                        value={value}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        onChange={handleChange}
-                        centered
-                    >
-                        <Tab label="Products" />
-                        <Tab label="Suppliers" />
-                        <Tab label="Stocks" />
-                        <Tab label="Category" />
-                        <Tab label="Transactions" />
-                    </Tabs>
-                    {value === 0 && <ProductList />}
-                    {value === 1 && <SupplierList />}
-                    {value === 2 && <StocksList />}
-                    {value === 3 && <CategoryList />}
-                    {value === 4 && <TransactionList />}
+        <ThemeProvider theme={theme}>
+            <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ mr: 2 }}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                            Admin Dashboard
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                    <Paper sx={{ p: 2 }}>
+                        <Tabs
+                            value={value}
+                            indicatorColor="primary"
+                            textColor="primary"
+                            onChange={handleChange}
+                            centered
+                        >
+                            <Tab label="Products" />
+                            <Tab label="Suppliers" />
+                            <Tab label="Stocks" />
+                            <Tab label="Category" />
+                            <Tab label="Transactions" />
+                        </Tabs>
+                        {value === 0 && <ProductList />}
+                        {value === 1 && <SupplierList />}
+                        {value === 2 && <StocksList />}
+                        {value === 3 && <CategoryList />}
+                        {value === 4 && <TransactionList />}
 
-                </Paper>
-            </Container>
-        </Box>
+                    </Paper>
+                </Container>
+            </Box>
+        </ThemeProvider>
+
     );
 }

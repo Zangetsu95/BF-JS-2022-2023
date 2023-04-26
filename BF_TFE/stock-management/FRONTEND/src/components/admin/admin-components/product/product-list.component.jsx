@@ -19,6 +19,7 @@ import {
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 import { useState, useEffect } from "react"
+import { useTheme } from "@emotion/react"
 
 const ProductList = () => {
   const navigate = useNavigate()
@@ -29,6 +30,7 @@ const ProductList = () => {
   const [selectedCategory, setSelectedCategory] = useState("")
   const [categories, setCategories] = useState([])
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const theme = useTheme()
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -135,31 +137,73 @@ const ProductList = () => {
                   </TableHead>
                   <TableBody>
                     <TableRow>
-                      <TableCell>Nom:</TableCell>
-                      <TableCell>{product.name}</TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        Nom:
+                      </TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        {product.name}
+                      </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Description:</TableCell>
-                      <TableCell>{product.description}</TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        Description:
+                      </TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        {product.description}
+                      </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Prix:</TableCell>
-                      <TableCell>{product.price} €</TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        Prix:
+                      </TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        {product.price} €
+                      </TableCell>
                     </TableRow>
                     {/* <TableRow>
                       <TableCell>Fournisseur:</TableCell>
                       <TableCell>{product.supplier}</TableCell>
                     </TableRow> */}
                     <TableRow>
-                      <TableCell>Quantité disponible:</TableCell>
-                      <TableCell>{product.quantity}</TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        Quantité disponible:
+                      </TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        {product.quantity}
+                      </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Catégorie:</TableCell>
-                      <TableCell>{product.category.name}</TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        Catégorie:
+                      </TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        {product.category.name}
+                      </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
                         <Button
                           variant="contained"
                           color="primary"

@@ -17,6 +17,7 @@ import {
 } from "@mui/material"
 import { useLocation, useNavigate } from "react-router-dom"
 import axios from "axios"
+import { useTheme } from "@emotion/react"
 
 const ProductDetailAdmin = () => {
   const location = useLocation() || {}

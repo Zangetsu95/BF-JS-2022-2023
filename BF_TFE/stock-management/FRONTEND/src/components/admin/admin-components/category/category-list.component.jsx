@@ -13,9 +13,11 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
+import { useTheme } from "@emotion/react"
 
 const CategoryList = () => {
   const navigate = useNavigate()
+  const theme = useTheme()
   const [currentPage, setCurrentPage] = useState()
   const [totalPages, setTotalPages] = useState(1)
   const [category, setCategory] = useState([])
@@ -59,8 +61,16 @@ const CategoryList = () => {
                 <Table>
                   <TableBody>
                     <TableRow>
-                      <TableCell>Nom:</TableCell>
-                      <TableCell>{data.name}</TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        Nom:
+                      </TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        {data.name}
+                      </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>

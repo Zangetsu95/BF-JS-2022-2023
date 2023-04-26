@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import {
   Box,
   Button,
+  InputAdornment,
   Table,
   TableBody,
   TableCell,
@@ -13,8 +14,10 @@ import {
 } from "@mui/material"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { useTheme } from "@emotion/react"
 
 const StocksList = () => {
+  const theme = useTheme()
   const [data, setData] = useState([])
   const [search, setSearch] = useState("")
   const [filteredData, setFilteredData] = useState([])
@@ -72,6 +75,11 @@ const StocksList = () => {
           label="Rechercher"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          InputProps={{
+            style: {
+              color: theme.palette.text.secondary,
+            },
+          }}
         />
       </Box>
       <Table>
@@ -118,9 +126,15 @@ const StocksList = () => {
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map(({ product, supplier }) => (
               <TableRow key={product.id}>
-                <TableCell>{product.name}</TableCell>
-                <TableCell>{supplier.name}</TableCell>
-                <TableCell>{product.quantity}</TableCell>
+                <TableCell style={{ color: theme.palette.text.secondary }}>
+                  {product.name}
+                </TableCell>
+                <TableCell style={{ color: theme.palette.text.secondary }}>
+                  {supplier.name}
+                </TableCell>
+                <TableCell style={{ color: theme.palette.text.secondary }}>
+                  {product.quantity}
+                </TableCell>
                 <TableCell>
                   <Button
                     variant="contained"

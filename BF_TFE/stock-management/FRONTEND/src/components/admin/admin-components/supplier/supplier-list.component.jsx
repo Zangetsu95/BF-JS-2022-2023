@@ -13,9 +13,11 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
+import { useTheme } from "@emotion/react"
 
 const SupplierList = () => {
   const navigate = useNavigate()
+  const theme = useTheme()
   const [currentPage, setCurrentPage] = useState()
   const [totalPages, setTotalPages] = useState(1)
   const [supplier, setSupplier] = useState([])
@@ -61,16 +63,40 @@ const SupplierList = () => {
                 <Table>
                   <TableBody>
                     <TableRow>
-                      <TableCell>Nom:</TableCell>
-                      <TableCell>{data.name}</TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        Nom:
+                      </TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        {data.name}
+                      </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Adress:</TableCell>
-                      <TableCell>{data.adress}</TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        Adress:
+                      </TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        {data.adress}
+                      </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>Téléphone:</TableCell>
-                      <TableCell>{data.phone_number} </TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        Téléphone:
+                      </TableCell>
+                      <TableCell
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        {data.phone_number}{" "}
+                      </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>

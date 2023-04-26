@@ -1,6 +1,6 @@
-import * as React from "react"
+import React, { useState, useEffect } from "react"
 import {
-  Button,
+  Typography,
   Grid,
   Paper,
   Table,
@@ -9,19 +9,45 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
+  Button,
 } from "@mui/material"
-import { useState, useEffect } from "react"
 import axios from "axios"
-import jwt_decode from "jwt-decode"
 import pdfMake from "pdfmake/build/pdfmake"
 import pdfFonts from "pdfmake/build/vfs_fonts"
+import { useTheme } from "@emotion/react"
+import jwt_decode from "jwt-decode"
 
 // Initialise pdfmake avec les polices
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 const TransactionList = () => {
+  const theme = useTheme()
   const [transactionsData, setTransactionsData] = useState([])
+
+  const fetchProductName = async (productId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/product/${productId}`
+      )
+      return response.data.name
+    } catch (error) {
+      console.error("Error fetching product:", error)
+      return "Unknown"
+    }
+  }
+
+  const fetchUserEmail = async (userId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/user/${userId}`
+      )
+      console.log("response :>> ", response)
+      return response.data.email
+    } catch (error) {
+      console.error("Error fetching user:", error)
+      return "Unknown"
+    }
+  }
 
   useEffect(() => {
     const fetchTransactionsData = async () => {
@@ -43,7 +69,19 @@ const TransactionList = () => {
 
         const transactions = response.data
 
-        setTransactionsData(transactions)
+        const transactionsWithProductNames = await Promise.all(
+          transactions.map(async (transaction) => {
+            const productName = await fetchProductName(transaction.product_id)
+            const userEmail = await fetchUserEmail(transaction.user_id)
+            return {
+              ...transaction,
+              product_name: productName,
+              user_email: userEmail,
+            }
+          })
+        )
+
+        setTransactionsData(transactionsWithProductNames)
       } catch (error) {
         console.error(error)
       }
@@ -58,28 +96,37 @@ const TransactionList = () => {
       content: [
         { text: "Transaction Details", style: "header" },
         {
-          text: `Type: ${transaction.type}`,
-          style: "subheader",
-        },
-        {
-          text: `Date: ${transaction.date}`,
-          style: "subheader",
-        },
-        {
-          text: `Quantity: ${transaction.quantity}`,
-          style: "subheader",
-        },
-        {
-          text: `Price: ${transaction.price} €`,
-          style: "subheader",
-        },
-        {
-          text: `Product Name: ${transaction.product_id}`,
-          style: "subheader",
-        },
-        {
-          text: `User Email: ${transaction.user_id}`,
-          style: "subheader",
+          table: {
+            widths: ["auto", "*"],
+            body: [
+              [
+                { text: "Type:", style: "tableHeader" },
+                { text: transaction.type },
+              ],
+              [
+                { text: "Date:", style: "tableHeader" },
+                {
+                  text: new Date(transaction.date).toLocaleDateString("fr-FR"),
+                },
+              ],
+              [
+                { text: "Quantity:", style: "tableHeader" },
+                { text: transaction.quantity },
+              ],
+              [
+                { text: "Price:", style: "tableHeader" },
+                { text: `${transaction.price} €` },
+              ],
+              [
+                { text: "Product:", style: "tableHeader" },
+                { text: transaction.product_name },
+              ],
+              [
+                { text: "User Email:", style: "tableHeader" },
+                { text: transaction.user_email },
+              ],
+            ],
+          },
         },
       ],
       styles: {
@@ -88,104 +135,164 @@ const TransactionList = () => {
           bold: true,
           margin: [0, 0, 0, 10],
         },
-        subheader: {
-          fontSize: 14,
+        tableHeader: {
           bold: true,
-          margin: [0, 10, 0, 5],
+          fillColor: theme.palette.primary.main,
+          color: "white",
         },
       },
     }
-    pdfMake
-      .createPdf(docDefinition)
-      .download(`Transaction_${transaction.id}.pdf`)
-  }
-
-  const handleGeneratePdf = (transaction) => {
-    generatePdf(transaction)
+    pdfMake.createPdf(docDefinition).open()
   }
 
   return (
-    <>
-      <Typography variant="h4" sx={{ fontWeight: "bold", mb: 2 }}>
-        Transactions
-      </Typography>
-      <Grid container spacing={2}>
-        {transactionsData.map((transaction) => (
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={4}
-            key={transaction.id}
-            sx={{
-              backgroundColor:
-                transaction.type === "purchase" ? "#e8f5e9" : "#ffebee",
-              border: `3px solid ${
-                transaction.type === "sale" ? "red" : "transparent"
-              }`,
-              borderRadius: 2,
-              boxShadow: 1,
-              p: 2,
-              position: "relative",
-            }}
-          >
-            <Typography
-              variant="subtitle1"
-              sx={{
-                backgroundColor:
-                  transaction.type === "sale" ? "green" : "transparent",
-                borderRadius: 2,
-                color: "white",
-                left: 0,
-                padding: 0.5,
-                position: "absolute",
-                top: 0,
-              }}
-            >
-              {transaction.type.toUpperCase()}
-            </Typography>
-            <Paper>
-              <TableContainer>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Type</TableCell>
-                      <TableCell>{transaction.type}</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>Date:</TableCell>
-                      <TableCell>{transaction.date}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Quantity:</TableCell>
-                      <TableCell>{transaction.quantity}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Price:</TableCell>
-                      <TableCell>{transaction.price} €</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Product Name:</TableCell>
-                      {/* TODO Product NAME */}
-                      <TableCell>{transaction.product_id}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>User Email:</TableCell>
-                      <TableCell>{transaction.user_id}</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Paper>
-            <Button onClick={() => handleGeneratePdf(transaction)}>
-              Generate PDF
-            </Button>
-          </Grid>
-        ))}
+    <Grid container justifyContent="center">
+      <Grid item xs={12} sm={10}>
+        <Typography variant="h4" gutterBottom>
+          Transactions List
+        </Typography>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  style={{
+                    color: theme.palette.text.primary,
+                    backgroundColor: "blue",
+                  }}
+                >
+                  Type
+                </TableCell>
+                <TableCell
+                  style={{
+                    color: theme.palette.text.primary,
+                    backgroundColor: "blue",
+                  }}
+                >
+                  Date
+                </TableCell>
+                <TableCell
+                  style={{
+                    color: theme.palette.text.primary,
+                    backgroundColor: "blue",
+                  }}
+                >
+                  Quantité
+                </TableCell>
+                <TableCell
+                  style={{
+                    color: theme.palette.text.primary,
+                    backgroundColor: "blue",
+                  }}
+                >
+                  Prix
+                </TableCell>
+                <TableCell
+                  style={{
+                    color: theme.palette.text.primary,
+                    backgroundColor: "blue",
+                  }}
+                >
+                  Prix total
+                </TableCell>
+                <TableCell
+                  style={{
+                    color: theme.palette.text.primary,
+                    backgroundColor: "blue",
+                  }}
+                >
+                  Produit
+                </TableCell>
+                <TableCell
+                  style={{
+                    color: theme.palette.text.primary,
+                    backgroundColor: "blue",
+                  }}
+                >
+                  User Email
+                </TableCell>
+                <TableCell
+                  style={{
+                    color: theme.palette.text.primary,
+                    backgroundColor: "blue",
+                  }}
+                >
+                  Facture
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {transactionsData.map((transaction) => (
+                <TableRow key={transaction.id}>
+                  <TableCell
+                    style={{
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    {transaction.type}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    {new Date(transaction.date).toLocaleDateString("fr-FR")}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    {transaction.quantity}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    {transaction.price} €
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    {transaction.price * transaction.quantity} €
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    {transaction.product_name}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    {transaction.user_email}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => generatePdf(transaction)}
+                    >
+                      PDF
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Grid>
-    </>
+    </Grid>
   )
 }
 

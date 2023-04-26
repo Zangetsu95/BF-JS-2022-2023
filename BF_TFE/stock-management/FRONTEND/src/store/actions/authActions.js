@@ -48,6 +48,7 @@ export const logout = () => {
         dispatch({ type: "SET_UNAUTHENTICATED" });
         localStorage.removeItem("userRole");
         localStorage.removeItem("userId")
+        dispatch({ type: "SET_USER_ROLE", payload: null })
         dispatch(clearCart())
     };
 };

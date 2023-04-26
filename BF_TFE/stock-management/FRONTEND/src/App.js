@@ -115,12 +115,15 @@ function Content() {
 
 
   return (
-    <div className="App">
+    // <div className="App">
+    <>
       <NavBar />
       <div>
         <main>{routes}</main>
       </div>
-    </div>
+    </>
+
+    // </div>
   );
 }
 
