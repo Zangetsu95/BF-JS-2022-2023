@@ -94,7 +94,7 @@ const TransactionList = () => {
   const generatePdf = (transaction) => {
     const docDefinition = {
       content: [
-        { text: "Transaction Details", style: "header" },
+        { text: "Transaction Details for the Admin", style: "header" },
         {
           table: {
             widths: ["auto", "*"],
@@ -138,7 +138,7 @@ const TransactionList = () => {
           layout: "lightHorizontalLines",
         },
         {
-          text: "Merci de nous avoir fait confiance pour vos produits !",
+          text: "Commande fait sur votre site !",
           style: "thanks",
         },
       ],

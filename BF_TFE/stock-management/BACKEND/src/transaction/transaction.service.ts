@@ -5,6 +5,7 @@ import { ProductEntity } from 'src/shared/entities/product/product.entity';
 import { StockEntity } from 'src/shared/entities/stock/stock.entity';
 import { TransactionEntity } from 'src/shared/entities/transaction/transaction.entity';
 import { UserEntity } from 'src/shared/entities/user/user.entity';
+import { StripeService } from 'src/stripe/stripe.service';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -18,6 +19,7 @@ export class TransactionService {
     private userRepo: Repository<UserEntity>,
     @InjectRepository(StockEntity)
     private stockRepo: Repository<StockEntity>,
+    private stripeService: StripeService,
   ) {}
 
   /**
@@ -106,6 +108,11 @@ export class TransactionService {
     if (transaction.type == 'purchasse') {
       productId.quantity += newTransaction.quantity;
       stock.quantity += newTransaction.quantity;
+      await this.stripeService.sendMail(
+        'customer@example.com',
+        'Nouvelle commande chez votre fournisseurs',
+        'Votre facture est disponible !',
+      );
     } else if (transaction.type == 'sale') {
       productId.quantity -= newTransaction.quantity;
       stock.quantity -= newTransaction.quantity;
