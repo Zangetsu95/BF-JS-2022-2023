@@ -22,7 +22,7 @@ export class ProductDTO {
     message: 'Le nom du produit doit être une chaîne de caractères.',
   })
   @IsDefined({ message: 'Le nom du produit ne peut pas être vide.' })
-  @MaxLength(15, {
+  @MaxLength(30, {
     message: 'Le nom du produit ne peut pas dépasser 15 caractères.',
   })
   @MinLength(2, {
@@ -35,7 +35,7 @@ export class ProductDTO {
     message: 'La déscription doit être une chaîne de caractères.',
   })
   @IsDefined({ message: 'La déscription ne peut pas être vide.' })
-  @MaxLength(35, {
+  @MaxLength(50, {
     message: 'La déscription ne peut pas dépasser 35 caractères.',
   })
   @MinLength(2, {

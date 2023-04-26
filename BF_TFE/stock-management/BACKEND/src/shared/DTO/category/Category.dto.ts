@@ -17,7 +17,7 @@ export class CategoryDTO {
     message: 'Le nom de la catégorie doit être une chaîne de caractères.',
   })
   @IsDefined({ message: 'Le nom de la catégorie ne peut pas être vide.' })
-  @MaxLength(15, {
+  @MaxLength(40, {
     message: 'Le nom de la catégorie ne peut pas dépasser 15 caractères.',
   })
   @MinLength(2, {
