@@ -1,0 +1,16 @@
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
+
+.Link {
+  text-align: center;
+  margin-top: 250px;
+  background-color: rgb(114, 122, 119);
+  margin-left: 800px;
+  margin-right: 800px;
+}

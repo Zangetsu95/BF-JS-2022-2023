@@ -111,12 +111,20 @@ function ResponsiveAppBar() {
     state.cart.cartItems.reduce((count, item) => count + 1, 0)
   )
 
+  const handleHome = () => {
+    navigate("/")
+  }
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
-          <Avatar src={logo} sx={{ mr: 1, width: 80, height: 80 }} />
+          <Avatar
+            onClick={handleHome}
+            src={logo}
+            sx={{ mr: 1, width: 80, height: 80, cursor: "pointer" }}
+          />
           <Typography
             variant="h6"
             noWrap
